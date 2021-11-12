@@ -1,0 +1,13 @@
+{
+  "name": "@cordjs/client",
+  "version": "0.0.1",
+  "description": "Discord bot framework",
+  "main": "lib/index.js",
+  "typings": "dist/core.d.ts",
+  "repository": "https://github.com/lukadev-0/cord.js",
+  "author": "LukaDev",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf lib && tsc && api-extractor run"
+  }
+}
