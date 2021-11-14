@@ -12,7 +12,7 @@ pagination_next: null
 
 The middleware path
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 path: string[];

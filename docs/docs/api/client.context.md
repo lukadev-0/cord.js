@@ -12,7 +12,7 @@ pagination_next: null
 
 Information about a middleware call, passed in as first argument to a middleware handler
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare abstract class Context 

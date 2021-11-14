@@ -10,7 +10,7 @@ pagination_next: null
 
 ## NextFn type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type NextFn = (err?: unknown) => void;

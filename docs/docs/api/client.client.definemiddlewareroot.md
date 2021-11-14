@@ -12,7 +12,7 @@ pagination_next: null
 
 Defines a middleware root
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 defineMiddlewareRoot(name: string): void;
@@ -24,7 +24,7 @@ defineMiddlewareRoot(name: string): void;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

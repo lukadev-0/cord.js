@@ -12,7 +12,7 @@ pagination_next: null
 
 The main class for any Cord.js bot
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class Client 
@@ -22,7 +22,7 @@ export declare class Client
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [middleware](./client.client.middleware.md) |  | [MiddlewareInterface](./client.middlewareinterface.md) &lt;[Context](./client.context.md) &gt;\[\] | The middleware |
+|  [middleware](./client.client.middleware.md) |  | [MiddlewareInterface](./client.middlewareinterface.md)&lt;[Context](./client.context.md)&gt;\[\] | The middleware |
 
 ## Methods
 

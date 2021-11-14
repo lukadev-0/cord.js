@@ -10,7 +10,7 @@ pagination_next: null
 
 ## MiddlewareInterface.cb property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 cb: MiddlewareHandler<T>;

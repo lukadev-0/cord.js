@@ -12,7 +12,7 @@ pagination_next: null
 
 A middleware object
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface MiddlewareInterface<T extends Context> 
@@ -22,6 +22,6 @@ export interface MiddlewareInterface<T extends Context>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cb](./client.middlewareinterface.cb.md) | [MiddlewareHandler](./client.middlewarehandler.md) &lt;T&gt; |  |
+|  [cb](./client.middlewareinterface.cb.md) | [MiddlewareHandler](./client.middlewarehandler.md)&lt;T&gt; |  |
 |  [path](./client.middlewareinterface.path.md) | string\[\] |  |
 

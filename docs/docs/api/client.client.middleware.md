@@ -12,7 +12,7 @@ pagination_next: null
 
 The middleware
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 middleware: MiddlewareInterface<Context>[];

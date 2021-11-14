@@ -12,7 +12,7 @@ pagination_next: null
 
 Constructs a new instance of the `Context` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constructor(path: string[]);

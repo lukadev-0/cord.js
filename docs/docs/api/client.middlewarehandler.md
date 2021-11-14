@@ -12,7 +12,7 @@ pagination_next: null
 
 A middleware handler
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface MiddlewareHandler<T extends Context> 

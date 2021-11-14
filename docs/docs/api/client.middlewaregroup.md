@@ -12,12 +12,12 @@ pagination_next: null
 
 A group of middleware
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<K extends keyof T>(name: K, ...args: Parameters<T[K]> | []) => T[K]) & {
     [K in keyof T]: T[K];
 } & (<K extends keyof T>(...args: Parameters<T[K]>) => void);
 ```
-<b>References:</b> [Middleware](./client.middleware.md) , [Context](./client.context.md)
+**References:** [Middleware](./client.middleware.md), [Context](./client.context.md)
 

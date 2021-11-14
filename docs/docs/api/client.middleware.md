@@ -12,10 +12,10 @@ pagination_next: null
 
 A middleware
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type Middleware<T extends Context> = (handler: MiddlewareHandler<T>) => void;
 ```
-<b>References:</b> [Context](./client.context.md) , [MiddlewareHandler](./client.middlewarehandler.md)
+**References:** [Context](./client.context.md), [MiddlewareHandler](./client.middlewarehandler.md)
 
