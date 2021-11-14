@@ -26,7 +26,7 @@ const config = {
   projectName: 'cord.js', // Usually your repo name.
   deploymentBranch: 'gh-pages',
   url: 'https://lukadev-0.github.io/',
-  baseUrl: '/cord.js/',
+  baseUrl: '/',
   trailingSlash: false,
 
   presets: [
