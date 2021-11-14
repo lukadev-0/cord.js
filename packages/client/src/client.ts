@@ -1,43 +1,10 @@
+import { PluginInstance } from '.'
 import { Context } from './context'
+import { NextFn, MiddlewareHandler, MiddlewareInterface } from './middleware'
+import { PluginFactory } from './plugin'
 
-/**
- * A middleware
- * @public
- */
-export type Middleware<T extends Context> = (
-  handler: MiddlewareHandler<T>
-) => void
-
-/**
- * A group of middleware
- * @public
- */
-export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<
-  K extends keyof T
->(
-  name: K,
-  ...args: Parameters<T[K]> | []
-) => T[K]) & {
-  [K in keyof T]: T[K]
-} & (<K extends keyof T>(...args: Parameters<T[K]>) => void)
-
-export type NextFn = (err?: unknown) => void
-
-/**
- * A middleware handler
- * @public
- */
-export interface MiddlewareHandler<T extends Context> {
-  (context: T, next: NextFn, err: unknown): void
-}
-
-/**
- * A middleware object
- * @public
- */
-export interface MiddlewareInterface<T extends Context> {
-  path: string[]
-  cb: MiddlewareHandler<T>
+export interface ClientOptions {
+  plugins: PluginFactory[]
 }
 
 /**
@@ -48,12 +15,75 @@ export class Client {
   /**
    * The middleware
    */
-  public middleware: MiddlewareInterface<Context>[] = []
+  public readonly middleware: MiddlewareInterface<Context>[] = []
+
+  /**
+   * The plugins
+   */
+  public readonly plugins: Readonly<Record<string, PluginInstance>>
+
+  private middlewareRoots: Record<string, string> = {}
+
+  constructor(options: ClientOptions) {
+    const { plugins } = options
+
+    let pluginInstances: Record<string, PluginInstance> = {}
+
+    const collisions: [string, string, string][] = []
+    for (const factory of plugins) {
+      const pluginCollisions: [string, string][] = []
+      const middlewareRoots: string[] = []
+      const plugin = factory(this, {
+        defineMiddlewareRoot: name => {
+          if (name in this.middlewareRoots) {
+            pluginCollisions.push([this.middlewareRoots[name], name])
+            return
+          }
+
+          middlewareRoots.push(name)
+          this._defineMiddlewareRoot(name)
+        },
+      })
+
+      middlewareRoots.forEach(v => {
+        this.middlewareRoots[v] = plugin.id
+      })
+
+      pluginCollisions.forEach(v => {
+        collisions.push([plugin.id, ...v])
+      })
+
+      if (plugin.id in pluginInstances) {
+        throw new Error(`2 plugins with id '${plugin.id}'`)
+      }
+
+      pluginInstances[plugin.id] = plugin.instance ?? new PluginInstance(plugin)
+    }
+
+    if (collisions.length) {
+      throw new Error(
+        'Middleware Collisions:\n' +
+          collisions
+            .map(([a, b, name]) => `  '${name}' ('${a}', '${b}')`)
+            .join('\n')
+      )
+    }
+
+    this.plugins = pluginInstances
+  }
+
+  /**
+   * Start the client
+   */
+  async start() {
+    await Promise.all(Object.values(this.plugins).map(v => v.start()))
+  }
 
   /**
    * Defines a middleware root
+   * @internal
    */
-  defineMiddlewareRoot(name: string): void {
+  _defineMiddlewareRoot(name: string): void {
     Object.defineProperty(this, name, {
       get: () => this.middlewareRootBuilder(name),
     })

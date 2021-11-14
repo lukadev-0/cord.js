@@ -7,5 +7,7 @@ import { Client } from './client'
 
 export * from './client'
 export * from './context'
+export * from './middleware'
+export * from './plugin'
 
 export default Client
