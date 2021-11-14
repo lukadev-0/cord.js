@@ -9,13 +9,40 @@ class Client {
     defineMiddlewareRoot(name: string): void;
     // @internal
     _execMiddleware(context: Context, after?: number, err?: unknown): void;
-    // Warning: (ae-forgotten-export) The symbol "MiddlewareInterface" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "Context" needs to be exported by the entry point index.d.ts
     middleware: MiddlewareInterface<Context>[];
 }
 export { Client }
 export default Client;
 
-// (No @packageDocumentation comment for this package)
+// @public
+export abstract class Context {
+    constructor(path: string[]);
+    path: string[];
+}
+
+// @public
+export type Middleware<T extends Context> = (handler: MiddlewareHandler<T>) => void;
+
+// @public
+export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<K extends keyof T>(name: K, ...args: Parameters<T[K]> | []) => T[K]) & {
+    [K in keyof T]: T[K];
+} & (<K extends keyof T>(...args: Parameters<T[K]>) => void);
+
+// @public
+export interface MiddlewareHandler<T extends Context> {
+    // (undocumented)
+    (context: T, next: NextFn, err: unknown): void;
+}
+
+// @public
+export interface MiddlewareInterface<T extends Context> {
+    // (undocumented)
+    cb: MiddlewareHandler<T>;
+    // (undocumented)
+    path: string[];
+}
+
+// @public (undocumented)
+export type NextFn = (err?: unknown) => void;
 
 ```

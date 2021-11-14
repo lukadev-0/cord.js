@@ -41,8 +41,7 @@ export interface MiddlewareInterface<T extends Context> {
 }
 
 /**
- * The main class for any Cord.js bot.
- * Handles middleware and plugins
+ * The main class for any Cord.js bot
  * @public
  */
 export class Client {

@@ -1,0 +1,105 @@
+{
+  "type": "category",
+  "label": "API Reference",
+  "items": [
+    {
+      "type": "doc",
+      "label": "(members)",
+      "id": "api/index"
+    },
+    {
+      "type": "category",
+      "label": "@cordjs/client",
+      "items": [
+        {
+          "type": "doc",
+          "label": "(members)",
+          "id": "api/client"
+        },
+        {
+          "type": "category",
+          "label": "Client",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.client"
+            },
+            {
+              "type": "doc",
+              "label": "defineMiddlewareRoot",
+              "id": "api/client.client.definemiddlewareroot"
+            },
+            {
+              "type": "doc",
+              "label": "middleware",
+              "id": "api/client.client.middleware"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Context",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.context"
+            },
+            {
+              "type": "doc",
+              "label": "(constructor)",
+              "id": "api/client.context._constructor_"
+            },
+            {
+              "type": "doc",
+              "label": "path",
+              "id": "api/client.context.path"
+            }
+          ]
+        },
+        {
+          "type": "doc",
+          "label": "Middleware",
+          "id": "api/client.middleware"
+        },
+        {
+          "type": "doc",
+          "label": "MiddlewareGroup",
+          "id": "api/client.middlewaregroup"
+        },
+        {
+          "type": "doc",
+          "label": "MiddlewareHandler",
+          "id": "api/client.middlewarehandler"
+        },
+        {
+          "type": "category",
+          "label": "MiddlewareInterface",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.middlewareinterface"
+            },
+            {
+              "type": "doc",
+              "label": "cb",
+              "id": "api/client.middlewareinterface.cb"
+            },
+            {
+              "type": "doc",
+              "label": "path",
+              "id": "api/client.middlewareinterface.path"
+            }
+          ]
+        },
+        {
+          "type": "doc",
+          "label": "NextFn",
+          "id": "api/client.nextfn"
+        }
+      ]
+    }
+  ]
+}

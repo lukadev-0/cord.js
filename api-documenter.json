@@ -1,0 +1,10 @@
+{
+  "outputTarget": "markdown",
+
+  "plugins": [
+    {
+      "packageName": "./scripts/docs/index.js",
+      "enabledFeatureNames": ["docusaurus-markdown-documenter"]
+    }
+  ]
+}
