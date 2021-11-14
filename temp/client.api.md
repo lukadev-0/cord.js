@@ -6,13 +6,23 @@
 
 // @public
 class Client {
-    defineMiddlewareRoot(name: string): void;
+    constructor(options: ClientOptions);
+    // @internal
+    _defineMiddlewareRoot(name: string): void;
     // @internal
     _execMiddleware(context: Context, after?: number, err?: unknown): void;
-    middleware: MiddlewareInterface<Context>[];
+    readonly middleware: MiddlewareInterface<Context>[];
+    readonly plugins: Readonly<Record<string, PluginInstance>>;
+    start(): Promise<void>;
 }
 export { Client }
 export default Client;
+
+// @public (undocumented)
+export interface ClientOptions {
+    // (undocumented)
+    plugins: PluginFactory[];
+}
 
 // @public
 export abstract class Context {
@@ -42,7 +52,33 @@ export interface MiddlewareInterface<T extends Context> {
     path: string[];
 }
 
-// @public (undocumented)
+// @public
 export type NextFn = (err?: unknown) => void;
+
+// @public
+interface Plugin_2 {
+    id: string;
+    start?(): void | Promise<void>;
+}
+export { Plugin_2 as Plugin }
+
+// @public
+export interface PluginActions {
+    defineMiddlewareRoot(name: string): void;
+}
+
+// @public
+export type PluginFactory = (client: Client, actions: PluginActions) => Plugin_2 & {
+    instance?: PluginInstance;
+};
+
+// @public
+export class PluginInstance implements Plugin_2 {
+    constructor(options: Plugin_2);
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    start(): Promise<void>;
+}
 
 ```

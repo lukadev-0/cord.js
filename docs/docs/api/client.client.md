@@ -18,15 +18,22 @@ The main class for any Cord.js bot
 export declare class Client 
 ```
 
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)(options)](./client.client._constructor_.md) |  | Constructs a new instance of the <code>Client</code> class |
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [middleware](./client.client.middleware.md) |  | [MiddlewareInterface](./client.middlewareinterface.md)&lt;[Context](./client.context.md)&gt;\[\] | The middleware |
+|  [plugins](./client.client.plugins.md) |  | Readonly&lt;Record&lt;string, [PluginInstance](./client.plugininstance.md)&gt;&gt; | The plugins |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [defineMiddlewareRoot(name)](./client.client.definemiddlewareroot.md) |  | Defines a middleware root |
+|  [start()](./client.client.start.md) |  | Start the client |
 

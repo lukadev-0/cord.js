@@ -15,5 +15,5 @@ The middleware
 **Signature:**
 
 ```typescript
-middleware: MiddlewareInterface<Context>[];
+readonly middleware: MiddlewareInterface<Context>[];
 ```

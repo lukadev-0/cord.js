@@ -27,13 +27,39 @@
             },
             {
               "type": "doc",
-              "label": "defineMiddlewareRoot",
-              "id": "api/client.client.definemiddlewareroot"
+              "label": "(constructor)",
+              "id": "api/client.client._constructor_"
             },
             {
               "type": "doc",
               "label": "middleware",
               "id": "api/client.client.middleware"
+            },
+            {
+              "type": "doc",
+              "label": "plugins",
+              "id": "api/client.client.plugins"
+            },
+            {
+              "type": "doc",
+              "label": "start",
+              "id": "api/client.client.start"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "ClientOptions",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.clientoptions"
+            },
+            {
+              "type": "doc",
+              "label": "plugins",
+              "id": "api/client.clientoptions.plugins"
             }
           ]
         },
@@ -98,6 +124,74 @@
           "type": "doc",
           "label": "NextFn",
           "id": "api/client.nextfn"
+        },
+        {
+          "type": "category",
+          "label": "Plugin_2",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.plugin_2"
+            },
+            {
+              "type": "doc",
+              "label": "id",
+              "id": "api/client.plugin_2.id"
+            },
+            {
+              "type": "doc",
+              "label": "start",
+              "id": "api/client.plugin_2.start"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "PluginActions",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.pluginactions"
+            },
+            {
+              "type": "doc",
+              "label": "defineMiddlewareRoot",
+              "id": "api/client.pluginactions.definemiddlewareroot"
+            }
+          ]
+        },
+        {
+          "type": "doc",
+          "label": "PluginFactory",
+          "id": "api/client.pluginfactory"
+        },
+        {
+          "type": "category",
+          "label": "PluginInstance",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/client.plugininstance"
+            },
+            {
+              "type": "doc",
+              "label": "(constructor)",
+              "id": "api/client.plugininstance._constructor_"
+            },
+            {
+              "type": "doc",
+              "label": "id",
+              "id": "api/client.plugininstance.id"
+            },
+            {
+              "type": "doc",
+              "label": "start",
+              "id": "api/client.plugininstance.start"
+            }
+          ]
         }
       ]
     }

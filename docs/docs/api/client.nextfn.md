@@ -10,6 +10,8 @@ pagination_next: null
 
 ## NextFn type
 
+The `next` function passed into [MiddlewareHandler](./client.middlewarehandler.md)
+
 **Signature:**
 
 ```typescript

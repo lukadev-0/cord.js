@@ -18,13 +18,17 @@ Cord.js Client, the main class for any Cord.js bot
 |  --- | --- |
 |  [Client](./client.client.md) | The main class for any Cord.js bot |
 |  [Context](./client.context.md) | Information about a middleware call, passed in as first argument to a middleware handler |
+|  [PluginInstance](./client.plugininstance.md) | An instance of a plugin |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
+|  [ClientOptions](./client.clientoptions.md) |  |
 |  [MiddlewareHandler](./client.middlewarehandler.md) | A middleware handler |
 |  [MiddlewareInterface](./client.middlewareinterface.md) | A middleware object |
+|  [Plugin\_2](./client.plugin_2.md) | A plugin, this is the return value of a [PluginFactory](./client.pluginfactory.md) |
+|  [PluginActions](./client.pluginactions.md) | Passed to [PluginFactory](./client.pluginfactory.md) |
 
 ## Type Aliases
 
@@ -32,5 +36,6 @@ Cord.js Client, the main class for any Cord.js bot
 |  --- | --- |
 |  [Middleware](./client.middleware.md) | A middleware |
 |  [MiddlewareGroup](./client.middlewaregroup.md) | A group of middleware |
-|  [NextFn](./client.nextfn.md) |  |
+|  [NextFn](./client.nextfn.md) | The <code>next</code> function passed into [MiddlewareHandler](./client.middlewarehandler.md) |
+|  [PluginFactory](./client.pluginfactory.md) | A function that returns a  |
 
