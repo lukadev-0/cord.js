@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[524],{5276:function(s){s.exports=JSON.parse('{"allTagsPath":"/cord.js/blog/tags","slug":"/cord.js/blog/tags/hola","name":"hola","count":1,"permalink":"/cord.js/blog/tags/hola"}')}}]);
