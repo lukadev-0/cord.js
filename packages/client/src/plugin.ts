@@ -3,7 +3,7 @@ import { Client } from './client'
 /**
  * A plugin, this is the return value of a {@link PluginFactory}
  */
-export interface Plugin {
+export interface PluginInterface {
   /**
    * Unique ID for this plugin, such as the package name.
    */
@@ -33,7 +33,7 @@ export interface PluginActions {
 }
 
 /**
- * A function that returns a {@link Plugin}
+ * A function that returns a {@link PluginInstance}
  *
  * @remarks
  * The {@link Client | client} and options are passed into the function.
@@ -41,19 +41,19 @@ export interface PluginActions {
 export type PluginFactory = (
   client: Client,
   actions: PluginActions
-) => Plugin & {
+) => PluginInterface & {
   instance?: PluginInstance
 }
 
 /**
  * An instance of a plugin
  */
-export class PluginInstance implements Plugin {
+export class PluginInstance implements PluginInterface {
   public id: string
 
-  private _start: Plugin['start']
+  private _start: PluginInterface['start']
 
-  constructor(options: Plugin) {
+  constructor(options: PluginInterface) {
     this.id = options.id
 
     this._start = options.start

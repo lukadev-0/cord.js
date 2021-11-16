@@ -25,7 +25,7 @@ const config = {
   organizationName: 'lukadev-0', // Usually your GitHub org/user name.
   projectName: 'cord.js', // Usually your repo name.
   deploymentBranch: 'gh-pages',
-  url: 'https://lukadev-0.github.io/',
+  url: 'https://cord.js.org/',
   baseUrl: '/',
   trailingSlash: false,
 
@@ -37,7 +37,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+          editUrl: 'https://github.com/lukadev-0/cord.js/edit/main/website/',
 
           sidebarItemsGenerator: async function ({
             defaultSidebarItemsGenerator,

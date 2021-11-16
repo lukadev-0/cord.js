@@ -15,12 +15,12 @@ Constructs a new instance of the `PluginInstance` class
 **Signature:**
 
 ```typescript
-constructor(options: Plugin);
+constructor(options: PluginInterface);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | Plugin |  |
+|  options | [PluginInterface](./client.plugininterface.md) |  |
 

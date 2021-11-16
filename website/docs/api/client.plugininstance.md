@@ -15,9 +15,9 @@ An instance of a plugin
 **Signature:**
 
 ```typescript
-export declare class PluginInstance implements Plugin 
+export declare class PluginInstance implements PluginInterface 
 ```
-**Implements:** Plugin
+**Implements:** [PluginInterface](./client.plugininterface.md)
 
 ## Constructors
 

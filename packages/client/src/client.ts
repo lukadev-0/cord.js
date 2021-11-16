@@ -1,7 +1,6 @@
-import { PluginInstance } from '.'
 import { Context } from './context'
 import { NextFn, MiddlewareHandler, MiddlewareInterface } from './middleware'
-import { PluginFactory } from './plugin'
+import { PluginFactory, PluginInstance } from './plugin'
 
 export interface ClientOptions {
   plugins: PluginFactory[]

@@ -14,7 +14,7 @@
   "scripts": {
     "build": "lerna run build --ignore docs --",
     "test": "jest",
-    "docs": "api-documenter generate --input-folder ./temp --output-folder ./docs/docs/api"
+    "docs": "api-documenter generate --input-folder ./temp --output-folder ./website/docs/api"
   },
   "workspaces": [
     "packages/*",

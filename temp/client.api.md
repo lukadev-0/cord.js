@@ -56,29 +56,28 @@ export interface MiddlewareInterface<T extends Context> {
 export type NextFn = (err?: unknown) => void;
 
 // @public
-interface Plugin_2 {
-    id: string;
-    start?(): void | Promise<void>;
-}
-export { Plugin_2 as Plugin }
-
-// @public
 export interface PluginActions {
     defineMiddlewareRoot(name: string): void;
 }
 
 // @public
-export type PluginFactory = (client: Client, actions: PluginActions) => Plugin_2 & {
+export type PluginFactory = (client: Client, actions: PluginActions) => PluginInterface & {
     instance?: PluginInstance;
 };
 
 // @public
-export class PluginInstance implements Plugin_2 {
-    constructor(options: Plugin_2);
+export class PluginInstance implements PluginInterface {
+    constructor(options: PluginInterface);
     // (undocumented)
     id: string;
     // (undocumented)
     start(): Promise<void>;
+}
+
+// @public
+export interface PluginInterface {
+    id: string;
+    start?(): void | Promise<void>;
 }
 
 ```
