@@ -28,5 +28,6 @@ export interface PluginInterface
 
 |  Method | Description |
 |  --- | --- |
-|  [start()?](./client.plugininterface.start.md) | <i>(Optional)</i> Run whenever [Client.start()](./client.client.start.md) is called. |
+|  [preStart()?](./client.plugininterface.prestart.md) | <i>(Optional)</i> Runs before [PluginInterface.start()](./client.plugininterface.start.md) |
+|  [start()?](./client.plugininterface.start.md) | <i>(Optional)</i> Runs whenever [Client.start()](./client.client.start.md) is called. After [PluginInterface.preStart()](./client.plugininterface.prestart.md) |
 

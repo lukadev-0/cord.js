@@ -15,5 +15,5 @@ pagination_next: null
 |  Package | Description |
 |  --- | --- |
 |  [@cordjs/client](./client.md) | Cord.js Client, the main class for any Cord.js bot |
-|  [@cordjs/gateway](./gateway.md) |  |
+|  [@cordjs/gateway](./gateway.md) | Connect to the gateway with Cord.js |
 

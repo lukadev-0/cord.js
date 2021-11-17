@@ -10,13 +10,13 @@ pagination_next: null
 
 ## PluginFactory type
 
-A function that returns a [PluginInstance](./client.plugininstance.md)
+A function that returns a [PluginInterface](./client.plugininterface.md)
 
 **Signature:**
 
 ```typescript
 export declare type PluginFactory = (client: Client, actions: PluginActions) => PluginInterface & {
-    instance?: PluginInstance;
+    instance?: PluginInstance | ((options: PluginInterface) => PluginInstance);
 };
 ```
 **References:** [Client](./client.client.md), [PluginActions](./client.pluginactions.md), [PluginInterface](./client.plugininterface.md), [PluginInstance](./client.plugininstance.md)

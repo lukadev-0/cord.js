@@ -35,5 +35,6 @@ export declare class PluginInstance implements PluginInterface
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [preStart()](./client.plugininstance.prestart.md) |  |  |
 |  [start()](./client.plugininstance.start.md) |  |  |
 

@@ -35,5 +35,7 @@ export declare class Client
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [executeMiddleware(context)](./client.client.executemiddleware.md) |  | Executes a middleware with the context |
+|  [plugin(id)](./client.client.plugin.md) |  |  |
 |  [start()](./client.client.start.md) |  | Start the client |
 

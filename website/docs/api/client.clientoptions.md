@@ -10,6 +10,8 @@ pagination_next: null
 
 ## ClientOptions interface
 
+[Client](./client.client.md) options
+
 **Signature:**
 
 ```typescript

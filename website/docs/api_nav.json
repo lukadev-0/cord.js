@@ -32,8 +32,18 @@
             },
             {
               "type": "doc",
+              "label": "executeMiddleware",
+              "id": "api/client.client.executemiddleware"
+            },
+            {
+              "type": "doc",
               "label": "middleware",
               "id": "api/client.client.middleware"
+            },
+            {
+              "type": "doc",
+              "label": "plugin",
+              "id": "api/client.client.plugin"
             },
             {
               "type": "doc",
@@ -167,6 +177,11 @@
             },
             {
               "type": "doc",
+              "label": "preStart",
+              "id": "api/client.plugininstance.prestart"
+            },
+            {
+              "type": "doc",
               "label": "start",
               "id": "api/client.plugininstance.start"
             }
@@ -188,6 +203,11 @@
             },
             {
               "type": "doc",
+              "label": "preStart",
+              "id": "api/client.plugininterface.prestart"
+            },
+            {
+              "type": "doc",
               "label": "start",
               "id": "api/client.plugininterface.start"
             }
@@ -206,8 +226,81 @@
         },
         {
           "type": "doc",
-          "label": "hello",
-          "id": "api/gateway.hello"
+          "label": "Gateway",
+          "id": "api/gateway.gateway"
+        },
+        {
+          "type": "category",
+          "label": "GatewayContext",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/gateway.gatewaycontext"
+            },
+            {
+              "type": "doc",
+              "label": "(constructor)",
+              "id": "api/gateway.gatewaycontext._constructor_"
+            },
+            {
+              "type": "doc",
+              "label": "data",
+              "id": "api/gateway.gatewaycontext.data"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "GatewayInstance",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/gateway.gatewayinstance"
+            },
+            {
+              "type": "doc",
+              "label": "(constructor)",
+              "id": "api/gateway.gatewayinstance._constructor_"
+            },
+            {
+              "type": "doc",
+              "label": "middlewareName",
+              "id": "api/gateway.gatewayinstance.middlewarename"
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "GatewayOptions",
+          "items": [
+            {
+              "type": "doc",
+              "label": "(members)",
+              "id": "api/gateway.gatewayoptions"
+            },
+            {
+              "type": "doc",
+              "label": "catchAll",
+              "id": "api/gateway.gatewayoptions.catchall"
+            },
+            {
+              "type": "doc",
+              "label": "client",
+              "id": "api/gateway.gatewayoptions.client"
+            },
+            {
+              "type": "doc",
+              "label": "middlewareName",
+              "id": "api/gateway.gatewayoptions.middlewarename"
+            },
+            {
+              "type": "doc",
+              "label": "token",
+              "id": "api/gateway.gatewayoptions.token"
+            }
+          ]
         }
       ]
     }

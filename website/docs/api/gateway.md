@@ -10,9 +10,28 @@ pagination_next: null
 
 ## gateway package
 
+Connect to the gateway with Cord.js
+
+## Remarks
+
+This plugin uses [Discord.js](https://discord.js.org/) under the hood.
+
+## Classes
+
+|  Class | Description |
+|  --- | --- |
+|  [GatewayContext](./gateway.gatewaycontext.md) | The context |
+|  [GatewayInstance](./gateway.gatewayinstance.md) | A plugin instance |
+
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [GatewayOptions](./gateway.gatewayoptions.md) | [Gateway](./gateway.gateway.md) options |
+
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [hello](./gateway.hello.md) |  |
+|  [Gateway](./gateway.gateway.md) | The gateway plugin |
 

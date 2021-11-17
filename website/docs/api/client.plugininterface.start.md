@@ -10,7 +10,7 @@ pagination_next: null
 
 ## PluginInterface.start() method
 
-Run whenever [Client.start()](./client.client.start.md) is called.
+Runs whenever [Client.start()](./client.client.start.md) is called. After [PluginInterface.preStart()](./client.plugininterface.prestart.md)
 
 **Signature:**
 
