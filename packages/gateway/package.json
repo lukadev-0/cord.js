@@ -1,6 +1,6 @@
 {
   "name": "@cordjs/gateway",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Connect to the gateway with Cord.js",
   "main": "lib/index.js",
   "typings": "dist/gateway.d.ts",
@@ -11,7 +11,7 @@
     "build": "rm -rf lib && tsc && api-extractor run"
   },
   "dependencies": {
-    "@cordjs/client": "^0.0.1",
+    "@cordjs/client": "^0.1.0",
     "discord.js": "^13.3.1"
   }
 }
