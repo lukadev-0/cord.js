@@ -214,6 +214,52 @@
               ]
             },
             {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/client!Client#executeMiddleware:member(1)",
+              "docComment": "/**\n * Executes a middleware with the context\n *\n * @param context - the context\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "executeMiddleware(context: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Context",
+                  "canonicalReference": "@cordjs/client!Context:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "context",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "executeMiddleware"
+            },
+            {
               "kind": "Property",
               "canonicalReference": "@cordjs/client!Client#middleware:member",
               "docComment": "/**\n * The middleware\n */\n",
@@ -253,6 +299,56 @@
                 "endIndex": 5
               },
               "isStatic": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/client!Client#plugin:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "plugin(id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginInstance",
+                  "canonicalReference": "@cordjs/client!PluginInstance:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "id",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "plugin"
             },
             {
               "kind": "Property",
@@ -344,7 +440,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@cordjs/client!ClientOptions:interface",
-          "docComment": "",
+          "docComment": "/**\n * {@link Client} options\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -898,7 +994,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@cordjs/client!PluginFactory:type",
-          "docComment": "/**\n * A function that returns a {@link PluginInstance}\n *\n * @remarks\n *\n * The {@link Client | client} and options are passed into the function.\n */\n",
+          "docComment": "/**\n * A function that returns a {@link PluginInterface}\n *\n * @remarks\n *\n * The {@link Client | client} and options are passed into the function.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -942,7 +1038,25 @@
             },
             {
               "kind": "Content",
-              "text": ";\n}"
+              "text": " | ((options: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PluginInterface",
+              "canonicalReference": "@cordjs/client!PluginInterface:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "PluginInstance",
+              "canonicalReference": "@cordjs/client!PluginInstance:class"
+            },
+            {
+              "kind": "Content",
+              "text": ");\n}"
             },
             {
               "kind": "Content",
@@ -953,7 +1067,7 @@
           "name": "PluginFactory",
           "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 10
+            "endIndex": 14
           }
         },
         {
@@ -1038,6 +1152,40 @@
             },
             {
               "kind": "Method",
+              "canonicalReference": "@cordjs/client!PluginInstance#preStart:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "preStart(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "preStart"
+            },
+            {
+              "kind": "Method",
               "canonicalReference": "@cordjs/client!PluginInstance#start:member(1)",
               "docComment": "",
               "excerptTokens": [
@@ -1119,8 +1267,45 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/client!PluginInterface#preStart:member(1)",
+              "docComment": "/**\n * Runs before {@link PluginInterface.start}\n *\n * @remarks\n *\n * :::note\n *\n * You can still add middlewares in this function, but not in {@link PluginInterface.start}\n *\n * :::\n *\n * All plugin start functions are called at the same time whenever {@link Client.start} is caled.\n *\n * This is where you would do stuff such as adding middleware defined by other plugins.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "preStart?(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "preStart"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "@cordjs/client!PluginInterface#start:member(1)",
-              "docComment": "/**\n * Run whenever {@link Client.start} is called.\n *\n * @remarks\n *\n * All plugin start functions are called at the same time whenever {@link Client.start} is caled.\n *\n * This is where you would do stuff such as connecting to the gateway.\n */\n",
+              "docComment": "/**\n * Runs whenever {@link Client.start} is called. After {@link PluginInterface.preStart}\n *\n * @remarks\n *\n * All plugin start functions are called at the same time whenever {@link Client.start} is caled.\n *\n * This is where you would do stuff such as connecting to the gateway.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

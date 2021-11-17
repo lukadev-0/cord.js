@@ -10,7 +10,8 @@ export interface PluginInterface {
   id: string
 
   /**
-   * Run whenever {@link Client.start} is called.
+   * Runs whenever {@link Client.start} is called.
+   * After {@link PluginInterface.preStart}
    *
    * @remarks
    * All plugin start functions are called at the same time
@@ -20,6 +21,26 @@ export interface PluginInterface {
    * gateway.
    */
   start?(): void | Promise<void>
+
+  /**
+   * Runs before {@link PluginInterface.start}
+   *
+   * @remarks
+   *
+   * :::note
+   *
+   * You can still add middlewares in this function,
+   * but not in {@link PluginInterface.start}
+   *
+   * :::
+   *
+   * All plugin start functions are called at the same time
+   * whenever {@link Client.start} is caled.
+   *
+   * This is where you would do stuff such as adding middleware
+   * defined by other plugins.
+   */
+  preStart?(): void | Promise<void>
 }
 
 /**
@@ -33,7 +54,7 @@ export interface PluginActions {
 }
 
 /**
- * A function that returns a {@link PluginInstance}
+ * A function that returns a {@link PluginInterface}
  *
  * @remarks
  * The {@link Client | client} and options are passed into the function.
@@ -42,7 +63,7 @@ export type PluginFactory = (
   client: Client,
   actions: PluginActions
 ) => PluginInterface & {
-  instance?: PluginInstance
+  instance?: PluginInstance | ((options: PluginInterface) => PluginInstance)
 }
 
 /**
@@ -52,14 +73,20 @@ export class PluginInstance implements PluginInterface {
   public id: string
 
   private _start: PluginInterface['start']
+  private _preStart: PluginInterface['preStart']
 
   constructor(options: PluginInterface) {
     this.id = options.id
 
     this._start = options.start
+    this._preStart = options.preStart
   }
 
   async start() {
     await this._start?.()
+  }
+
+  async preStart() {
+    await this._preStart?.()
   }
 }

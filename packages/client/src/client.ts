@@ -2,6 +2,10 @@ import { Context } from './context'
 import { NextFn, MiddlewareHandler, MiddlewareInterface } from './middleware'
 import { PluginFactory, PluginInstance } from './plugin'
 
+/**
+ * {@link Client} options
+ * @public
+ */
 export interface ClientOptions {
   plugins: PluginFactory[]
 }
@@ -22,6 +26,7 @@ export class Client {
   public readonly plugins: Readonly<Record<string, PluginInstance>>
 
   private middlewareRoots: Record<string, string> = {}
+  private started: boolean = false
 
   constructor(options: ClientOptions) {
     const { plugins } = options
@@ -56,7 +61,11 @@ export class Client {
         throw new Error(`2 plugins with id '${plugin.id}'`)
       }
 
-      pluginInstances[plugin.id] = plugin.instance ?? new PluginInstance(plugin)
+      pluginInstances[plugin.id] = plugin.instance
+        ? typeof plugin.instance === 'function'
+          ? plugin.instance(plugin)
+          : plugin.instance
+        : new PluginInstance(plugin)
     }
 
     if (collisions.length) {
@@ -71,11 +80,23 @@ export class Client {
     this.plugins = pluginInstances
   }
 
+  private async runAsyncFunctionInAllPlugins(name: keyof PluginInstance) {
+    await Promise.all(
+      Object.values(this.plugins).map(v => {
+        return (v[name] as () => unknown)()
+      })
+    )
+  }
+
   /**
    * Start the client
    */
   async start() {
-    await Promise.all(Object.values(this.plugins).map(v => v.start()))
+    if (this.started) throw new Error("Can only run 'start()' once")
+
+    await this.runAsyncFunctionInAllPlugins('preStart')
+    this.started = true
+    await this.runAsyncFunctionInAllPlugins('start')
   }
 
   /**
@@ -88,11 +109,14 @@ export class Client {
     })
   }
 
+  plugin(id: string): PluginInstance | null {
+    return this.plugins[id] ?? null
+  }
+
   /**
-   * Executes a middleware on the specified path
+   * Executes a middleware with the context
    *
    * @param context - the context
-   * @param path - the path
    *
    * @internal
    */
@@ -112,6 +136,13 @@ export class Client {
         middlewareIndex,
         err
       )
+  }
+
+  /**
+   * {@inheritDoc Client._execMiddleware}
+   */
+  executeMiddleware(context: Context) {
+    this._execMiddleware(context)
   }
 
   /**
@@ -144,6 +175,9 @@ export class Client {
     path: string[],
     cb: MiddlewareHandler<T>
   ) {
+    if (this.started)
+      throw new Error("Cannot add middleware after 'start()' has been called")
+
     this.middleware.push({
       path,
       cb: cb as MiddlewareHandler<Context>,

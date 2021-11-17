@@ -18,7 +18,8 @@
   },
   "workspaces": [
     "packages/*",
-    "docs"
+    "website",
+    "examples"
   ],
   "dependencies": {
     "@rushstack/node-core-library": "^3.43.2"

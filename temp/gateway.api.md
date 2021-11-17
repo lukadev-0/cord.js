@@ -4,9 +4,37 @@
 
 ```ts
 
-// @public (undocumented)
-export const hello = "";
+import { ClientEvents } from 'discord.js';
+import { ClientOptions } from 'discord.js';
+import { Context } from '@cordjs/client';
+import { PluginFactory } from '@cordjs/client';
+import { PluginInstance } from '@cordjs/client';
+import { PluginInterface } from '@cordjs/client';
 
-// (No @packageDocumentation comment for this package)
+// @public
+const Gateway: (options: GatewayOptions) => PluginFactory;
+export { Gateway }
+export default Gateway;
+
+// @public
+export class GatewayContext<K extends keyof ClientEvents> extends Context {
+    constructor(path: string[], data: ClientEvents[K]);
+    // (undocumented)
+    data: ClientEvents[K];
+}
+
+// @public
+export class GatewayInstance extends PluginInstance {
+    constructor(options: PluginInterface, middlewareName: string);
+    middlewareName: string;
+}
+
+// @public
+export interface GatewayOptions {
+    catchAll?: boolean;
+    client: ClientOptions;
+    middlewareName?: string;
+    token: string;
+}
 
 ```

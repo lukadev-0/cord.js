@@ -2,5 +2,5 @@
   "npmClient": "yarn",
   "version": "independent",
   "useWorkspaces": true,
-  "packages": ["packages/*", "docs"]
+  "packages": ["packages/*", "website", "examples"]
 }

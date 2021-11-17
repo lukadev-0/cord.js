@@ -1,0 +1,10 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@cordjs/client": "^0.0.1",
+    "@cordjs/gateway": "^0.0.1"
+  }
+}
