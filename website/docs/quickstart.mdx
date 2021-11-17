@@ -6,4 +6,145 @@ title: Quickstart
 
 Cord.js is a work in progress.
 
+If you encounter any issues,
+please report them [here](https://github.com/lukadev-0/cord.js/issues).
+
 :::
+
+Lets make a Discord bot!
+
+## Before we Begin
+
+Make sure you have created an
+application on the [developer portal](https://discord.com/developers/applications),
+and that you've created a bot, and copied the token!
+
+:::danger
+
+Do not share your token with anyone, as it allows the person
+to login as your bot and impersonate it.
+
+They will also gain all permissions granted to your bot.
+
+:::
+
+## Creating a new project
+
+Create a `package.json` by using the following command:
+
+```bash npm2yarn
+npm init
+```
+
+## Installing Packages
+
+We need to install some packages.
+
+```bash npm2yarn
+npm install @cordjs/client @cordjs/gateway
+```
+
+`@cordjs/client` is the package which will manage middleware and plugins
+
+`@cordjs/gateway` is the package which will allow us to receive events from the gateway
+
+## Writing some code
+
+Lets start writing code!
+
+Create an index.js file. We will need to require the
+packages that we have just installed.
+
+<Tabs
+  defaultValue="cjs"
+  values={[
+    { label: 'CommonJS', value: 'cjs' },
+    { label: 'ESM', value: 'esm' },
+  ]}
+>
+  <TabItem value="cjs">
+
+```js
+const { Client } = require('@cordjs/client')
+const { Gateway } = require('@cordjs/gateway')
+```
+
+  </TabItem>
+  <TabItem value="esm">
+
+```js
+import Client from '@cordjs/client'
+import Gateway from '@cordjs/gateway'
+```
+
+  </TabItem>
+</Tabs>
+
+### Creating a client
+
+Now we'll need to create a client.
+We will also need to specify the plugins, we are using the gateway plugin
+in order to receive events from the Discord gateway, such as a message
+being created.
+
+```js
+const client = new Client({
+  plugins: [
+    Gateway({
+      // Paste the token from the developer portal here
+      token: 'PASTE YOUR BOT TOKEN HERE',
+
+      client: {
+        intents: ['GUILDS', 'GUILD_MESSAGES'],
+      },
+    }),
+  ],
+})
+```
+
+### Adding Middleware
+
+Now we will need to add a middleware.
+
+```js
+client.gateway.messageCreate(ctx => {
+  const [msg] = ctx.data
+
+  if (msg.content === 'hello') {
+    msg.reply('Hello there!')
+  }
+})
+```
+
+This middleware will run whenever `messageCreate` has been fired.
+
+:::info
+
+The gateway plugin uses Discord.js under the hood.
+
+`messageCreate` can be replaced with
+any other [Discord.js event](https://discord.js.org/#/docs/main/stable/class/Client)
+
+:::
+
+### Starting it
+
+Now, we will need to actually start the bot,
+the `client.start()` function will do that,
+it will start any plugins, in this case the gateway plugin
+will establish a connection to the gateway.
+
+```js
+client.start()
+```
+
+## Testing your bot
+
+Now you can run your index.js file, and invite your bot
+to a server, and type
+
+> hello
+
+If everything is correct, then the bot should respond with
+
+> Hello there!

@@ -46,6 +46,11 @@ const config = {
             const sidebarItems = await defaultSidebarItemsGenerator(args)
             return filterSidebarItems(sidebarItems)
           },
+
+          remarkPlugins: [
+            require('@docusaurus/remark-plugin-npm2yarn'),
+            { sync: true },
+          ],
         },
         blog: {
           showReadingTime: true,
@@ -55,6 +60,9 @@ const config = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        pages: {
+          remarkPlugins: [require('@docusaurus/remark-plugin-npm2yarn')],
         },
       }),
     ],
