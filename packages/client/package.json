@@ -10,5 +10,7 @@
   "scripts": {
     "build": "rm -rf lib && tsc && api-extractor run"
   },
-  "gitHead": "329e38ce09af9e0608ec39bf3a0f8ad4fc57d18c"
+  "publishConfig": {
+    "access": "public"
+  }
 }
