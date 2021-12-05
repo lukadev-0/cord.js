@@ -5,7 +5,8 @@
   "packages": ["packages/*", "website", "examples/*"],
   "command": {
     "publish": {
-      "message": "chore(release): publish"
+      "message": "chore(release): publish",
+      "ignoreChanges": ["examples", "website"]
     }
   }
 }
