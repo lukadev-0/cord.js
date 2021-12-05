@@ -1,26 +1,37 @@
-import { Client } from '../client'
+import { BaseClient, createClient } from '../client'
+import {
+  ClientWithPlugins,
+  ClientPlugin,
+  PluginMiddlewareMap,
+  PluginOptions,
+} from '../plugin'
 import { Context } from '../context'
 import { MiddlewareGroup, Middleware } from '../middleware'
 
-declare module '../client' {
-  export interface Client {
-    test: MiddlewareGroup<{
-      yes: Middleware<{ path: string[]; d: 'y' }>
-      no: Middleware<{ path: string[]; d: 'n' }>
-      maybe: MiddlewareGroup<{
-        hm: Middleware<{ path: string[]; d: 'h' }>
-      }>
+type TestMiddleware = {
+  test: MiddlewareGroup<{
+    yes: Middleware<{ path: string[]; d: 'y' }>
+    no: Middleware<{ path: string[]; d: 'n' }>
+    maybe: MiddlewareGroup<{
+      hm: Middleware<{ path: string[]; d: 'h' }>
     }>
+  }>
+}
+
+class TestPlugin extends ClientPlugin<TestMiddleware> {
+  public id = 'test-plugin'
+
+  constructor(options: PluginOptions<TestMiddleware>) {
+    super(options, ['test'])
   }
 }
 
 describe('Client', () => {
   describe('middleware', () => {
-    let client: Client
+    let client: ClientWithPlugins<TestPlugin>
 
     beforeEach(() => {
-      client = new Client({ plugins: [] })
-      client._defineMiddlewareRoot('test')
+      client = createClient([TestPlugin])
     })
 
     test.each<[(fn: jest.Mock) => void, unknown]>([
@@ -81,62 +92,68 @@ describe('Client', () => {
         expect(c).toBeCalledTimes(1)
         expect(c.mock.calls[0][2]).toEqual(new Error('oops!'))
       })
+
+      it('catches errors', () => {
+        const a = jest.fn(() => {
+          throw new Error('oops!')
+        })
+        const b = jest.fn()
+        const c = jest.fn((_ctx, _next, _err) => {})
+
+        client.test(a)
+        client.test(b)
+        client.test(c)
+        client._execMiddleware({ path: ['test'] })
+
+        expect(a).toBeCalledTimes(1)
+        expect(b).toBeCalledTimes(0)
+        expect(c).toBeCalledTimes(1)
+        expect(c.mock.calls[0][2]).toEqual(new Error('oops!'))
+      })
     })
   })
 
-  describe('plugins', () => {
-    it('calls start', () => {
-      const start = jest.fn()
+  test('plugins', async () => {
+    const start = jest.fn()
+    const preStart = jest.fn()
+    const init = jest.fn()
+    const middleware = jest.fn()
 
-      new Client({
-        plugins: [
-          () => ({
-            id: 'test-plugin',
-            start,
-          }),
-        ],
-      }).start()
+    class OtherPlugin extends ClientPlugin<{ other: Middleware<Context> }> {
+      public id = 'other-plugin'
 
-      expect(start).toBeCalledTimes(1)
-    })
+      constructor(options: PluginOptions<{ other: Middleware<Context> }>) {
+        super(options, ['other'])
+      }
 
-    it('errors on middleware name collisions', () => {
-      expect(() => {
-        new Client({
-          plugins: [
-            (_, actions) => {
-              actions.defineMiddlewareRoot('test')
-              return {
-                id: 'test-plugin-a',
-              }
-            },
-            (_, actions) => {
-              actions.defineMiddlewareRoot('test')
-              return {
-                id: 'test-plugin-b',
-              }
-            },
-          ],
-        })
-      }).toThrow(
-        'Middleware Collisions:\n' +
-          "  'test' ('test-plugin-b', 'test-plugin-a')"
-      )
-    })
+      start() {
+        this.pluginRunMiddleware({ path: ['other'] })
+        start()
+      }
 
-    it('it errors on id collisions', () => {
-      expect(() => {
-        new Client({
-          plugins: [
-            () => ({
-              id: 'test-plugin',
-            }),
-            () => ({
-              id: 'test-plugin',
-            }),
-          ],
-        })
-      }).toThrow("2 plugins with id 'test-plugin'")
-    })
+      init(client: BaseClient) {
+        super.init(client)
+        init()
+      }
+
+      preStart = preStart
+    }
+
+    const client = createClient([TestPlugin, OtherPlugin])
+
+    expect(client).toHaveProperty('test')
+    expect(client).toHaveProperty('other')
+
+    client.other(middleware)
+
+    expect(init).toBeCalledTimes(1)
+    expect(start).not.toBeCalled()
+    expect(preStart).not.toBeCalled()
+
+    await client.start()
+
+    expect(middleware).toBeCalledTimes(1)
+    expect(start).toBeCalledTimes(1)
+    expect(preStart).toBeCalledTimes(1)
   })
 })

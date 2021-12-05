@@ -4,15 +4,25 @@
 
 ```ts
 
+import { Client } from 'discord.js';
 import { ClientEvents } from 'discord.js';
 import { ClientOptions } from 'discord.js';
+import { ClientPlugin } from '@cordjs/client';
 import { Context } from '@cordjs/client';
-import { PluginFactory } from '@cordjs/client';
-import { PluginInstance } from '@cordjs/client';
-import { PluginInterface } from '@cordjs/client';
+import { Middleware } from '@cordjs/client';
+import { MiddlewareGroup } from '@cordjs/client';
+import { PluginOptions } from '@cordjs/client';
 
 // @public
-const Gateway: (options: GatewayOptions) => PluginFactory;
+class Gateway extends ClientPlugin<GatewayMiddleware, GatewayOptions> {
+    constructor(options: GatewayOptions);
+    // (undocumented)
+    discordClient?: Client;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    start(): Promise<void>;
+}
 export { Gateway }
 export default Gateway;
 
@@ -24,16 +34,16 @@ export class GatewayContext<K extends keyof ClientEvents> extends Context {
 }
 
 // @public
-export class GatewayInstance extends PluginInstance {
-    constructor(options: PluginInterface, middlewareName: string);
-    middlewareName: string;
-}
+export type GatewayMiddleware = {
+    gateway: MiddlewareGroup<{
+        [K in keyof ClientEvents]: Middleware<GatewayContext<K>>;
+    }>;
+};
 
 // @public
-export interface GatewayOptions {
+export interface GatewayOptions extends PluginOptions<GatewayMiddleware> {
     catchAll?: boolean;
     client: ClientOptions;
-    middlewareName?: string;
     token: string;
 }
 

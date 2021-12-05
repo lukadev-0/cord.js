@@ -1,20 +1,25 @@
 import { Context } from './context'
 import { NextFn, MiddlewareHandler, MiddlewareInterface } from './middleware'
-import { PluginFactory, PluginInstance } from './plugin'
+import {
+  AnyPlugin,
+  ClientPlugin,
+  ClientWithPlugins,
+  PluginConstructor,
+} from './plugin'
 
 /**
- * {@link Client} options
+ * Options for the Client
  * @public
  */
 export interface ClientOptions {
-  plugins: PluginFactory[]
+  plugins: AnyPlugin[]
 }
 
 /**
  * The main class for any Cord.js bot
  * @public
  */
-export class Client {
+export class BaseClient {
   /**
    * The middleware
    */
@@ -23,69 +28,31 @@ export class Client {
   /**
    * The plugins
    */
-  public readonly plugins: Readonly<Record<string, PluginInstance>>
+  public readonly plugins: Record<string, AnyPlugin>
 
-  private middlewareRoots: Record<string, string> = {}
+  private pluginByConstructor: Map<typeof ClientPlugin, AnyPlugin> = new Map()
   private started: boolean = false
 
+  /**
+   * @param options - the options
+   */
   constructor(options: ClientOptions) {
-    const { plugins } = options
+    const plugins: Record<string, AnyPlugin> = {}
+    for (const plugin of options.plugins) {
+      plugins[plugin.id] = plugin
 
-    let pluginInstances: Record<string, PluginInstance> = {}
-
-    const collisions: [string, string, string][] = []
-    for (const factory of plugins) {
-      const pluginCollisions: [string, string][] = []
-      const middlewareRoots: string[] = []
-      const plugin = factory(this, {
-        defineMiddlewareRoot: name => {
-          if (name in this.middlewareRoots) {
-            pluginCollisions.push([this.middlewareRoots[name], name])
-            return
-          }
-
-          middlewareRoots.push(name)
-          this._defineMiddlewareRoot(name)
-        },
-      })
-
-      middlewareRoots.forEach(v => {
-        this.middlewareRoots[v] = plugin.id
-      })
-
-      pluginCollisions.forEach(v => {
-        collisions.push([plugin.id, ...v])
-      })
-
-      if (plugin.id in pluginInstances) {
-        throw new Error(`2 plugins with id '${plugin.id}'`)
-      }
-
-      pluginInstances[plugin.id] = plugin.instance
-        ? typeof plugin.instance === 'function'
-          ? plugin.instance(plugin)
-          : plugin.instance
-        : new PluginInstance(plugin)
-    }
-
-    if (collisions.length) {
-      throw new Error(
-        'Middleware Collisions:\n' +
-          collisions
-            .map(([a, b, name]) => `  '${name}' ('${a}', '${b}')`)
-            .join('\n')
+      this.pluginByConstructor.set(
+        plugin.constructor as typeof ClientPlugin,
+        plugin
       )
     }
-
-    this.plugins = pluginInstances
+    this.plugins = plugins
   }
 
-  private async runAsyncFunctionInAllPlugins(name: keyof PluginInstance) {
-    await Promise.all(
-      Object.values(this.plugins).map(v => {
-        return (v[name] as () => unknown)()
-      })
-    )
+  private runInAllPlugins(name: keyof AnyPlugin) {
+    return Object.values(this.plugins).map(v => {
+      return (v[name] as () => unknown)()
+    })
   }
 
   /**
@@ -94,9 +61,9 @@ export class Client {
   async start() {
     if (this.started) throw new Error("Can only run 'start()' once")
 
-    await this.runAsyncFunctionInAllPlugins('preStart')
+    await Promise.all(this.runInAllPlugins('preStart'))
     this.started = true
-    await this.runAsyncFunctionInAllPlugins('start')
+    await Promise.all(this.runInAllPlugins('start'))
   }
 
   /**
@@ -109,8 +76,15 @@ export class Client {
     })
   }
 
-  plugin(id: string): PluginInstance | null {
-    return this.plugins[id] ?? null
+  plugin<T extends string | typeof ClientPlugin>(
+    id: T
+  ): (T extends string ? AnyPlugin : T) | null {
+    if (typeof id === 'string')
+      return (this.plugins[id] as T extends string ? AnyPlugin : T) ?? null
+    return (
+      (this.pluginByConstructor.get(id) as T extends string ? AnyPlugin : T) ??
+      null
+    )
   }
 
   /**
@@ -139,30 +113,27 @@ export class Client {
   }
 
   /**
-   * {@inheritDoc Client._execMiddleware}
-   */
-  executeMiddleware(context: Context) {
-    this._execMiddleware(context)
-  }
-
-  /**
    * Executes the middleware
    *
    * @param middleware - the middleware
    *
    * @internal
    */
-  private execMiddleware<T extends Context>(
+  private async execMiddleware<T extends Context>(
     context: T,
     middleware: MiddlewareInterface<T>,
     index: number,
     err: unknown
   ) {
-    const next: NextFn = err => {
+    try {
+      const next: NextFn = err => {
+        this._execMiddleware(context, index + 1, err)
+      }
+
+      await middleware.cb(context, next, err)
+    } catch (err) {
       this._execMiddleware(context, index + 1, err)
     }
-
-    middleware.cb(context, next, err)
   }
 
   /**
@@ -220,4 +191,43 @@ export class Client {
 
     return new Proxy(() => {}, handler)
   }
+}
+
+/**
+ * The plugins parameter passed into {@link createClient}
+ *
+ * @public
+ */
+export type CreateClientPlugins<T extends PluginConstructor<AnyPlugin>> =
+  | T
+  | [T, ConstructorParameters<T>[0]]
+
+/**
+ * Creates a client with the specified plugins
+ *
+ * @public
+ */
+export function createClient<T extends PluginConstructor<AnyPlugin>>(
+  plugins: CreateClientPlugins<T>[]
+): ClientWithPlugins<InstanceType<T>> {
+  const pluginInstances: AnyPlugin[] = []
+  const mixed = plugins.reduce((acc, plugin) => {
+    const constructor = Array.isArray(plugin) ? plugin[0] : plugin
+    const options = Array.isArray(plugin) ? plugin[1] : undefined
+    const instance = new (constructor as new (options?: unknown) => AnyPlugin)(
+      options
+    )
+    pluginInstances.push(instance)
+    return instance.extendClient(acc)
+  }, BaseClient)
+
+  const client = new (class Client extends mixed {})({
+    plugins: pluginInstances,
+  }) as ClientWithPlugins<InstanceType<T>>
+
+  pluginInstances.forEach(plugin => {
+    plugin.init(client)
+  })
+
+  return client
 }

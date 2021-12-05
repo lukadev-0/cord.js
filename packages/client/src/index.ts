@@ -3,11 +3,31 @@
  * @packageDocumentation
  */
 
-import { Client } from './client'
+import { createClient } from './client'
 
-export * from './client'
-export * from './context'
-export * from './middleware'
-export * from './plugin'
+export {
+  createClient,
+  BaseClient,
+  ClientOptions,
+  CreateClientPlugins,
+} from './client'
+export { Context } from './context'
+export {
+  Middleware,
+  MiddlewareGroup,
+  MiddlewareHandler,
+  MiddlewareInterface,
+  NextFn,
+} from './middleware'
+export {
+  ClientPlugin,
+  PluginConstructor,
+  PluginExtendedClient,
+  PluginMiddlewareMap,
+  PluginOptions,
+  AnyPlugin,
+  ExtendedClient,
+  ClientWithPlugins,
+} from './plugin'
 
-export default Client
+export default createClient

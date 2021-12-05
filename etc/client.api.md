@@ -5,33 +5,70 @@
 ```ts
 
 // @public
-class Client {
+export type AnyPlugin = ClientPlugin<Record<string, Middleware<Context>>>;
+
+// @public
+export class BaseClient {
     constructor(options: ClientOptions);
     // @internal
     _defineMiddlewareRoot(name: string): void;
     // @internal
     _execMiddleware(context: Context, after?: number, err?: unknown): void;
-    executeMiddleware(context: Context): void;
     readonly middleware: MiddlewareInterface<Context>[];
     // (undocumented)
-    plugin(id: string): PluginInstance | null;
-    readonly plugins: Readonly<Record<string, PluginInstance>>;
+    plugin<T extends string | typeof ClientPlugin>(id: T): (T extends string ? AnyPlugin : T) | null;
+    readonly plugins: Record<string, AnyPlugin>;
     start(): Promise<void>;
 }
-export { Client }
-export default Client;
 
 // @public
 export interface ClientOptions {
     // (undocumented)
-    plugins: PluginFactory[];
+    plugins: AnyPlugin[];
 }
+
+// @public
+export abstract class ClientPlugin<TMiddleware extends {
+    [x: string]: Middleware<Context>;
+}, TOptions extends PluginOptions<TMiddleware> = PluginOptions<TMiddleware>> {
+    constructor(options: TOptions, defaultMiddleware: ReadonlyArray<{
+        [K in keyof TMiddleware]: K;
+    }[keyof TMiddleware]>);
+    client?: BaseClient;
+    extendClient(base: typeof BaseClient): ExtendedClient<TMiddleware>;
+    abstract readonly id: string;
+    init(client: BaseClient): void;
+    readonly middleware: PluginMiddlewareMap<TMiddleware>;
+    readonly options: TOptions;
+    // (undocumented)
+    protected pluginRunMiddleware(context: Context): void;
+    // @virtual
+    preStart(): void;
+    // @virtual
+    start(): void;
+}
+
+// Warning: (ae-forgotten-export) The symbol "UnionToIntersection" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type ClientWithPlugins<T extends AnyPlugin> = BaseClient & UnionToIntersection<PluginExtendedClient<T>>;
 
 // @public
 export abstract class Context {
     constructor(path: string[]);
     path: string[];
 }
+
+// @public
+function createClient<T extends PluginConstructor<AnyPlugin>>(plugins: CreateClientPlugins<T>[]): ClientWithPlugins<InstanceType<T>>;
+export { createClient }
+export default createClient;
+
+// @public
+export type CreateClientPlugins<T extends PluginConstructor<AnyPlugin>> = T | [T, ConstructorParameters<T>[0]];
+
+// @public
+export type ExtendedClient<T> = new () => T & BaseClient;
 
 // @public
 export type Middleware<T extends Context> = (handler: MiddlewareHandler<T>) => void;
@@ -59,31 +96,22 @@ export interface MiddlewareInterface<T extends Context> {
 export type NextFn = (err?: unknown) => void;
 
 // @public
-export interface PluginActions {
-    defineMiddlewareRoot(name: string): void;
-}
+export type PluginConstructor<T extends AnyPlugin> = (new () => T) | (new (options: any) => T);
 
 // @public
-export type PluginFactory = (client: Client, actions: PluginActions) => PluginInterface & {
-    instance?: PluginInstance | ((options: PluginInterface) => PluginInstance);
+export type PluginExtendedClient<T extends AnyPlugin> = InstanceType<ReturnType<T['extendClient']>>;
+
+// @public
+export type PluginMiddlewareMap<TMiddleware extends Record<string, Middleware<Context>>> = {
+    [K in keyof TMiddleware]: string;
 };
 
 // @public
-export class PluginInstance implements PluginInterface {
-    constructor(options: PluginInterface);
+export interface PluginOptions<TMiddleware extends {
+    [x: string]: Middleware<Context>;
+}> {
     // (undocumented)
-    id: string;
-    // (undocumented)
-    preStart(): Promise<void>;
-    // (undocumented)
-    start(): Promise<void>;
-}
-
-// @public
-export interface PluginInterface {
-    id: string;
-    preStart?(): void | Promise<void>;
-    start?(): void | Promise<void>;
+    middleware?: PluginMiddlewareMap<TMiddleware>;
 }
 
 ```

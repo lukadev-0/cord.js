@@ -12,14 +12,14 @@
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "build": "lerna run build --ignore docs --",
+    "build": "lerna run build-ae --",
     "test": "jest",
     "docs": "api-documenter generate --input-folder ./temp --output-folder ./website/docs/api"
   },
   "workspaces": [
     "packages/*",
     "website",
-    "examples"
+    "examples/*"
   ],
   "dependencies": {
     "@rushstack/node-core-library": "^3.43.2"

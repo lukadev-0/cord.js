@@ -1,0 +1,15 @@
+{
+  "name": "gateway-ts",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "node ."
+  },
+  "dependencies": {
+    "@cordjs/client": "*",
+    "@cordjs/gateway": "*"
+  }
+}

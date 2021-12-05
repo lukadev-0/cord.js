@@ -12,7 +12,7 @@
     "dist/client.d.ts"
   ],
   "scripts": {
-    "build": "rm -rf lib && tsc && api-extractor run"
+    "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"
   },
   "publishConfig": {
     "access": "public"

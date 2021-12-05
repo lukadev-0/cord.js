@@ -7,12 +7,11 @@
  */
 
 import {
-  Context,
+  ClientPlugin,
   Middleware,
   MiddlewareGroup,
-  PluginFactory,
-  PluginInstance,
-  PluginInterface,
+  Context,
+  PluginOptions,
 } from '@cordjs/client'
 import { Client, ClientEvents, ClientOptions } from 'discord.js'
 
@@ -20,18 +19,11 @@ import { Client, ClientEvents, ClientOptions } from 'discord.js'
  * {@link Gateway} options
  * @public
  */
-export interface GatewayOptions {
+export interface GatewayOptions extends PluginOptions<GatewayMiddleware> {
   /**
    * The token to login with
    */
   token: string
-
-  /**
-   * The middleware name
-   *
-   * @defaultValue 'gateway'
-   */
-  middlewareName?: string
 
   /**
    * The {@link https://discord.js.org/#/docs/main/stable/typedef/ClientOptions | Discord.js client options}
@@ -50,18 +42,67 @@ export interface GatewayOptions {
 }
 
 /**
- * A plugin instance
+ * {@link Gateway} middleware
+ */
+export type GatewayMiddleware = {
+  gateway: MiddlewareGroup<{
+    [K in keyof ClientEvents]: Middleware<GatewayContext<K>>
+  }>
+}
+
+/**
+ * Gateway plugin
+ *
  * @public
  */
-export class GatewayInstance extends PluginInstance {
-  /**
-   * The middleware name
-   */
-  public middlewareName: string
+export class Gateway extends ClientPlugin<GatewayMiddleware, GatewayOptions> {
+  id = '@cordjs/gateway'
 
-  constructor(options: PluginInterface, middlewareName: string) {
-    super(options)
-    this.middlewareName = middlewareName
+  public discordClient?: Client
+
+  constructor(options: GatewayOptions) {
+    super(options, ['gateway'])
+  }
+
+  async start() {
+    const client = new Client(this.options.client)
+
+    if (this.options.catchAll) {
+      const emit = client.emit
+
+      client.emit = <K extends keyof ClientEvents>(
+        eventName: string,
+        ...args: ClientEvents[K]
+      ) => {
+        this.pluginRunMiddleware(
+          new GatewayContext([this.middleware.gateway, eventName], args)
+        )
+
+        return emit.apply(client, [eventName, args])
+      }
+    } else {
+      const added: Record<string, true> = {}
+      for (const middleware of this.client!.middleware) {
+        if (
+          middleware.path.length === 2 &&
+          middleware.path[0] === this.middleware.gateway
+        ) {
+          if (!(middleware.path[1] in added)) {
+            const eventName = middleware.path[1] as keyof ClientEvents
+
+            added[eventName] = true
+            client.on(eventName, (...args) => {
+              this.pluginRunMiddleware(
+                new GatewayContext([this.middleware.gateway, eventName], args)
+              )
+            })
+          }
+        }
+      }
+    }
+
+    this.discordClient = client
+    await client.login(this.options.token)
   }
 }
 
@@ -74,83 +115,6 @@ export class GatewayContext<K extends keyof ClientEvents> extends Context {
   constructor(path: string[], data: ClientEvents[K]) {
     super(path)
     this.data = data
-  }
-}
-
-/**
- * The gateway plugin
- * @public
- *
- * @param options
- */
-export const Gateway =
-  (options: GatewayOptions): PluginFactory =>
-  (client, actions) => {
-    const { defineMiddlewareRoot } = actions
-    const {
-      middlewareName = 'gateway',
-      client: clientOptions,
-      token,
-      catchAll,
-    } = options
-    const djsClient = new Client(clientOptions)
-
-    defineMiddlewareRoot(middlewareName ?? 'gateway')
-
-    function addEventListeners() {
-      if (catchAll) {
-        const emit = djsClient.emit
-
-        djsClient.emit = <K extends keyof ClientEvents>(
-          eventName: string,
-          ...args: ClientEvents[K]
-        ) => {
-          client.executeMiddleware(
-            new GatewayContext([middlewareName, eventName], args)
-          )
-
-          return emit.apply(djsClient, [eventName, args])
-        }
-        return
-      }
-
-      const added: Record<string, true> = {}
-      for (const middleware of client.middleware) {
-        if (
-          middleware.path.length === 2 &&
-          middleware.path[0] === middlewareName
-        ) {
-          if (!(middleware.path[1] in added)) {
-            const eventName = middleware.path[1] as keyof ClientEvents
-
-            added[eventName] = true
-            djsClient.on(eventName, (...args) => {
-              client.executeMiddleware(
-                new GatewayContext([middlewareName, eventName], args)
-              )
-            })
-          }
-        }
-      }
-    }
-
-    return {
-      id: '@cordjs/gateway',
-      instance: options => new GatewayInstance(options, middlewareName),
-
-      async start() {
-        addEventListeners()
-
-        await djsClient.login(token)
-      },
-    }
-  }
-
-declare module '@cordjs/client' {
-  export interface Client {
-    gateway: MiddlewareGroup<{
-      [K in keyof ClientEvents]: Middleware<GatewayContext<K>>
-    }>
   }
 }
 

@@ -40,5 +40,7 @@ export interface MiddlewareInterface<T extends Context> {
 
 /**
  * The `next` function passed into {@link MiddlewareHandler}
+ *
+ * @public
  */
 export type NextFn = (err?: unknown) => void

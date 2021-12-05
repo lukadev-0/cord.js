@@ -170,17 +170,31 @@
       "name": "",
       "members": [
         {
-          "kind": "Variable",
-          "canonicalReference": "@cordjs/gateway!Gateway:var",
-          "docComment": "/**\n * The gateway plugin\n *\n * @param options - \n *\n * @public\n */\n",
+          "kind": "Class",
+          "canonicalReference": "@cordjs/gateway!Gateway:class",
+          "docComment": "/**\n * Gateway plugin\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "Gateway: "
+              "text": "export declare class Gateway extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClientPlugin",
+              "canonicalReference": "@cordjs/client!ClientPlugin:class"
             },
             {
               "kind": "Content",
-              "text": "(options: "
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "GatewayMiddleware",
+              "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
             },
             {
               "kind": "Reference",
@@ -189,20 +203,138 @@
             },
             {
               "kind": "Content",
-              "text": ") => "
-            },
-            {
-              "kind": "Reference",
-              "text": "PluginFactory",
-              "canonicalReference": "@cordjs/client!PluginFactory:type"
+              "text": "> "
             }
           ],
           "releaseTag": "Public",
           "name": "Gateway",
-          "variableTypeTokenRange": {
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@cordjs/gateway!Gateway:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `Gateway` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GatewayOptions",
+                  "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/gateway!Gateway#discordClient:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "discordClient?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Client",
+                  "canonicalReference": "discord.js!Client:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "discordClient",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/gateway!Gateway#id:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/gateway!Gateway#start:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "start"
+            }
+          ],
+          "extendsTokenRange": {
             "startIndex": 1,
-            "endIndex": 5
-          }
+            "endIndex": 7
+          },
+          "implementsTokenRanges": []
         },
         {
           "kind": "Class",
@@ -342,106 +474,65 @@
           "implementsTokenRanges": []
         },
         {
-          "kind": "Class",
-          "canonicalReference": "@cordjs/gateway!GatewayInstance:class",
-          "docComment": "/**\n * A plugin instance\n *\n * @public\n */\n",
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type",
+          "docComment": "/**\n * {@link Gateway} middleware\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare class GatewayInstance extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "PluginInstance",
-              "canonicalReference": "@cordjs/client!PluginInstance:class"
+              "text": "export declare type GatewayMiddleware = "
             },
             {
               "kind": "Content",
-              "text": " "
+              "text": "{\n    gateway: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MiddlewareGroup",
+              "canonicalReference": "@cordjs/client!MiddlewareGroup:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<{\n        [K in keyof "
+            },
+            {
+              "kind": "Reference",
+              "text": "ClientEvents",
+              "canonicalReference": "discord.js!ClientEvents:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Middleware",
+              "canonicalReference": "@cordjs/client!Middleware:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "GatewayContext",
+              "canonicalReference": "@cordjs/gateway!GatewayContext:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<K>>;\n    }>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
           "releaseTag": "Public",
-          "name": "GatewayInstance",
-          "members": [
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@cordjs/gateway!GatewayInstance:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `GatewayInstance` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor(options: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "PluginInterface",
-                  "canonicalReference": "@cordjs/client!PluginInterface:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", middlewareName: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "options",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                },
-                {
-                  "parameterName": "middlewareName",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@cordjs/gateway!GatewayInstance#middlewareName:member",
-              "docComment": "/**\n * The middleware name\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "middlewareName: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "middlewareName",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false
-            }
-          ],
-          "extendsTokenRange": {
+          "name": "GatewayMiddleware",
+          "typeTokenRange": {
             "startIndex": 1,
-            "endIndex": 3
-          },
-          "implementsTokenRanges": []
+            "endIndex": 10
+          }
         },
         {
           "kind": "Interface",
@@ -450,7 +541,25 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface GatewayOptions "
+              "text": "export interface GatewayOptions extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "PluginOptions",
+              "canonicalReference": "@cordjs/client!PluginOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "GatewayMiddleware",
+              "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
             }
           ],
           "releaseTag": "Public",
@@ -511,32 +620,6 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@cordjs/gateway!GatewayOptions#middlewareName:member",
-              "docComment": "/**\n * The middleware name\n *\n * @defaultValue\n *\n * 'gateway'\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "middlewareName?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "middlewareName",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
               "canonicalReference": "@cordjs/gateway!GatewayOptions#token:member",
               "docComment": "/**\n * The token to login with\n */\n",
               "excerptTokens": [
@@ -562,7 +645,12 @@
               }
             }
           ],
-          "extendsTokenRanges": []
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 5
+            }
+          ]
         }
       ]
     }

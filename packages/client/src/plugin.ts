@@ -1,92 +1,171 @@
-import { Client } from './client'
+import { BaseClient, ClientOptions } from './client'
+import { Middleware } from './middleware'
+import { Context } from './context'
+import { UnionToIntersection } from './util'
 
 /**
- * A plugin, this is the return value of a {@link PluginFactory}
- */
-export interface PluginInterface {
-  /**
-   * Unique ID for this plugin, such as the package name.
-   */
-  id: string
-
-  /**
-   * Runs whenever {@link Client.start} is called.
-   * After {@link PluginInterface.preStart}
-   *
-   * @remarks
-   * All plugin start functions are called at the same time
-   * whenever {@link Client.start} is caled.
-   *
-   * This is where you would do stuff such as connecting to the
-   * gateway.
-   */
-  start?(): void | Promise<void>
-
-  /**
-   * Runs before {@link PluginInterface.start}
-   *
-   * @remarks
-   *
-   * :::note
-   *
-   * You can still add middlewares in this function,
-   * but not in {@link PluginInterface.start}
-   *
-   * :::
-   *
-   * All plugin start functions are called at the same time
-   * whenever {@link Client.start} is caled.
-   *
-   * This is where you would do stuff such as adding middleware
-   * defined by other plugins.
-   */
-  preStart?(): void | Promise<void>
-}
-
-/**
- * Passed to {@link PluginFactory}
- */
-export interface PluginActions {
-  /**
-   * Defines a middleware root
-   */
-  defineMiddlewareRoot(name: string): void
-}
-
-/**
- * A function that returns a {@link PluginInterface}
+ * Type that represents an extended client
  *
- * @remarks
- * The {@link Client | client} and options are passed into the function.
+ * @typeParam T - the extended members
+ *
+ * @public
  */
-export type PluginFactory = (
-  client: Client,
-  actions: PluginActions
-) => PluginInterface & {
-  instance?: PluginInstance | ((options: PluginInterface) => PluginInstance)
+export type ExtendedClient<T> = new () => T & BaseClient
+
+/**
+ * {@link ClientPlugin} with default type parameters
+ *
+ * @public
+ */
+export type AnyPlugin = ClientPlugin<Record<string, Middleware<Context>>>
+
+/**
+ * Middleware Map
+ *
+ * @typeParam TMiddleware - the middleware
+ *
+ * @public
+ */
+export type PluginMiddlewareMap<
+  TMiddleware extends Record<string, Middleware<Context>>
+> = {
+  [K in keyof TMiddleware]: string
 }
 
 /**
- * An instance of a plugin
+ * Base plugin options
+ *
+ * @typeParam TMiddleware - the middleware
+ *
+ * @public
  */
-export class PluginInstance implements PluginInterface {
-  public id: string
+export interface PluginOptions<
+  TMiddleware extends { [x: string]: Middleware<Context> }
+> {
+  middleware?: PluginMiddlewareMap<TMiddleware>
+}
 
-  private _start: PluginInterface['start']
-  private _preStart: PluginInterface['preStart']
+/**
+ * A plugin
+ *
+ * @typeParam TMiddleware - the middleware
+ * @typeParam TOptions - The options
+ *
+ * @public
+ */
+export abstract class ClientPlugin<
+  TMiddleware extends { [x: string]: Middleware<Context> },
+  TOptions extends PluginOptions<TMiddleware> = PluginOptions<TMiddleware>
+> {
+  /**
+   * The unique identifier of the plugin.
+   */
+  public abstract readonly id: string
 
-  constructor(options: PluginInterface) {
-    this.id = options.id
+  /**
+   * The client
+   */
+  public client?: BaseClient
 
-    this._start = options.start
-    this._preStart = options.preStart
+  /**
+   * The middleware this plugin defines
+   */
+  public readonly middleware: PluginMiddlewareMap<TMiddleware>
+
+  /**
+   * The options
+   */
+  public readonly options: TOptions
+
+  constructor(
+    options: TOptions,
+    defaultMiddleware: ReadonlyArray<
+      { [K in keyof TMiddleware]: K }[keyof TMiddleware]
+    >
+  ) {
+    const middlewareMap: Record<string, string> = {}
+    for (const name of defaultMiddleware) {
+      middlewareMap[name as string] =
+        options?.middleware?.[name] ?? (name as string)
+    }
+
+    this.middleware = middlewareMap as PluginMiddlewareMap<TMiddleware>
+    this.options = options ?? null
   }
 
-  async start() {
-    await this._start?.()
+  /**
+   * Runs during {@link createClient} after the client has been constructed
+   * @param client - the client
+   */
+  init(client: BaseClient) {
+    this.client = client
   }
 
-  async preStart() {
-    await this._preStart?.()
+  /**
+   * Extends the client class,
+   * based on {@link https://www.typescriptlang.org/docs/handbook/mixins.html}.
+   *
+   * @param base - base class
+   *
+   * @returns
+   * Modified client which extends `base`.
+   */
+  extendClient(base: typeof BaseClient): ExtendedClient<TMiddleware> {
+    const middleware = this.middleware
+
+    const extended = class extends base {
+      constructor(options: ClientOptions) {
+        super(options)
+        for (const name of Object.keys(middleware)) {
+          this._defineMiddlewareRoot(name)
+        }
+      }
+    }
+
+    return extended as ExtendedClient<TMiddleware>
+  }
+
+  /**
+   * Runs before `start`
+   *
+   * @virtual
+   */
+  preStart() {}
+
+  /**
+   * Runs after `preStart`
+   *
+   * @virtual
+   */
+  start() {}
+
+  protected pluginRunMiddleware(context: Context) {
+    this.client?._execMiddleware(context)
   }
 }
+
+/**
+ * Gets the instance type of {@link ClientPlugin.extendClient}
+ *
+ * @public
+ */
+export type PluginExtendedClient<T extends AnyPlugin> = InstanceType<
+  ReturnType<T['extendClient']>
+>
+
+/**
+ * A client with the specified plugins
+ *
+ * @public
+ */
+export type ClientWithPlugins<T extends AnyPlugin> = BaseClient &
+  UnionToIntersection<PluginExtendedClient<T>>
+
+/**
+ * Plugin constructor
+ *
+ * @public
+ */
+export type PluginConstructor<T extends AnyPlugin> =
+  | (new () => T)
+  | (new (options: any) => T)
