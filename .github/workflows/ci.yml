@@ -22,7 +22,8 @@ jobs:
         run: yarn docs
       - name: Deploy Docs
         env:
-          GIT_USER: ${{ secrets.GITHUB_TOKEN }}
+          GIT_USER: git
+          USE_SSH: true
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions"
