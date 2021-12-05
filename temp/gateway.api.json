@@ -339,7 +339,7 @@
         {
           "kind": "Class",
           "canonicalReference": "@cordjs/gateway!GatewayContext:class",
-          "docComment": "/**\n * The context\n */\n",
+          "docComment": "/**\n * The context\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -476,7 +476,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type",
-          "docComment": "/**\n * {@link Gateway} middleware\n */\n",
+          "docComment": "/**\n * {@link Gateway} middleware\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

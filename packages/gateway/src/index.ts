@@ -43,6 +43,8 @@ export interface GatewayOptions extends PluginOptions<GatewayMiddleware> {
 
 /**
  * {@link Gateway} middleware
+ *
+ * @public
  */
 export type GatewayMiddleware = {
   gateway: MiddlewareGroup<{
@@ -108,6 +110,8 @@ export class Gateway extends ClientPlugin<GatewayMiddleware, GatewayOptions> {
 
 /**
  * The context
+ *
+ * @public
  */
 export class GatewayContext<K extends keyof ClientEvents> extends Context {
   public data: ClientEvents[K]
