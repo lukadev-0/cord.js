@@ -1,6 +1,6 @@
 {
   "name": "@cordjs/gateway",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Connect to the gateway with Cord.js",
   "main": "lib/index.js",
   "typings": "dist/gateway.d.ts",
@@ -15,7 +15,7 @@
     "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"
   },
   "dependencies": {
-    "@cordjs/client": "^0.1.1",
+    "@cordjs/client": "^0.2.0",
     "discord.js": "^13.3.1"
   },
   "publishConfig": {

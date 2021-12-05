@@ -9,7 +9,7 @@
     "start": "node ."
   },
   "dependencies": {
-    "@cordjs/client": "*",
-    "@cordjs/gateway": "*"
+    "@cordjs/client": "^0.2.0",
+    "@cordjs/gateway": "^0.2.0"
   }
 }
