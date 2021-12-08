@@ -98,18 +98,19 @@ We will also need to specify the plugins we're going to use.
 We are going to use the gateway plugin, it allows us to receive events from the gateway.
 
 ```js
-const client = new Client({
-  plugins: [
-    Gateway({
+const client = createClient([
+  [
+    Gateway,
+    {
       // Paste the token from the developer portal here
       token: 'PASTE YOUR BOT TOKEN HERE',
 
       client: {
         intents: ['GUILDS', 'GUILD_MESSAGES'],
       },
-    }),
+    },
   ],
-})
+])
 ```
 
 ### Adding Middleware
