@@ -1,0 +1,83 @@
+---
+title: Middleware
+---
+
+Middleware is a powerful feature that allows you to listen to events,
+and handle errors much more easily.
+
+Middleware are added to the client, and plugins are responsible for
+running the middleware you define.
+
+Every middleware has a _path_, which is the path it will listen to.
+Whenever a plugin runs a middleware, it will do so at a specific path.
+
+Paths will be seperated by dots (`.`) in the documentation.
+But they are represented by arrays internally.
+
+In order to add a middleware you just need to access
+it on the client.
+
+Lets say you want to define a middleware on path `gateway.messageCreate`
+
+```js
+const client = createClient(/* ... */)
+
+client.gateway.messageCreate((context, next) => {
+  // do stuff
+})
+```
+
+:::info
+
+The first segment of the path (e.g. `gateway`) must be defined
+by a plugin.
+
+:::
+
+Middleware defined will also match _sub-middlewares_,
+which means that if you add a middleware at `gateway` and
+a middleware at `gateway.messageCreate` gets run, then
+the `gateway` middleware will be matched and will be run.
+
+You might've noticed the 2 parameters passed into the function.
+The first is the context, and the second is the next function.
+
+- **context**
+  Provides extra information about the middleware run.
+  This is an object that is defined by the plugin that
+  ran the middleware.
+
+  Every context object must have a `path` property,
+  the same context object is passed to _each middleware that
+  is being run_. This means that you can add extra properties
+  and access it on the rest of the middleware being run.
+
+- **next**
+  Multiple middleware can be put onto the same path,
+  but only the first middleware will be run. But if `next()`
+  is called, the next middleware will also be run.
+
+## Error Handling
+
+Middleware also supports error handling.
+
+Error handling is very easy using middleware. Cord.js will
+catch any errors that are thrown in the middleware, and will
+run the next **error handling middleware**, the same can be
+accomplished by calling `next(error)`. Returning a Promise
+or async/await is also supported.
+
+You can create error handling middleware by simply adding
+another parameter to the _middleware handler_.
+
+This parameter (`error`) is the error.
+
+```js
+client.gateway.messageCreate((context, next) => {
+  throw new Error('This is an error!')
+})
+
+client.gateway.messageCreate((context, next, error) => {
+  console.error(error)
+})
+```

@@ -1,5 +1,6 @@
 ---
-title: Quickstart
+title: Getting Started
+sidebar_position: 0
 ---
 
 :::caution Work in Progress
@@ -11,13 +12,22 @@ please report them [here](https://github.com/lukadev-0/cord.js/issues).
 
 :::
 
-Lets make a Discord bot!
+This guide will walk you through the basics of using Cord.js, and get
+you a basic bot up and running.
 
 ## Before we Begin
 
 Make sure you have created an
-application on the [developer portal](https://discord.com/developers/applications),
-and that you've created a bot, and copied the token!
+application on the [developer portal](https://discord.com/developers/applications).
+
+You also need to add a bot to your application, which can be done in the
+Bot tab.
+
+You'll also need to add the bot to your server, which can be done in the
+OAuth2 > URL Generator tab, select the `bot` tab and copy the URL into
+your browser.
+
+You will also need the bot token, which can be found in the `Bot` tab.
 
 :::danger
 
@@ -30,7 +40,7 @@ They will also gain all permissions granted to your bot.
 
 ## Creating a new project
 
-Create a `package.json` by using the following command:
+First, we'll need to initialize a new project.
 
 ```bash npm2yarn
 npm init
@@ -38,13 +48,13 @@ npm init
 
 ## Installing Packages
 
-We need to install some packages.
+Now we'll install the packages we need.
 
 ```bash npm2yarn
 npm install @cordjs/client @cordjs/gateway
 ```
 
-`@cordjs/client` is the package which will manage middleware and plugins
+`@cordjs/client` is the main package, it handles middleware and plugins
 
 `@cordjs/gateway` is the package which will allow us to receive events from the gateway
 
@@ -65,7 +75,7 @@ packages that we have just installed.
   <TabItem value="cjs">
 
 ```js
-const { Client } = require('@cordjs/client')
+const { createClient } = require('@cordjs/client')
 const { Gateway } = require('@cordjs/gateway')
 ```
 
@@ -73,7 +83,7 @@ const { Gateway } = require('@cordjs/gateway')
   <TabItem value="esm">
 
 ```js
-import Client from '@cordjs/client'
+import createClient from '@cordjs/client'
 import Gateway from '@cordjs/gateway'
 ```
 
@@ -83,9 +93,9 @@ import Gateway from '@cordjs/gateway'
 ### Creating a client
 
 Now we'll need to create a client.
-We will also need to specify the plugins, we are using the gateway plugin
-in order to receive events from the Discord gateway, such as a message
-being created.
+
+We will also need to specify the plugins we're going to use.
+We are going to use the gateway plugin, it allows us to receive events from the gateway.
 
 ```js
 const client = new Client({
@@ -104,7 +114,9 @@ const client = new Client({
 
 ### Adding Middleware
 
-Now we will need to add a middleware.
+We are going to use _middleware_. A powerful feature
+that allows us to listen for events, it also allows
+us to handle errors.
 
 ```js
 client.gateway.messageCreate(ctx => {
@@ -130,21 +142,16 @@ any other [Discord.js event](https://discord.js.org/#/docs/main/stable/class/Cli
 ### Starting it
 
 Now, we will need to actually start the bot,
-the `client.start()` function will do that,
-it will start any plugins, in this case the gateway plugin
-will establish a connection to the gateway.
+the `client.start()` function will do that.
+
+The gateway plugin will connect to the gateway whenever
+we call `client.start()`.
 
 ```js
 client.start()
 ```
 
-## Testing your bot
+Your bot is now online!
 
-Now you can run your index.js file, and invite your bot
-to a server, and type
-
-> hello
-
-If everything is correct, then the bot should respond with
-
-> Hello there!
+Test it by sending "hello" to the bot, if everything is correct,
+it should respond with "Hello there!".

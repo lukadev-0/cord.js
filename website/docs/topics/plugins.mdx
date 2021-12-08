@@ -1,0 +1,64 @@
+---
+title: Plugins
+---
+
+Plugins are responsible for running and defining middleware, currently
+there is only one official plugin, the gateway plugin.
+
+:::info
+
+We are planning to add more plugins in the future, such as
+interactions.
+
+:::
+
+## Using Plugins
+
+You define the plugins that you will use to `createClient`,
+for example:
+
+```js
+import createClient from '@cordjs/client'
+
+createClient([SomePlugin, SomeOtherPlugin])
+```
+
+Plugins can also accept options, for example:
+
+```js
+createClient([
+  [
+    SomePlugin,
+    {
+      foo: 'bar',
+    },
+  ],
+])
+```
+
+## Creating Plugins
+
+To create a plugin, create a class that extends `Plugin`.
+
+```js
+import { Plugin } from '@cordjs/client'
+
+class MyPlugin extends Plugin {
+  constructor(options) {
+    this.id = 'my-cool-plugin'
+
+    super(options, [
+      'foo', // these are your middleware
+      'bar',
+    ])
+  }
+}
+```
+
+:::info
+
+Check the source of the
+[gateway plugin](https://github.com/lukadev-0/cord.js/blob/main/packages/gateway/src/index.js)
+for more information, and if you are using TypeScript you can see the typings there.
+
+:::

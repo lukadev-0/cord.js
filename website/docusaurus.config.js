@@ -5,14 +5,11 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 function filterSidebarItems(items) {
-  const result = items.map(item => {
-    if (item.type === 'category') {
-      return { ...item, items: filterSidebarItems(item.items) }
-    }
-    return item
+  const result = items.filter(item => {
+    return item.label !== 'api'
   })
 
-  return result.filter(doc => !doc.id?.startsWith('api'))
+  return result
 }
 
 /** @type {import('@docusaurus/types').Config} */
@@ -80,7 +77,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'quickstart',
+            docId: 'getting-started',
             position: 'left',
             label: 'Docs',
           },
@@ -104,12 +101,16 @@ const config = {
             title: 'Documentation',
             items: [
               {
-                label: 'Quickstart',
-                to: '/docs/quickstart',
+                label: 'Getting Started',
+                to: '/docs/getting-started',
               },
               {
                 label: 'API Reference',
                 to: '/docs/api/index',
+              },
+              {
+                label: 'Middleware',
+                to: '/docs/topics/middleware',
               },
             ],
           },

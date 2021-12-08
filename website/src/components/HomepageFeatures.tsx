@@ -24,21 +24,19 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'Unopionated',
+    title: 'Unopinionated',
     description: (
       <>
-        Cord.js is actually a collection of libraries.
-        You can structure your code however you want,
-        it's up to you.
+        Cord.js is unopinionated, meaning you
+        can structure your bot in any way you want.
       </>
     ),
   },
   {
-    title: 'Powered using Middlewares',
+    title: 'Powered using Middleware',
     description: (
       <>
-        Listen to events using middlewares.
-        And error handling is also supported using middlewares!
+        Middleware is a powerful way to listen to events, and handle errors.
       </>
     ),
   },

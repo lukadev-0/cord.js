@@ -1,0 +1,19 @@
+---
+title: '@cordjs/gateway'
+---
+
+The gateway plugin allows you receive events from the gateway.
+It uses Discord.js under the hood.
+
+The gateway plugin accepts 3 options
+
+- **token** - The token of the Discord bot
+- **client** - Options for the Discord.js client
+- **catchAll?** - (default: false) If true, the `emit`
+  method will be overwritten and all events will be
+  catched, if disabled, event listeners are added
+  using the middleware that are added.
+
+## Example
+
+See the [gateway example](https://github.com/lukadev-0/cord.js/tree/master/examples/gateway)
