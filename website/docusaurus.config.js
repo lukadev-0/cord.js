@@ -68,11 +68,15 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      metadata: [{ name: 'theme-color', content: '#3578e5' }],
+      image: 'img/cordjs.png',
+
       navbar: {
         title: 'Cord.js',
         logo: {
           alt: 'Cord.js Logo',
           src: 'img/logo.svg',
+          srcDark: 'img/logo-dark.svg',
         },
         items: [
           {
