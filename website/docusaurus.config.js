@@ -68,7 +68,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      metadata: [{ name: 'theme-color', content: '#3578e5' }],
+      metadatas: [{ name: 'theme-color', content: '#3578e5' }],
       image: 'img/cordjs.png',
 
       navbar: {
