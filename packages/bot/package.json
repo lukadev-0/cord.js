@@ -1,15 +1,15 @@
 {
-  "name": "@cordjs/client",
+  "name": "@cordjs/bot",
   "version": "0.2.0",
   "description": "Discord bot framework",
   "main": "lib/index.js",
-  "typings": "dist/client.d.ts",
+  "typings": "dist/bot.d.ts",
   "repository": "https://github.com/lukadev-0/cord.js",
   "author": "LukaDev",
   "license": "MIT",
   "files": [
     "lib",
-    "dist/client.d.ts"
+    "dist/bot.d.ts"
   ],
   "scripts": {
     "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"

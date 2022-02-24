@@ -170,18 +170,58 @@
       "name": "",
       "members": [
         {
-          "kind": "Class",
-          "canonicalReference": "@cordjs/gateway!Gateway:class",
+          "kind": "Variable",
+          "canonicalReference": "@cordjs/gateway!Gateway:var",
           "docComment": "/**\n * Gateway plugin\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare class Gateway extends "
+              "text": "Gateway: "
+            },
+            {
+              "kind": "Content",
+              "text": "<N extends {\n    readonly gateway?: string | undefined;\n} = {}>(options: "
             },
             {
               "kind": "Reference",
-              "text": "ClientPlugin",
-              "canonicalReference": "@cordjs/client!ClientPlugin:class"
+              "text": "GatewayOptions",
+              "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " & {\n    middleware?: N | undefined;\n}) => {\n    id: string;\n    helpers: import(\"@cordjs/bot\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "CordPluginHelpers",
+              "canonicalReference": "@cordjs/bot!CordPluginHelpers:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    decorateBot(bot: "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": " & import(\"@cordjs/bot\")."
+            },
+            {
+              "kind": "Reference",
+              "text": "RenameFields",
+              "canonicalReference": "@cordjs/bot!RenameFields:type"
             },
             {
               "kind": "Content",
@@ -194,147 +234,33 @@
             },
             {
               "kind": "Content",
-              "text": ", "
+              "text": ", N>;\n    start: (() => "
             },
             {
               "kind": "Reference",
-              "text": "GatewayOptions",
-              "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
             },
             {
               "kind": "Content",
-              "text": "> "
+              "text": "<void>) | undefined;\n    preStart: (() => "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<void>) | undefined;\n}"
             }
           ],
           "releaseTag": "Public",
           "name": "Gateway",
-          "members": [
-            {
-              "kind": "Constructor",
-              "canonicalReference": "@cordjs/gateway!Gateway:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `Gateway` class\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "constructor(options: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "GatewayOptions",
-                  "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ");"
-                }
-              ],
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "options",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@cordjs/gateway!Gateway#discordClient:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "discordClient?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Client",
-                  "canonicalReference": "discord.js!Client:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "discordClient",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false
-            },
-            {
-              "kind": "Property",
-              "canonicalReference": "@cordjs/gateway!Gateway#id:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "id: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "id",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "isStatic": false
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "@cordjs/gateway!Gateway#start:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "start(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Promise",
-                  "canonicalReference": "!Promise:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<void>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [],
-              "name": "start"
-            }
-          ],
-          "extendsTokenRange": {
+          "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 7
-          },
-          "implementsTokenRanges": []
+            "endIndex": 18
+          }
         },
         {
           "kind": "Class",
@@ -361,7 +287,7 @@
             {
               "kind": "Reference",
               "text": "Context",
-              "canonicalReference": "@cordjs/client!Context:class"
+              "canonicalReference": "@cordjs/bot!Context:class"
             },
             {
               "kind": "Content",
@@ -489,7 +415,7 @@
             {
               "kind": "Reference",
               "text": "MiddlewareGroup",
-              "canonicalReference": "@cordjs/client!MiddlewareGroup:type"
+              "canonicalReference": "@cordjs/bot!MiddlewareGroup:type"
             },
             {
               "kind": "Content",
@@ -507,7 +433,7 @@
             {
               "kind": "Reference",
               "text": "Middleware",
-              "canonicalReference": "@cordjs/client!Middleware:type"
+              "canonicalReference": "@cordjs/bot!Middleware:type"
             },
             {
               "kind": "Content",
@@ -537,29 +463,11 @@
         {
           "kind": "Interface",
           "canonicalReference": "@cordjs/gateway!GatewayOptions:interface",
-          "docComment": "/**\n * {@link Gateway} options\n *\n * @public\n */\n",
+          "docComment": "/**\n * Gateway options\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface GatewayOptions extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "PluginOptions",
-              "canonicalReference": "@cordjs/client!PluginOptions:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "GatewayMiddleware",
-              "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type"
-            },
-            {
-              "kind": "Content",
-              "text": "> "
+              "text": "export interface GatewayOptions "
             }
           ],
           "releaseTag": "Public",
@@ -568,7 +476,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@cordjs/gateway!GatewayOptions#catchAll:member",
-              "docComment": "/**\n * Whether or not to catch all events\n *\n * @remarks\n *\n * This will monkey patch the `emit` function\n *\n * @defaultValue\n *\n * false\n */\n",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -594,7 +502,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@cordjs/gateway!GatewayOptions#client:member",
-              "docComment": "/**\n * The {@link https://discord.js.org/#/docs/main/stable/typedef/ClientOptions | Discord.js client options}\n */\n",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -607,6 +515,15 @@
                 },
                 {
                   "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Client",
+                  "canonicalReference": "discord.js!Client:class"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
@@ -615,42 +532,11 @@
               "name": "client",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "@cordjs/gateway!GatewayOptions#token:member",
-              "docComment": "/**\n * The token to login with\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "token: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "token",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
+                "endIndex": 4
               }
             }
           ],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 5
-            }
-          ]
+          "extendsTokenRanges": []
         }
       ]
     }

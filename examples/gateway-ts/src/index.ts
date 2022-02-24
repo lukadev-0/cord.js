@@ -1,4 +1,4 @@
-import { createClient } from '@cordjs/client'
+import { createClient } from '@cordjs/bot'
 import { Gateway } from '@cordjs/gateway'
 
 const client = createClient([

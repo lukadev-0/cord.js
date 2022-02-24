@@ -7,22 +7,25 @@
 import { Client } from 'discord.js';
 import { ClientEvents } from 'discord.js';
 import { ClientOptions } from 'discord.js';
-import { ClientPlugin } from '@cordjs/client';
-import { Context } from '@cordjs/client';
-import { Middleware } from '@cordjs/client';
-import { MiddlewareGroup } from '@cordjs/client';
-import { PluginOptions } from '@cordjs/client';
+import { Context } from '@cordjs/bot';
+import { CordBot } from '@cordjs/bot';
+import { CordPluginHelpers } from '@cordjs/bot';
+import { Middleware } from '@cordjs/bot';
+import { MiddlewareGroup } from '@cordjs/bot';
+import { RenameFields } from '@cordjs/bot';
 
 // @public
-class Gateway extends ClientPlugin<GatewayMiddleware, GatewayOptions> {
-    constructor(options: GatewayOptions);
-    // (undocumented)
-    discordClient?: Client;
-    // (undocumented)
+const Gateway: <N extends {
+    readonly gateway?: string | undefined;
+} = {}>(options: GatewayOptions & {
+    middleware?: N | undefined;
+}) => {
     id: string;
-    // (undocumented)
-    start(): Promise<void>;
-}
+    helpers: CordPluginHelpers;
+    decorateBot(bot: CordBot): CordBot & RenameFields<GatewayMiddleware, N>;
+    start: (() => Promise<void>) | undefined;
+    preStart: (() => Promise<void>) | undefined;
+};
 export { Gateway }
 export default Gateway;
 
@@ -41,10 +44,11 @@ export type GatewayMiddleware = {
 };
 
 // @public
-export interface GatewayOptions extends PluginOptions<GatewayMiddleware> {
+export interface GatewayOptions {
+    // (undocumented)
     catchAll?: boolean;
-    client: ClientOptions;
-    token: string;
+    // (undocumented)
+    client: ClientOptions | Client;
 }
 
 ```
