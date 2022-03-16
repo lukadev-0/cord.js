@@ -245,7 +245,7 @@
         {
           "kind": "Function",
           "canonicalReference": "@cordjs/bot!Cord:function(1)",
-          "docComment": "/**\n * Creates a Cord.js bot\n *\n * @param plugins - the plugins\n *\n * @returns the bot\n */\n",
+          "docComment": "/**\n * Creates a Cord.js bot\n *\n * @param plugins - the plugins\n *\n * @returns the bot\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -582,7 +582,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@cordjs/bot!CordBotWithPlugins:type",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
