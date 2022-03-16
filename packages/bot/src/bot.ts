@@ -142,6 +142,9 @@ export class CordBot {
   }
 }
 
+/**
+ * @public
+ */
 export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot &
   UnionToIntersection<ReturnType<NonNullable<T[number]['decorateBot']>>>
 
@@ -151,6 +154,8 @@ export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot &
  * @param plugins - the plugins
  *
  * @returns the bot
+ *
+ * @public
  */
 export function Cord<T extends CordPlugin[]>(plugins: T) {
   const bot = new CordBot(plugins)
