@@ -34,6 +34,8 @@ export type GatewayMiddleware = {
 export interface GatewayOptions {
   catchAll?: boolean
 
+  token: string
+
   client: ClientOptions | Client
 }
 
@@ -94,6 +96,8 @@ export const Gateway = createPlugin<GatewayOptions, GatewayMiddleware>(
             }
           }
         }
+
+        await client.login(options.token)
       },
     }
   }

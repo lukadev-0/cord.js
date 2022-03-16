@@ -8,8 +8,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 16.x
       - name: Install dependencies
@@ -18,17 +17,23 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test
-      - name: Generate API reference
-        run: yarn docs
-      - uses: webfactory/ssh-agent@v0.5.0
+      - name: Prettier
+        run: yarn prettier
+      - uses: EndBug/add-and-commit@v9
         with:
-          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
-      - name: Deploy Docs
-        env:
-          GIT_USER: git
-          USE_SSH: true
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions"
-
-          cd website && npm run deploy
+          default_author: github_actions
+          message: 'style: 💅 run prettier'
+      - name: Build website
+        run: yarn build
+        working-directory: ./website
+      - name: Export website
+        run: yarn export
+        working-directory: ./website
+      - name: Deploy Website
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./website/out
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'chore: 🚀 deploy'

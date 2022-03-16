@@ -4,3 +4,4 @@
 /packages/*/lib
 /examples/*/dist
 /coverage
+/scripts/*/node_modules

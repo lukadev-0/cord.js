@@ -1,0 +1,5 @@
+/etc
+/temp
+/website/.next
+/packages/*/lib
+/packages/*/dist

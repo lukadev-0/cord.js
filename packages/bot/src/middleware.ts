@@ -57,7 +57,7 @@ export interface MiddlewareOptions<T> {
 }
 
 /**
- * The `next` function passed into {@link MiddlewareHandler}
+ * The `next` function passed into {@link MiddlewareCallback}
  *
  * @public
  */
