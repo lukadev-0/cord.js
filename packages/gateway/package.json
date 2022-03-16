@@ -15,7 +15,7 @@
     "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"
   },
   "dependencies": {
-    "@cordjs/client": "^0.2.0"
+    "@cordjs/bot": "^0.2.0"
   },
   "devDependencies": {
     "discord.js": "^13.6.0"
