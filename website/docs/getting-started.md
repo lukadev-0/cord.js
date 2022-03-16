@@ -133,6 +133,14 @@ use destructuring to get the message.
 Check the [Discord.js documentation](https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=e-apiRequest)
 for a list of events and the parameters that are passed to them.
 
+### Starting the bot
+
+We will need to start the bot in order for it to come online.
+
+```js
+bot.start()
+```
+
 ## Running the bot
 
 Lets run the bot!
