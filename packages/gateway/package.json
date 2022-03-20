@@ -14,7 +14,7 @@
   ],
   "exports": {
     ".": {
-      "require":  "./lib/index.js",
+      "require": "./lib/index.js",
       "default": "./esm.mjs"
     }
   },
