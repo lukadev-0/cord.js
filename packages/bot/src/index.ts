@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-export { Cord as default, CordBot } from './bot'
+export { Cord as default, Cord, CordBot } from './bot'
 export { Context } from './context'
 export { createMiddlewareBuilder } from './middleware'
 export { createPlugin } from './plugin'

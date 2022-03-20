@@ -82,6 +82,7 @@ export const Gateway = createPlugin<GatewayOptions, GatewayMiddleware>(
                 const eventName = middleware.path[1] as keyof ClientEvents
 
                 added[eventName] = true
+
                 client.on(eventName, (...args) => {
                   helpers
                     .bot()

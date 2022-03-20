@@ -12,6 +12,7 @@ export abstract class Context {
 
 // @public
 function Cord<T extends CordPlugin[]>(plugins: T): CordBotWithPlugins<T>;
+export { Cord }
 export default Cord;
 
 // @public

@@ -63,6 +63,61 @@ export interface MiddlewareOptions<T> {
  */
 export type NextFn = (err?: unknown) => void
 
+function createMiddlewareHandler(
+  currentPath: string[],
+  addMiddleware: (
+    path: string[],
+    callback: MiddlewareCallback<Context> | MiddlewareOptions<Context>
+  ) => void
+) {
+  const noop = () => {}
+
+  const handler = {
+    get: (_: unknown, name: string): unknown => {
+      return createMiddlewareHandler([...currentPath, name], addMiddleware)
+    },
+
+    apply: <T>(
+      _0: unknown,
+      _1: unknown,
+      args: T extends Array<infer K> ? T : T[]
+    ): unknown => {
+      if (typeof args[0] === 'function') {
+        addMiddleware(currentPath, args[0] as MiddlewareCallback<Context>)
+        return
+      }
+
+      if (typeof args[0] === 'object') {
+        addMiddleware(currentPath, args[0] as MiddlewareOptions<Context>)
+        return
+      }
+
+      if (typeof args[1] === 'function') {
+        addMiddleware(
+          [...currentPath, args[0] as string],
+          args[1] as MiddlewareCallback<Context>
+        )
+        return
+      }
+
+      if (typeof args[1] === 'object') {
+        addMiddleware(
+          [...currentPath, args[0] as string],
+          args[0] as MiddlewareOptions<Context>
+        )
+        return
+      }
+
+      return createMiddlewareHandler(
+        [...currentPath, args[0] as string],
+        addMiddleware
+      )
+    },
+  }
+
+  return new Proxy(noop, handler)
+}
+
 /**
  * Creates a middleware builder
  *
@@ -76,44 +131,6 @@ export function createMiddlewareBuilder(
   ) => void
 ) {
   const path = [name]
-  const noop = () => {}
 
-  const handler = {
-    get: (_: unknown, name: string): unknown => {
-      path.push(name)
-      return new Proxy(() => {}, handler)
-    },
-
-    apply: <T>(
-      _0: unknown,
-      _1: unknown,
-      args: T extends Array<infer K> ? T : T[]
-    ): unknown => {
-      if (typeof args[0] === 'function') {
-        addMiddleware(path, args[0] as MiddlewareCallback<Context>)
-        return
-      }
-
-      if (typeof args[0] === 'object') {
-        addMiddleware(path, args[0] as MiddlewareOptions<Context>)
-        return
-      }
-
-      path.push(args[0] as string)
-
-      if (typeof args[1] === 'function') {
-        addMiddleware(path, args[1] as MiddlewareCallback<Context>)
-        return
-      }
-
-      if (typeof args[1] === 'object') {
-        addMiddleware(path, args[0] as MiddlewareOptions<Context>)
-        return
-      }
-
-      return new Proxy(noop, handler)
-    },
-  }
-
-  return new Proxy(noop, handler)
+  return createMiddlewareHandler(path, addMiddleware)
 }
