@@ -1,9 +1,10 @@
 {
-  "name": "gateway",
+  "name": "cord.js-example-gateway",
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "node ."
   },

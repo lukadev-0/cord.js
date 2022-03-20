@@ -1,5 +1,5 @@
 {
-  "name": "gateway-ts",
+  "name": "cord.js-example-gateway-with-ts",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
