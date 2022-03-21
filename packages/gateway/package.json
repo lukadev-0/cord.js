@@ -1,6 +1,6 @@
 {
   "name": "@cordjs/gateway",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Connect to the gateway with Cord.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -21,7 +21,7 @@
     "build": "tsup && api-extractor run"
   },
   "dependencies": {
-    "@cordjs/bot": "^0.2.0"
+    "@cordjs/bot": "^0.3.0"
   },
   "devDependencies": {
     "discord.js": "^13.6.0"
