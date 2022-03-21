@@ -2,6 +2,7 @@
 
 /packages/*/dist
 /packages/*/lib
+/packages/*/node_modules
 /examples/*/dist
 /coverage
 /scripts/*/node_modules

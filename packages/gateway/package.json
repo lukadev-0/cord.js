@@ -2,24 +2,23 @@
   "name": "@cordjs/gateway",
   "version": "0.2.0",
   "description": "Connect to the gateway with Cord.js",
-  "main": "lib/index.js",
-  "typings": "dist/gateway.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/bot.d.ts",
   "repository": "https://github.com/lukadev-0/cord.js",
   "author": "LukaDev",
   "license": "MIT",
   "files": [
-    "lib",
-    "dist/gateway.d.ts",
-    "esm.mjs"
+    "dist"
   ],
   "exports": {
     ".": {
-      "require":  "./lib/index.js",
-      "default": "./esm.mjs"
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
     }
   },
   "scripts": {
-    "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"
+    "build": "tsup && api-extractor run"
   },
   "dependencies": {
     "@cordjs/bot": "^0.2.0"

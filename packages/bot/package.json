@@ -2,27 +2,28 @@
   "name": "@cordjs/bot",
   "version": "0.2.0",
   "description": "Discord bot framework",
-  "main": "lib/index.js",
-  "module": "esm.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "typings": "dist/bot.d.ts",
   "repository": "https://github.com/lukadev-0/cord.js",
   "author": "LukaDev",
   "license": "MIT",
   "files": [
-    "lib",
-    "dist/bot.d.ts",
-    "esm.mjs"
+    "dist"
   ],
   "exports": {
     ".": {
-      "require":  "./lib/index.js",
-      "default": "./esm.mjs"
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
     }
   },
   "scripts": {
-    "build-ae": "rm -rf lib && tsc -p tsconfig.build.json && api-extractor run"
+    "build": "tsup && api-extractor run"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "discord.js": "^14.0.0-dev.1647259751.2297c2b"
   }
 }

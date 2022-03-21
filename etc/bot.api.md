@@ -106,4 +106,6 @@ export type RenameFields<A extends Record<string, unknown>, B extends Record<str
     } ? B[K] : K]: A[K];
 };
 
+// (No @packageDocumentation comment for this package)
+
 ```

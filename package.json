@@ -10,10 +10,11 @@
     "prettier": "^2.6.0",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",
+    "tsup": "^5.12.1",
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "build": "lerna run build-ae --",
+    "build": "lerna run build --scope @cordjs/* --no-private --",
     "test": "jest",
     "prettier": "prettier --write ."
   },
