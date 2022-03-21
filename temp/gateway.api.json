@@ -161,7 +161,7 @@
   },
   "kind": "Package",
   "canonicalReference": "@cordjs/gateway!",
-  "docComment": "/**\n * Connect to the gateway with Cord.js\n *\n * @remarks\n *\n * This plugin uses {@link https://discord.js.org/ | Discord.js} under the hood.\n *\n * @packageDocumentation\n */\n",
+  "docComment": "",
   "name": "@cordjs/gateway",
   "members": [
     {
@@ -185,11 +185,11 @@
             {
               "kind": "Reference",
               "text": "GatewayOptions",
-              "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
+              "canonicalReference": "@cordjs/gateway!~GatewayOptions:interface"
             },
             {
               "kind": "Content",
-              "text": " & {\n    middleware?: N | undefined;\n}) => {\n    id: string;\n    helpers: import(\"@cordjs/bot\")."
+              "text": " & {\n    middleware?: N | undefined;\n}) => {\n    id: string;\n    helpers: _cordjs_bot."
             },
             {
               "kind": "Reference",
@@ -216,7 +216,7 @@
             },
             {
               "kind": "Content",
-              "text": " & import(\"@cordjs/bot\")."
+              "text": " & _cordjs_bot."
             },
             {
               "kind": "Reference",
@@ -230,7 +230,7 @@
             {
               "kind": "Reference",
               "text": "GatewayMiddleware",
-              "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type"
+              "canonicalReference": "@cordjs/gateway!~GatewayMiddleware:type"
             },
             {
               "kind": "Content",
@@ -269,7 +269,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare class GatewayContext<K extends "
+              "text": "declare class GatewayContext<K extends "
             },
             {
               "kind": "Content",
@@ -406,7 +406,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare type GatewayMiddleware = "
+              "text": "declare type GatewayMiddleware = "
             },
             {
               "kind": "Content",
@@ -442,7 +442,7 @@
             {
               "kind": "Reference",
               "text": "GatewayContext",
-              "canonicalReference": "@cordjs/gateway!GatewayContext:class"
+              "canonicalReference": "@cordjs/gateway!~GatewayContext:class"
             },
             {
               "kind": "Content",
@@ -467,7 +467,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface GatewayOptions "
+              "text": "interface GatewayOptions "
             }
           ],
           "releaseTag": "Public",

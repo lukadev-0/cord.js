@@ -4,7 +4,7 @@
   "description": "Discord bot framework",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "typings": "dist/bot.d.ts",
+  "typings": "dist/index.d.ts",
   "repository": "https://github.com/lukadev-0/cord.js",
   "author": "LukaDev",
   "license": "MIT",

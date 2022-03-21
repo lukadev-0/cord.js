@@ -14,7 +14,7 @@
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "build": "lerna run build --scope @cordjs/* --no-private --",
+    "build": "lerna run build --",
     "test": "jest",
     "prettier": "prettier --write ."
   },

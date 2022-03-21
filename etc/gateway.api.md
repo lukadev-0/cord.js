@@ -9,10 +9,9 @@ import { ClientEvents } from 'discord.js';
 import { ClientOptions } from 'discord.js';
 import { Context } from '@cordjs/bot';
 import { CordBot } from '@cordjs/bot';
-import { CordPluginHelpers } from '@cordjs/bot';
+import * as _cordjs_bot from '@cordjs/bot';
 import { Middleware } from '@cordjs/bot';
 import { MiddlewareGroup } from '@cordjs/bot';
-import { RenameFields } from '@cordjs/bot';
 
 // @public
 const Gateway: <N extends {
@@ -21,8 +20,8 @@ const Gateway: <N extends {
     middleware?: N | undefined;
 }) => {
     id: string;
-    helpers: CordPluginHelpers;
-    decorateBot(bot: CordBot): CordBot & RenameFields<GatewayMiddleware, N>;
+    helpers: _cordjs_bot.CordPluginHelpers;
+    decorateBot(bot: CordBot): CordBot & _cordjs_bot.RenameFields<GatewayMiddleware, N>;
     start: (() => Promise<void>) | undefined;
     preStart: (() => Promise<void>) | undefined;
 };
@@ -52,5 +51,7 @@ export interface GatewayOptions {
     // (undocumented)
     token: string;
 }
+
+// (No @packageDocumentation comment for this package)
 
 ```
