@@ -15,6 +15,9 @@ import {
 } from '@cordjs/bot'
 import { Client, ClientEvents, ClientOptions } from 'discord.js'
 
+import type { DiscordClientEventData } from './events'
+import { DiscordClientEventProperties } from './events'
+
 /**
  * {@link Gateway} middleware
  *
@@ -22,7 +25,7 @@ import { Client, ClientEvents, ClientOptions } from 'discord.js'
  */
 export type GatewayMiddleware = {
   gateway: MiddlewareGroup<{
-    [K in keyof ClientEvents]: Middleware<GatewayContext<K>>
+    [K in keyof DiscordClientEventData]: Middleware<GatewayContext<K>>
   }>
 }
 
@@ -32,11 +35,20 @@ export type GatewayMiddleware = {
  * @public
  */
 export interface GatewayOptions {
+  /**
+   * Catch all events
+   *
+   * @remarks
+   * If `true` all events will be catched, this is done by monkey-patching the `EventEmitter.emit` method.
+   *
+   * If `false` it will detect the events by the `middleware`.
+   */
   catchAll?: boolean
 
+  /**
+   * The Discord bot token.
+   */
   token: string
-
-  client: ClientOptions | Client
 }
 
 /**
@@ -46,16 +58,13 @@ export interface GatewayOptions {
  */
 export const Gateway = createPlugin<GatewayOptions, GatewayMiddleware>(
   (options, helpers) => {
-    const client =
-      options.client instanceof Client
-        ? options.client
-        : new Client(options.client)
-
     return {
       id: '@cordjs/gateway',
       middleware: ['gateway'],
 
       async start() {
+        const client = helpers.client()
+
         if (options.catchAll) {
           const emit = client.emit
 
@@ -109,10 +118,12 @@ export const Gateway = createPlugin<GatewayOptions, GatewayMiddleware>(
  *
  * @public
  */
-export class GatewayContext<K extends keyof ClientEvents> extends Context {
-  public data: ClientEvents[K]
+export class GatewayContext<
+  K extends keyof DiscordClientEventData
+> extends Context {
+  public data: DiscordClientEventData[K]
 
-  constructor(path: string[], data: ClientEvents[K]) {
+  constructor(path: string[], data: DiscordClientEventData[K]) {
     super(path)
     this.data = data
   }

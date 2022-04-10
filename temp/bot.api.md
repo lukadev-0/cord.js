@@ -4,6 +4,9 @@
 
 ```ts
 
+import { Client } from 'discord.js';
+import { ClientOptions } from 'discord.js';
+
 // @public
 export abstract class Context {
     constructor(path: string[]);
@@ -18,6 +21,7 @@ export default Cord;
 // @public
 export class CordBot {
     constructor(plugins: CordPlugin[]);
+    client?: Client;
     defineMiddleware(name: string): void;
     // (undocumented)
     execMiddleware(context: Context): Promise<void>;
@@ -29,31 +33,33 @@ export class CordBot {
 // Warning: (ae-forgotten-export) The symbol "UnionToIntersection" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot & UnionToIntersection<ReturnType<NonNullable<T[number]['decorateBot']>>>;
+export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot & UnionToIntersection<T[number]['decorateBot'] extends (bot: CordBot) => infer R ? R : unknown>;
 
 // @public
-export interface CordPlugin {
-    decorateBot?(bot: CordBot): CordBot;
+export interface CordPlugin<DecoratedBotT extends CordBot = CordBot> {
+    decorateBot?(bot: CordBot): DecoratedBotT;
     id: string;
+    modifyClientOptions?(options: ClientOptions): ClientOptions;
     preStart?(): Promise<void>;
     start?(): Promise<void>;
 }
 
 // @public
+export function CordPluginHelper<MiddlewareT extends string, BotDecorationsT>(factory: (helpers: CordPluginHelpers) => CordPluginOptions<MiddlewareT, BotDecorationsT>): CordPlugin<CordBot & BotDecorationsT>;
+
+// @public
 export interface CordPluginHelpers {
-    // (undocumented)
     bot(): CordBot;
-    // (undocumented)
-    path(root: string, path: string[]): string[];
-    // (undocumented)
-    root(root: string): string;
+    client(): Client;
+    path(path: string[]): string[];
 }
 
 // @public
-export interface CordPluginOptions {
+export interface CordPluginOptions<MiddlewareT extends string, BotDecorationsT> {
     id: string;
-    init?(bot: CordBot): void | Record<string, unknown>;
-    middleware: string[];
+    init?(): Omit<BotDecorationsT, MiddlewareT>;
+    middleware: MiddlewareT;
+    modifyClientOptions?(options: ClientOptions): ClientOptions;
     preStart?(): Promise<void>;
     start?(): Promise<void>;
 }
@@ -61,21 +67,10 @@ export interface CordPluginOptions {
 // Warning: (ae-internal-missing-underscore) The name "createMiddlewareBuilder" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function createMiddlewareBuilder(name: string, addMiddleware: (path: string[], callback: MiddlewareCallback<Context> | MiddlewareOptions<Context>) => void): object;
+export function createMiddlewareBuilder(name: string, addMiddleware: (path: string[], callback: MiddlewareCallback<Context> | MiddlewareOptions<Context>) => void): () => undefined;
 
 // @public
-export function createPlugin<O, M extends Record<string, unknown>>(factory: (options: O, helpers: CordPluginHelpers) => CordPluginOptions): <N extends { readonly [K in keyof M]?: string | undefined; } = {}>(options: O & {
-    middleware?: N | undefined;
-}) => {
-    id: string;
-    helpers: CordPluginHelpers;
-    decorateBot(bot: CordBot): CordBot & RenameFields<M, N>;
-    start: (() => Promise<void>) | undefined;
-    preStart: (() => Promise<void>) | undefined;
-};
-
-// @public
-export type Middleware<T, O extends Record<string, unknown> = {}> = (callback: MiddlewareCallback<T> | (MiddlewareOptions<T> & O)) => void;
+export type Middleware<T, O extends Record<string, unknown> = Record<string, never>> = (callback: MiddlewareCallback<T> | (MiddlewareOptions<T> & O)) => void;
 
 // @public
 export type MiddlewareCallback<T> = (context: T, next: NextFn, err: unknown) => void;
@@ -98,13 +93,6 @@ export interface MiddlewareOptions<T> {
 
 // @public
 export type NextFn = (err?: unknown) => void;
-
-// @public
-export type RenameFields<A extends Record<string, unknown>, B extends Record<string, string | undefined>> = {
-    [K in keyof A as B extends {
-        [L in K]: string;
-    } ? B[K] : K]: A[K];
-};
 
 // (No @packageDocumentation comment for this package)
 

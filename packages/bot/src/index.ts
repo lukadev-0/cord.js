@@ -6,7 +6,7 @@
 export { Cord as default, Cord, CordBot } from './bot'
 export { Context } from './context'
 export { createMiddlewareBuilder } from './middleware'
-export { createPlugin } from './plugin'
+export { CordPluginHelper } from './plugin'
 
 export type {
   MiddlewareCallback,
@@ -17,11 +17,6 @@ export type {
   NextFn,
 } from './middleware'
 
-export type {
-  CordPlugin,
-  CordPluginOptions,
-  RenameFields,
-  CordPluginHelpers,
-} from './plugin'
+export type { CordPlugin, CordPluginOptions, CordPluginHelpers } from './plugin'
 
 export type { CordBotWithPlugins } from './bot'

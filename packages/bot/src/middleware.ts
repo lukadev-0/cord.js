@@ -3,6 +3,9 @@ import { Context } from './context'
 /**
  * A middleware callback
  *
+ * @param context - The context
+ * @param next - The `next`
+ *
  * @public
  */
 export type MiddlewareCallback<T> = (
@@ -14,16 +17,40 @@ export type MiddlewareCallback<T> = (
 /**
  * A middleware
  *
- * @public
- */
-export type Middleware<T, O extends Record<string, unknown> = {}> = (
-  callback: MiddlewareCallback<T> | (MiddlewareOptions<T> & O)
-) => void
-
-/**
- * A group of middleware
+ * @param callback - The callback or options object
+ *
+ * @remarks
+ * This is a function that can be used to add middleware to the bot.
+ * See {@link https://cord.js.org/docs/middleware | the middleware documentation}.
+ *
+ * @example
+ * ```ts
+ * bot.gateway.messageCreate(context => {
+ *   // do something
+ * })
+ * ```
  *
  * @public
+ */
+export type Middleware<
+  T,
+  O extends Record<string, unknown> = Record<string, never>
+> = (callback: MiddlewareCallback<T> | (MiddlewareOptions<T> & O)) => void
+
+/**
+ * A group of {@link Middleware | middleware}
+ *
+ * @public
+ *
+ * @remarks
+ * Middleware is able to be added to a MiddlewareGroup.
+ *
+ * Middleware added to a MiddlewareGroup will be run whenever any child of the
+ * MiddlewareGroup is run.
+ *
+ * For example, if you add a middleware to `bot.gateway`, assuming that `catchAll`
+ * is enabled, the middleware will be run for every gateway event.
+ *
  */
 export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<
   K extends keyof T
@@ -70,48 +97,31 @@ function createMiddlewareHandler(
     callback: MiddlewareCallback<Context> | MiddlewareOptions<Context>
   ) => void
 ) {
-  const noop = () => {}
+  const noop = () => undefined
 
-  const handler = {
-    get: (_: unknown, name: string): unknown => {
+  const handler: ProxyHandler<typeof noop> = {
+    get: (_target: typeof noop, name: string): unknown => {
       return createMiddlewareHandler([...currentPath, name], addMiddleware)
     },
 
-    apply: <T>(
-      _0: unknown,
-      _1: unknown,
-      args: T extends Array<infer K> ? T : T[]
-    ): unknown => {
-      if (typeof args[0] === 'function') {
-        addMiddleware(currentPath, args[0] as MiddlewareCallback<Context>)
-        return
-      }
+    apply: (
+      _target: typeof noop,
+      _thisArg: unknown,
+      args:
+        | [MiddlewareCallback<Context> | MiddlewareOptions<Context>]
+        | [string, MiddlewareCallback<Context> | MiddlewareOptions<Context>]
+    ) => {
+      const [pathOrCallbackOrOptions, callbackOrOptions] = args
 
-      if (typeof args[0] === 'object') {
-        addMiddleware(currentPath, args[0] as MiddlewareOptions<Context>)
-        return
+      if (callbackOrOptions) {
+        const path = pathOrCallbackOrOptions as string
+        addMiddleware([...currentPath, path], callbackOrOptions)
+      } else {
+        const callbackOrOptions = pathOrCallbackOrOptions as
+          | MiddlewareCallback<Context>
+          | MiddlewareOptions<Context>
+        addMiddleware(currentPath, callbackOrOptions)
       }
-
-      if (typeof args[1] === 'function') {
-        addMiddleware(
-          [...currentPath, args[0] as string],
-          args[1] as MiddlewareCallback<Context>
-        )
-        return
-      }
-
-      if (typeof args[1] === 'object') {
-        addMiddleware(
-          [...currentPath, args[0] as string],
-          args[0] as MiddlewareOptions<Context>
-        )
-        return
-      }
-
-      return createMiddlewareHandler(
-        [...currentPath, args[0] as string],
-        addMiddleware
-      )
     },
   }
 

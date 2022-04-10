@@ -1,35 +1,35 @@
 import {
+  Cord,
+  CordBot,
   Context,
   CordBotWithPlugins,
-  createPlugin,
+  CordPluginHelper,
   Middleware,
   MiddlewareGroup,
 } from '..'
-import { Cord } from '../bot'
 
-const TestPlugin = createPlugin<
-  {},
-  {
-    test: MiddlewareGroup<{
-      yes: Middleware<{ path: string[]; d: 'y' }>
-      no: Middleware<{ path: string[]; d: 'n' }>
-      maybe: MiddlewareGroup<{
-        hm: Middleware<{ path: string[]; d: 'h' }>
-      }>
-    }>
-  }
->(() => ({
+const TestPlugin = () => ({
   id: 'test',
 
-  middleware: ['test'],
-}))
+  decorateBot(bot: CordBot) {
+    bot.defineMiddleware('test')
+    return bot as CordBot & {
+      test: MiddlewareGroup<{
+        yes: Middleware<Context>
+        maybe: MiddlewareGroup<{
+          hm: Middleware<Context>
+        }>
+      }>
+    }
+  },
+})
 
 describe('Bot', () => {
   describe('middleware', () => {
     let bot: CordBotWithPlugins<[ReturnType<typeof TestPlugin>]>
 
     beforeEach(() => {
-      bot = Cord([TestPlugin({})])
+      bot = Cord([TestPlugin()])
     })
 
     test.each<[(fn: jest.Mock) => void, unknown]>([
@@ -66,7 +66,7 @@ describe('Bot', () => {
       it('handles errors', () => {
         const a = jest.fn()
         const b = jest.fn()
-        const c = jest.fn((_ctx, _next, _err) => {})
+        const c = jest.fn((_ctx, _next, _err) => undefined)
 
         bot.test(a)
         bot.test(b)
@@ -90,7 +90,7 @@ describe('Bot', () => {
           throw new Error('oops!')
         })
         const b = jest.fn()
-        const c = jest.fn((_ctx, _next, _err) => {})
+        const c = jest.fn((_ctx, _next, _err) => undefined)
 
         bot.test(a)
         bot.test(b)
@@ -108,31 +108,23 @@ describe('Bot', () => {
   test('plugins', async () => {
     const start = jest.fn()
     const preStart = jest.fn()
-    const init = jest.fn()
+    const init = jest.fn(() => ({ decoration: 123 } as const))
     const middleware = jest.fn()
 
-    const OtherPlugin = createPlugin<
-      {},
-      {
-        other: Middleware<Context>
-        decoration: number
-      }
-    >(() => {
-      return {
+    const OtherPlugin = () =>
+      CordPluginHelper<
+        'other',
+        { decoration: 123; other: Middleware<Context> }
+      >(() => ({
         id: 'other',
-        middleware: ['other'],
+        middleware: 'other',
 
         start,
         preStart,
-        init(bot) {
-          init(bot)
+        init,
+      }))
 
-          return { decoration: 123 }
-        },
-      }
-    })
-
-    const bot = Cord([TestPlugin({}), OtherPlugin({})])
+    const bot = Cord([TestPlugin(), OtherPlugin()])
 
     expect(bot).toHaveProperty('test')
     expect(bot).toHaveProperty('other')
@@ -142,7 +134,6 @@ describe('Bot', () => {
     bot.other(middleware)
 
     expect(init).toBeCalledTimes(1)
-    expect(init).toBeCalledWith(bot)
     expect(start).not.toBeCalled()
     expect(preStart).not.toBeCalled()
 

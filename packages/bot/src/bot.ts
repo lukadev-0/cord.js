@@ -1,3 +1,5 @@
+import { ClientOptions } from 'discord.js'
+import { Client } from 'discord.js'
 import { Context } from './context'
 import {
   createMiddlewareBuilder,
@@ -26,9 +28,14 @@ export class CordBot {
   public readonly plugins: Record<string, CordPlugin>
 
   /**
+   * The Discord.js {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Client} instance.
+   */
+  public client?: Client
+
+  /**
    * Whether the client has been started
    */
-  private _started: boolean = false
+  private _started = false
 
   /**
    * @param options - the options
@@ -48,7 +55,8 @@ export class CordBot {
     K extends keyof {
       [K in keyof CordPlugin as NonNullable<CordPlugin[K]> extends (
         ...args: infer _0
-      ) => infer _1
+      ) => // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      infer _1
         ? K
         : never]: CordPlugin[K]
     }
@@ -69,6 +77,20 @@ export class CordBot {
 
     await Promise.all(this._runPluginLifecycle('preStart'))
     this._started = true
+
+    const initialClientOptions: ClientOptions = {
+      intents: [],
+    }
+
+    const clientOptions = Object.values(this.plugins).reduce(
+      (previousValue, plugin) => {
+        return plugin.modifyClientOptions?.(previousValue) ?? previousValue
+      },
+      initialClientOptions
+    )
+
+    this.client = new Client(clientOptions)
+
     await Promise.all(this._runPluginLifecycle('start'))
   }
 
@@ -146,7 +168,9 @@ export class CordBot {
  * @public
  */
 export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot &
-  UnionToIntersection<ReturnType<NonNullable<T[number]['decorateBot']>>>
+  UnionToIntersection<
+    T[number] extends CordPlugin<infer R> ? R : unknown
+  >
 
 /**
  * Creates a Cord.js bot
