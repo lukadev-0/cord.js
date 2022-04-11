@@ -33,7 +33,7 @@ export class CordBot {
 // Warning: (ae-forgotten-export) The symbol "UnionToIntersection" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot & UnionToIntersection<T[number]['decorateBot'] extends (bot: CordBot) => infer R ? R : unknown>;
+export type CordBotWithPlugins<T extends CordPlugin[]> = CordBot & UnionToIntersection<T[number] extends CordPlugin<infer R> ? R : unknown>;
 
 // @public
 export interface CordPlugin<DecoratedBotT extends CordBot = CordBot> {

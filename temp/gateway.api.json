@@ -180,7 +180,7 @@
             },
             {
               "kind": "Content",
-              "text": "<N extends {\n    readonly gateway?: string | undefined;\n} = {}>(options: "
+              "text": "<MiddlewareT extends string = \"gateway\">(options: "
             },
             {
               "kind": "Reference",
@@ -189,43 +189,25 @@
             },
             {
               "kind": "Content",
-              "text": " & {\n    middleware?: N | undefined;\n}) => {\n    id: string;\n    helpers: _cordjs_bot."
+              "text": "<MiddlewareT>) => _cordjs_bot."
             },
             {
               "kind": "Reference",
-              "text": "CordPluginHelpers",
-              "canonicalReference": "@cordjs/bot!CordPluginHelpers:interface"
+              "text": "CordPlugin",
+              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
             },
             {
               "kind": "Content",
-              "text": ";\n    decorateBot(bot: "
-            },
-            {
-              "kind": "Reference",
-              "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!CordBot:class"
-            },
-            {
-              "kind": "Content",
-              "text": "): "
+              "text": "<_cordjs_bot."
             },
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!CordBot:class"
+              "canonicalReference": "@cordjs/bot!~CordBot:class"
             },
             {
               "kind": "Content",
-              "text": " & _cordjs_bot."
-            },
-            {
-              "kind": "Reference",
-              "text": "RenameFields",
-              "canonicalReference": "@cordjs/bot!RenameFields:type"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
+              "text": " & "
             },
             {
               "kind": "Reference",
@@ -234,32 +216,14 @@
             },
             {
               "kind": "Content",
-              "text": ", N>;\n    start: (() => "
-            },
-            {
-              "kind": "Reference",
-              "text": "Promise",
-              "canonicalReference": "!Promise:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<void>) | undefined;\n    preStart: (() => "
-            },
-            {
-              "kind": "Reference",
-              "text": "Promise",
-              "canonicalReference": "!Promise:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<void>) | undefined;\n}"
+              "text": ">"
             }
           ],
           "releaseTag": "Public",
           "name": "Gateway",
           "variableTypeTokenRange": {
             "startIndex": 1,
-            "endIndex": 18
+            "endIndex": 10
           }
         },
         {
@@ -277,8 +241,8 @@
             },
             {
               "kind": "Reference",
-              "text": "ClientEvents",
-              "canonicalReference": "discord.js!ClientEvents:interface"
+              "text": "DiscordClientEventData",
+              "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
             },
             {
               "kind": "Content",
@@ -287,7 +251,7 @@
             {
               "kind": "Reference",
               "text": "Context",
-              "canonicalReference": "@cordjs/bot!Context:class"
+              "canonicalReference": "@cordjs/bot!~Context:class"
             },
             {
               "kind": "Content",
@@ -329,8 +293,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "ClientEvents",
-                  "canonicalReference": "discord.js!ClientEvents:interface"
+                  "text": "DiscordClientEventData",
+                  "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
                 },
                 {
                   "kind": "Content",
@@ -371,8 +335,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "ClientEvents",
-                  "canonicalReference": "discord.js!ClientEvents:interface"
+                  "text": "DiscordClientEventData",
+                  "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
                 },
                 {
                   "kind": "Content",
@@ -401,6 +365,45 @@
         },
         {
           "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/gateway!GatewayIntentsOption:type",
+          "docComment": "/**\n * The {@link GatewayOptions.intents} option\n *\n * @remarks\n *\n * Determines what {@link https://discord.com/developers/docs/topics/gateway#gateway-intents | intents} to use.\n *\n * If set to a {@link https://discord.js.org/#/docs/discord.js/main/typedef/IntentsResolvable | IntentsResolvable} it will be used as the intents.\n *\n * If set to `'auto'`, it will automatically detect the intents based on middleware.\n *\n * If set to an object, it will use `'auto'`, but you are able to configure the intents for `threadMembersUpdate` and `typingStart` as they will not have an intent by default.\n *\n * @defaultValue\n *\n * 'auto'\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "declare type GatewayIntentsOption = "
+            },
+            {
+              "kind": "Reference",
+              "text": "BitFieldResolvable",
+              "canonicalReference": "discord.js!BitFieldResolvable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "GatewayIntentsString",
+              "canonicalReference": "discord.js!GatewayIntentsString:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", number> | 'auto' | {\n    threadMembersUpdate?: 'guild' | 'member' | 'both';\n    typingStart?: 'guild' | 'dm' | 'both';\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "GatewayIntentsOption",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "TypeAlias",
           "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type",
           "docComment": "/**\n * {@link Gateway} middleware\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -415,7 +418,7 @@
             {
               "kind": "Reference",
               "text": "MiddlewareGroup",
-              "canonicalReference": "@cordjs/bot!MiddlewareGroup:type"
+              "canonicalReference": "@cordjs/bot!~MiddlewareGroup:type"
             },
             {
               "kind": "Content",
@@ -423,8 +426,8 @@
             },
             {
               "kind": "Reference",
-              "text": "ClientEvents",
-              "canonicalReference": "discord.js!ClientEvents:interface"
+              "text": "DiscordClientEventData",
+              "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
             },
             {
               "kind": "Content",
@@ -433,7 +436,7 @@
             {
               "kind": "Reference",
               "text": "Middleware",
-              "canonicalReference": "@cordjs/bot!Middleware:type"
+              "canonicalReference": "@cordjs/bot!~Middleware:type"
             },
             {
               "kind": "Content",
@@ -467,16 +470,45 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface GatewayOptions "
+              "text": "interface GatewayOptions<MiddlewareT extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "'gateway'"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
             }
           ],
           "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "MiddlewareT",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
           "name": "GatewayOptions",
           "members": [
             {
               "kind": "PropertySignature",
               "canonicalReference": "@cordjs/gateway!GatewayOptions#catchAll:member",
-              "docComment": "",
+              "docComment": "/**\n * Catch all events\n *\n * @remarks\n *\n * If `true` all events will be catched, this is done by monkey-patching the `EventEmitter.emit` method.\n *\n * If `false` it will detect the events by the `middleware`.\n *\n * @defaultValue\n *\n * `false`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -501,44 +533,61 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@cordjs/gateway!GatewayOptions#client:member",
-              "docComment": "",
+              "canonicalReference": "@cordjs/gateway!GatewayOptions#intents:member",
+              "docComment": "/**\n * The intents to use.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "client: "
+                  "text": "intents?: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "ClientOptions",
-                  "canonicalReference": "discord.js!ClientOptions:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Client",
-                  "canonicalReference": "discord.js!Client:class"
+                  "text": "GatewayIntentsOption",
+                  "canonicalReference": "@cordjs/gateway!~GatewayIntentsOption:type"
                 },
                 {
                   "kind": "Content",
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "isOptional": true,
               "releaseTag": "Public",
-              "name": "client",
+              "name": "intents",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 4
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@cordjs/gateway!GatewayOptions#middleware:member",
+              "docComment": "/**\n * The name of the middleware\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "middleware?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "MiddlewareT"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "middleware",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
               }
             },
             {
               "kind": "PropertySignature",
               "canonicalReference": "@cordjs/gateway!GatewayOptions#token:member",
-              "docComment": "",
+              "docComment": "/**\n * The Discord bot token.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

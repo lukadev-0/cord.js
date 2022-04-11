@@ -290,7 +290,7 @@ export const DiscordClientEventIntents = {
   messageDelete: IntentsBitField.Flags.GuildMessages,
   messageReactionRemoveAll: IntentsBitField.Flags.GuildMessageReactions,
   messageReactionRemoveEmoji: IntentsBitField.Flags.GuildMessageReactions,
-  messageDeleteBulk: 'messages',
+  messageDeleteBulk: IntentsBitField.Flags.GuildMessages,
   messageReactionAdd: IntentsBitField.Flags.GuildMessageReactions,
   messageReactionRemove: IntentsBitField.Flags.GuildMessageReactions,
   messageUpdate: IntentsBitField.Flags.GuildMessages,

@@ -12,7 +12,8 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "emitDeclarationOnly": true
   },
   "exclude": ["**/__tests__"]
 }

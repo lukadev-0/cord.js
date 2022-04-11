@@ -9,5 +9,4 @@ export default defineConfig({
   minify: false,
   tsconfig: 'tsconfig.build.json',
   target: 'es2021',
-  dts: true,
 })

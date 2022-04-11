@@ -4,51 +4,75 @@
 
 ```ts
 
+import { BitFieldResolvable } from 'discord.js';
 import { Client } from 'discord.js';
-import { ClientEvents } from 'discord.js';
-import { ClientOptions } from 'discord.js';
+import { Collection } from 'discord.js';
 import { Context } from '@cordjs/bot';
-import { CordBot } from '@cordjs/bot';
 import * as _cordjs_bot from '@cordjs/bot';
+import { DMChannel } from 'discord.js';
+import { GatewayIntentsString } from 'discord.js';
+import { Guild } from 'discord.js';
+import { GuildBan } from 'discord.js';
+import { GuildEmoji } from 'discord.js';
+import { GuildMember } from 'discord.js';
+import { GuildScheduledEvent } from 'discord.js';
+import { Interaction } from 'discord.js';
+import { Invite } from 'discord.js';
+import { Message } from 'discord.js';
+import { MessageReaction } from 'discord.js';
 import { Middleware } from '@cordjs/bot';
 import { MiddlewareGroup } from '@cordjs/bot';
+import { NewsChannel } from 'discord.js';
+import { NonThreadGuildBasedChannel } from 'discord.js';
+import { PartialGuildMember } from 'discord.js';
+import { PartialMessage } from 'discord.js';
+import { PartialMessageReaction } from 'discord.js';
+import { PartialUser } from 'discord.js';
+import { Presence } from 'discord.js';
+import { Role } from 'discord.js';
+import { Snowflake } from 'discord.js';
+import { StageInstance } from 'discord.js';
+import { Sticker } from 'discord.js';
+import { TextBasedChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
+import { ThreadChannel } from 'discord.js';
+import { ThreadMember } from 'discord.js';
+import { Typing } from 'discord.js';
+import { User } from 'discord.js';
+import { VoiceState } from 'discord.js';
 
 // @public
-const Gateway: <N extends {
-    readonly gateway?: string | undefined;
-} = {}>(options: GatewayOptions & {
-    middleware?: N | undefined;
-}) => {
-    id: string;
-    helpers: _cordjs_bot.CordPluginHelpers;
-    decorateBot(bot: CordBot): CordBot & _cordjs_bot.RenameFields<GatewayMiddleware, N>;
-    start: (() => Promise<void>) | undefined;
-    preStart: (() => Promise<void>) | undefined;
-};
+const Gateway: <MiddlewareT extends string = "gateway">(options: GatewayOptions<MiddlewareT>) => _cordjs_bot.CordPlugin<_cordjs_bot.CordBot & GatewayMiddleware>;
 export { Gateway }
 export default Gateway;
 
+// Warning: (ae-forgotten-export) The symbol "DiscordClientEventData" needs to be exported by the entry point index.d.ts
+//
 // @public
-export class GatewayContext<K extends keyof ClientEvents> extends Context {
-    constructor(path: string[], data: ClientEvents[K]);
+export class GatewayContext<K extends keyof DiscordClientEventData> extends Context {
+    constructor(path: string[], data: DiscordClientEventData[K]);
     // (undocumented)
-    data: ClientEvents[K];
+    data: DiscordClientEventData[K];
 }
+
+// @public
+export type GatewayIntentsOption = BitFieldResolvable<GatewayIntentsString, number> | 'auto' | {
+    threadMembersUpdate?: 'guild' | 'member' | 'both';
+    typingStart?: 'guild' | 'dm' | 'both';
+};
 
 // @public
 export type GatewayMiddleware = {
     gateway: MiddlewareGroup<{
-        [K in keyof ClientEvents]: Middleware<GatewayContext<K>>;
+        [K in keyof DiscordClientEventData]: Middleware<GatewayContext<K>>;
     }>;
 };
 
 // @public
-export interface GatewayOptions {
-    // (undocumented)
+export interface GatewayOptions<MiddlewareT extends string = 'gateway'> {
     catchAll?: boolean;
-    // (undocumented)
-    client: ClientOptions | Client;
-    // (undocumented)
+    intents?: GatewayIntentsOption;
+    middleware?: MiddlewareT;
     token: string;
 }
 

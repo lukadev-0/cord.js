@@ -645,16 +645,16 @@
             },
             {
               "kind": "Content",
-              "text": "<T[number]['decorateBot'] extends (bot: "
+              "text": "<T[number] extends "
             },
             {
               "kind": "Reference",
-              "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "text": "CordPlugin",
+              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
             },
             {
               "kind": "Content",
-              "text": ") => infer R ? R : unknown>"
+              "text": "<infer R> ? R : unknown>"
             },
             {
               "kind": "Content",

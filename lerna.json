@@ -5,6 +5,10 @@
   "command": {
     "publish": {
       "message": "chore(release): 🚀 publish"
+    },
+
+    "run": {
+      "npmClient": "yarn"
     }
   }
 }

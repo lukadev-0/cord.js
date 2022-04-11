@@ -10,12 +10,15 @@ import {
   Middleware,
   MiddlewareGroup,
   Context,
-  createPlugin,
-  CordBot,
+  CordPluginHelper,
 } from '@cordjs/bot'
-import { Client, ClientEvents, ClientOptions } from 'discord.js'
+import {
+  BitFieldResolvable,
+  GatewayIntentsString,
+  IntentsBitField,
+} from 'discord.js'
 
-import type { DiscordClientEventData } from './events'
+import { DiscordClientEventData, DiscordClientEventIntents } from './events'
 import { DiscordClientEventProperties } from './events'
 
 /**
@@ -34,7 +37,12 @@ export type GatewayMiddleware = {
  *
  * @public
  */
-export interface GatewayOptions {
+export interface GatewayOptions<MiddlewareT extends string = 'gateway'> {
+  /**
+   * The name of the middleware
+   */
+  middleware?: MiddlewareT
+
   /**
    * Catch all events
    *
@@ -42,6 +50,8 @@ export interface GatewayOptions {
    * If `true` all events will be catched, this is done by monkey-patching the `EventEmitter.emit` method.
    *
    * If `false` it will detect the events by the `middleware`.
+   *
+   * @defaultValue `false`
    */
   catchAll?: boolean
 
@@ -49,69 +59,179 @@ export interface GatewayOptions {
    * The Discord bot token.
    */
   token: string
+
+  /**
+   * The intents to use.
+   */
+  intents?: GatewayIntentsOption
 }
+
+/**
+ * The {@link GatewayOptions.intents} option
+ *
+ * @remarks
+ * Determines what {@link https://discord.com/developers/docs/topics/gateway#gateway-intents | intents} to use.
+ *
+ * If set to a {@link https://discord.js.org/#/docs/discord.js/main/typedef/IntentsResolvable | IntentsResolvable} it
+ * will be used as the intents.
+ *
+ * If set to `'auto'`, it will automatically detect the intents based on middleware.
+ *
+ * If set to an object, it will use `'auto'`, but you are able to configure the intents
+ * for `threadMembersUpdate` and `typingStart` as they will not have an intent by default.
+ *
+ * @defaultValue 'auto'
+ *
+ * @public
+ */
+export type GatewayIntentsOption =
+  | BitFieldResolvable<GatewayIntentsString, number>
+  | 'auto'
+  | {
+      threadMembersUpdate?: 'guild' | 'member' | 'both'
+      typingStart?: 'guild' | 'dm' | 'both'
+    }
 
 /**
  * Gateway plugin
  *
  * @public
  */
-export const Gateway = createPlugin<GatewayOptions, GatewayMiddleware>(
-  (options, helpers) => {
+export const Gateway = <MiddlewareT extends string = 'gateway'>(
+  options: GatewayOptions<MiddlewareT>
+) =>
+  CordPluginHelper<MiddlewareT, GatewayMiddleware>(({ bot, client, path }) => {
+    const {
+      middleware = 'gateway',
+      catchAll = false,
+      token,
+      intents: intentsOption = 'auto',
+    } = options
+
+    function getEvents() {
+      const { middleware: botMiddleware } = bot()
+
+      const events: string[] = []
+      for (const v of botMiddleware) {
+        const [root, event] = v.path
+        if (root === middleware) {
+          if (!(event in DiscordClientEventProperties))
+            throw new Error(`Unknown event: ${event}`)
+
+          events.push(event)
+        }
+      }
+
+      return events
+    }
+
+    function eventArgsToObject<K extends keyof DiscordClientEventData>(
+      event: K,
+      args: unknown[]
+    ) {
+      const eventProperties = DiscordClientEventProperties[event]
+
+      const obj: Record<string, unknown> = {}
+      for (let i = 0; i < eventProperties.length; i++) {
+        obj[eventProperties[i]] = args[i]
+      }
+      return obj as DiscordClientEventData[K]
+    }
+
+    function getIntents(events: string[]) {
+      const intents = new IntentsBitField()
+      for (const event of events) {
+        const intent =
+          DiscordClientEventIntents[
+            event as keyof typeof DiscordClientEventIntents
+          ]
+        if (intent) {
+          intents.add(intent)
+        }
+      }
+      return intents
+    }
+
+    function onAnyEvent(
+      callback: (event: keyof DiscordClientEventData, args: unknown[]) => void
+    ) {
+      const { emit: originalEmit } = client()
+
+      client().emit = (event: string, ...args: unknown[]) => {
+        if (event in DiscordClientEventProperties) {
+          callback(event as keyof DiscordClientEventData, args)
+        }
+
+        return originalEmit.call(client(), event, ...args)
+      }
+    }
+
+    function execEventMiddleware(
+      event: keyof DiscordClientEventData,
+      args: unknown[]
+    ) {
+      bot().execMiddleware(
+        new GatewayContext(path([event]), eventArgsToObject(event, args))
+      )
+    }
+
+    function isIntentResolvable(
+      bit: unknown
+    ): bit is BitFieldResolvable<GatewayIntentsString, number> {
+      if (typeof bit === 'number' && bit >= 0) return true
+      if (bit instanceof IntentsBitField) return true
+      if (Array.isArray(bit)) return bit.every(isIntentResolvable)
+      if (typeof bit === 'string') {
+        if (bit in IntentsBitField.Flags) return true
+        if (!isNaN(Number(bit))) return true
+      }
+
+      return false
+    }
+
     return {
       id: '@cordjs/gateway',
-      middleware: ['gateway'],
+      middleware: middleware as MiddlewareT,
 
       async start() {
-        const client = helpers.client()
-
-        if (options.catchAll) {
-          const emit = client.emit
-
-          client.emit = <K extends keyof ClientEvents>(
-            eventName: string,
-            ...args: ClientEvents[K]
-          ) => {
-            helpers
-              .bot()
-              .execMiddleware(
-                new GatewayContext(helpers.path('gateway', [eventName]), args)
-              )
-
-            return emit.apply(client, [eventName, args])
-          }
+        if (catchAll) {
+          onAnyEvent(execEventMiddleware)
         } else {
-          const added: Record<string, true> = {}
-          for (const middleware of helpers.bot().middleware) {
-            if (
-              middleware.path.length === 2 &&
-              middleware.path[0] === helpers.root('gateway')
-            ) {
-              if (!(middleware.path[1] in added)) {
-                const eventName = middleware.path[1] as keyof ClientEvents
-
-                added[eventName] = true
-
-                client.on(eventName, (...args) => {
-                  helpers
-                    .bot()
-                    .execMiddleware(
-                      new GatewayContext(
-                        helpers.path('gateway', [eventName]),
-                        args
-                      )
-                    )
-                })
-              }
-            }
+          const events = getEvents()
+          for (const event of events) {
+            client().on(event, (...args) =>
+              execEventMiddleware(event as keyof DiscordClientEventData, args)
+            )
           }
         }
 
-        await client.login(options.token)
+        await client().login(token)
+      },
+
+      modifyClientOptions(clientOptions) {
+        if (catchAll) {
+          if (!isIntentResolvable(intentsOption)) {
+            throw new TypeError(
+              'If catchAll is enabled, options.intents must be a valid IntentsResolvable'
+            )
+          }
+
+          return {
+            ...clientOptions,
+            intents: [clientOptions.intents, intentsOption],
+          }
+        }
+
+        const events = getEvents()
+        const intents = getIntents(events)
+
+        return {
+          ...clientOptions,
+          intents: [clientOptions.intents, intents],
+        }
       },
     }
-  }
-)
+  })
 
 /**
  * The context
