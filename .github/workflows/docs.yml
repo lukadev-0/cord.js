@@ -10,6 +10,8 @@ jobs:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    steps:
       - name: Build website
         run: yarn build
         working-directory: ./website
