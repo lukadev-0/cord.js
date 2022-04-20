@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [push, pull-request]
 
 jobs:
   build:
@@ -17,23 +17,11 @@ jobs:
         run: yarn build
       - name: Test
         run: yarn test
+      - name: Lint
+        run: yarn lint
       - name: Prettier
         run: yarn prettier
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: 'style: 💅 run prettier'
-      - name: Build website
-        run: yarn build
-        working-directory: ./website
-      - name: Export website
-        run: yarn next export
-        working-directory: ./website
-      - name: Deploy Website
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./website/out
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'chore: 🚀 deploy'
+          message: 'style: 🎨 run prettier'
