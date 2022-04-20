@@ -20,10 +20,11 @@
   "scripts": {
     "build": "tsup --dts-resolve && api-extractor run"
   },
-  "dependencies": {
+  "devDependencies": {
     "discord.js": "^14.0.0-dev.1647259751.2297c2b"
   },
   "peerDependencies": {
+    "discord.js": "^14.0.0-dev.1647259751.2297c2b",
     "@cordjs/bot": "^0.3.0"
   },
   "publishConfig": {
