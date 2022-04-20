@@ -1,6 +1,4 @@
 node_modules
 
-/packages/*/dist
-/packages/*/lib
-/examples/*/dist
+/packages/*/out
 /coverage

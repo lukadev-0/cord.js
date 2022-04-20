@@ -161,7 +161,7 @@
   },
   "kind": "Package",
   "canonicalReference": "@cordjs/bot!",
-  "docComment": "",
+  "docComment": "/**\n * Cord.js is a Discord bot framework.\n *\n * @packageDocumentation\n */\n",
   "name": "@cordjs/bot",
   "members": [
     {
@@ -176,7 +176,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare abstract class Context "
+              "text": "export declare abstract class Context "
             }
           ],
           "releaseTag": "Public",
@@ -249,12 +249,12 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare function Cord<T extends "
+              "text": "export declare function Cord<T extends "
             },
             {
               "kind": "Reference",
               "text": "CordPlugin",
-              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+              "canonicalReference": "@cordjs/bot!CordPlugin:interface"
             },
             {
               "kind": "Content",
@@ -275,7 +275,7 @@
             {
               "kind": "Reference",
               "text": "CordBotWithPlugins",
-              "canonicalReference": "@cordjs/bot!~CordBotWithPlugins:type"
+              "canonicalReference": "@cordjs/bot!CordBotWithPlugins:type"
             },
             {
               "kind": "Content",
@@ -323,7 +323,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare class CordBot "
+              "text": "export declare class CordBot "
             }
           ],
           "releaseTag": "Public",
@@ -341,7 +341,7 @@
                 {
                   "kind": "Reference",
                   "text": "CordPlugin",
-                  "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+                  "canonicalReference": "@cordjs/bot!CordPlugin:interface"
                 },
                 {
                   "kind": "Content",
@@ -449,7 +449,7 @@
                 {
                   "kind": "Reference",
                   "text": "Context",
-                  "canonicalReference": "@cordjs/bot!~Context:class"
+                  "canonicalReference": "@cordjs/bot!Context:class"
                 },
                 {
                   "kind": "Content",
@@ -500,7 +500,7 @@
                 {
                   "kind": "Reference",
                   "text": "MiddlewareObject",
-                  "canonicalReference": "@cordjs/bot!~MiddlewareObject:interface"
+                  "canonicalReference": "@cordjs/bot!MiddlewareObject:interface"
                 },
                 {
                   "kind": "Content",
@@ -509,7 +509,7 @@
                 {
                   "kind": "Reference",
                   "text": "Context",
-                  "canonicalReference": "@cordjs/bot!~Context:class"
+                  "canonicalReference": "@cordjs/bot!Context:class"
                 },
                 {
                   "kind": "Content",
@@ -550,7 +550,7 @@
                 {
                   "kind": "Reference",
                   "text": "CordPlugin",
-                  "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+                  "canonicalReference": "@cordjs/bot!CordPlugin:interface"
                 },
                 {
                   "kind": "Content",
@@ -614,12 +614,12 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type CordBotWithPlugins<T extends "
+              "text": "export declare type CordBotWithPlugins<T extends "
             },
             {
               "kind": "Reference",
               "text": "CordPlugin",
-              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+              "canonicalReference": "@cordjs/bot!CordPlugin:interface"
             },
             {
               "kind": "Content",
@@ -632,7 +632,7 @@
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "canonicalReference": "@cordjs/bot!CordBot:class"
             },
             {
               "kind": "Content",
@@ -641,7 +641,7 @@
             {
               "kind": "Reference",
               "text": "UnionToIntersection",
-              "canonicalReference": "@cordjs/bot!~UnionToIntersection:type"
+              "canonicalReference": "@cordjs/bot!UnionToIntersection:type"
             },
             {
               "kind": "Content",
@@ -650,7 +650,7 @@
             {
               "kind": "Reference",
               "text": "CordPlugin",
-              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+              "canonicalReference": "@cordjs/bot!CordPlugin:interface"
             },
             {
               "kind": "Content",
@@ -688,12 +688,12 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface CordPlugin<DecoratedBotT extends "
+              "text": "export interface CordPlugin<DecoratedBotT extends "
             },
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "canonicalReference": "@cordjs/bot!CordBot:class"
             },
             {
               "kind": "Content",
@@ -706,7 +706,7 @@
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "canonicalReference": "@cordjs/bot!CordBot:class"
             },
             {
               "kind": "Content",
@@ -741,7 +741,7 @@
                 {
                   "kind": "Reference",
                   "text": "CordBot",
-                  "canonicalReference": "@cordjs/bot!~CordBot:class"
+                  "canonicalReference": "@cordjs/bot!CordBot:class"
                 },
                 {
                   "kind": "Content",
@@ -922,7 +922,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare function CordPluginHelper<MiddlewareT extends "
+              "text": "export declare function CordPluginHelper<MiddlewareT extends "
             },
             {
               "kind": "Content",
@@ -939,7 +939,7 @@
             {
               "kind": "Reference",
               "text": "CordPluginHelpers",
-              "canonicalReference": "@cordjs/bot!~CordPluginHelpers:interface"
+              "canonicalReference": "@cordjs/bot!CordPluginHelpers:interface"
             },
             {
               "kind": "Content",
@@ -948,7 +948,7 @@
             {
               "kind": "Reference",
               "text": "CordPluginOptions",
-              "canonicalReference": "@cordjs/bot!~CordPluginOptions:interface"
+              "canonicalReference": "@cordjs/bot!CordPluginOptions:interface"
             },
             {
               "kind": "Content",
@@ -961,7 +961,7 @@
             {
               "kind": "Reference",
               "text": "CordPlugin",
-              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+              "canonicalReference": "@cordjs/bot!CordPlugin:interface"
             },
             {
               "kind": "Content",
@@ -970,7 +970,7 @@
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "canonicalReference": "@cordjs/bot!CordBot:class"
             },
             {
               "kind": "Content",
@@ -1029,7 +1029,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface CordPluginHelpers "
+              "text": "export interface CordPluginHelpers "
             }
           ],
           "releaseTag": "Public",
@@ -1047,7 +1047,7 @@
                 {
                   "kind": "Reference",
                   "text": "CordBot",
-                  "canonicalReference": "@cordjs/bot!~CordBot:class"
+                  "canonicalReference": "@cordjs/bot!CordBot:class"
                 },
                 {
                   "kind": "Content",
@@ -1147,7 +1147,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface CordPluginOptions<MiddlewareT extends "
+              "text": "export interface CordPluginOptions<MiddlewareT extends "
             },
             {
               "kind": "Content",
@@ -1392,7 +1392,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type Middleware<T, O extends "
+              "text": "export declare type Middleware<T, O extends "
             },
             {
               "kind": "Reference",
@@ -1427,7 +1427,7 @@
             {
               "kind": "Reference",
               "text": "MiddlewareCallback",
-              "canonicalReference": "@cordjs/bot!~MiddlewareCallback:type"
+              "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
             },
             {
               "kind": "Content",
@@ -1436,7 +1436,7 @@
             {
               "kind": "Reference",
               "text": "MiddlewareOptions",
-              "canonicalReference": "@cordjs/bot!~MiddlewareOptions:interface"
+              "canonicalReference": "@cordjs/bot!MiddlewareOptions:interface"
             },
             {
               "kind": "Content",
@@ -1485,7 +1485,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type MiddlewareCallback<T> = "
+              "text": "export declare type MiddlewareCallback<T> = "
             },
             {
               "kind": "Content",
@@ -1494,7 +1494,7 @@
             {
               "kind": "Reference",
               "text": "NextFn",
-              "canonicalReference": "@cordjs/bot!~NextFn:type"
+              "canonicalReference": "@cordjs/bot!NextFn:type"
             },
             {
               "kind": "Content",
@@ -1532,7 +1532,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type MiddlewareGroup<T extends "
+              "text": "export declare type MiddlewareGroup<T extends "
             },
             {
               "kind": "Reference",
@@ -1546,7 +1546,7 @@
             {
               "kind": "Reference",
               "text": "Middleware",
-              "canonicalReference": "@cordjs/bot!~Middleware:type"
+              "canonicalReference": "@cordjs/bot!Middleware:type"
             },
             {
               "kind": "Content",
@@ -1555,7 +1555,7 @@
             {
               "kind": "Reference",
               "text": "Context",
-              "canonicalReference": "@cordjs/bot!~Context:class"
+              "canonicalReference": "@cordjs/bot!Context:class"
             },
             {
               "kind": "Content",
@@ -1619,12 +1619,12 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface MiddlewareObject<T extends "
+              "text": "export interface MiddlewareObject<T extends "
             },
             {
               "kind": "Reference",
               "text": "Context",
-              "canonicalReference": "@cordjs/bot!~Context:class"
+              "canonicalReference": "@cordjs/bot!Context:class"
             },
             {
               "kind": "Content",
@@ -1659,7 +1659,7 @@
                 {
                   "kind": "Reference",
                   "text": "MiddlewareCallback",
-                  "canonicalReference": "@cordjs/bot!~MiddlewareCallback:type"
+                  "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
                 },
                 {
                   "kind": "Content",
@@ -1714,7 +1714,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface MiddlewareOptions<T> "
+              "text": "export interface MiddlewareOptions<T> "
             }
           ],
           "releaseTag": "Public",
@@ -1745,7 +1745,7 @@
                 {
                   "kind": "Reference",
                   "text": "MiddlewareCallback",
-                  "canonicalReference": "@cordjs/bot!~MiddlewareCallback:type"
+                  "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
                 },
                 {
                   "kind": "Content",
@@ -1774,7 +1774,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type NextFn = "
+              "text": "export declare type NextFn = "
             },
             {
               "kind": "Content",

@@ -5,44 +5,45 @@
 ```ts
 
 import { BitFieldResolvable } from 'discord.js';
-import { Client } from 'discord.js';
-import { Collection } from 'discord.js';
+import type { Client } from 'discord.js';
+import type { Collection } from 'discord.js';
 import { Context } from '@cordjs/bot';
-import * as _cordjs_bot from '@cordjs/bot';
-import { DMChannel } from 'discord.js';
+import { CordBot } from '@cordjs/bot';
+import { CordPlugin } from '@cordjs/bot';
+import type { DMChannel } from 'discord.js';
 import { GatewayIntentsString } from 'discord.js';
-import { Guild } from 'discord.js';
-import { GuildBan } from 'discord.js';
-import { GuildEmoji } from 'discord.js';
-import { GuildMember } from 'discord.js';
-import { GuildScheduledEvent } from 'discord.js';
-import { Interaction } from 'discord.js';
-import { Invite } from 'discord.js';
-import { Message } from 'discord.js';
-import { MessageReaction } from 'discord.js';
+import type { Guild } from 'discord.js';
+import type { GuildBan } from 'discord.js';
+import type { GuildEmoji } from 'discord.js';
+import type { GuildMember } from 'discord.js';
+import type { GuildScheduledEvent } from 'discord.js';
+import type { Interaction } from 'discord.js';
+import type { Invite } from 'discord.js';
+import type { Message } from 'discord.js';
+import type { MessageReaction } from 'discord.js';
 import { Middleware } from '@cordjs/bot';
 import { MiddlewareGroup } from '@cordjs/bot';
-import { NewsChannel } from 'discord.js';
-import { NonThreadGuildBasedChannel } from 'discord.js';
-import { PartialGuildMember } from 'discord.js';
-import { PartialMessage } from 'discord.js';
-import { PartialMessageReaction } from 'discord.js';
-import { PartialUser } from 'discord.js';
-import { Presence } from 'discord.js';
-import { Role } from 'discord.js';
-import { Snowflake } from 'discord.js';
-import { StageInstance } from 'discord.js';
-import { Sticker } from 'discord.js';
-import { TextBasedChannel } from 'discord.js';
-import { TextChannel } from 'discord.js';
-import { ThreadChannel } from 'discord.js';
-import { ThreadMember } from 'discord.js';
-import { Typing } from 'discord.js';
-import { User } from 'discord.js';
-import { VoiceState } from 'discord.js';
+import type { NewsChannel } from 'discord.js';
+import type { NonThreadGuildBasedChannel } from 'discord.js';
+import type { PartialGuildMember } from 'discord.js';
+import type { PartialMessage } from 'discord.js';
+import type { PartialMessageReaction } from 'discord.js';
+import type { PartialUser } from 'discord.js';
+import type { Presence } from 'discord.js';
+import type { Role } from 'discord.js';
+import type { Snowflake } from 'discord.js';
+import type { StageInstance } from 'discord.js';
+import type { Sticker } from 'discord.js';
+import type { TextBasedChannel } from 'discord.js';
+import type { TextChannel } from 'discord.js';
+import type { ThreadChannel } from 'discord.js';
+import type { ThreadMember } from 'discord.js';
+import type { Typing } from 'discord.js';
+import type { User } from 'discord.js';
+import type { VoiceState } from 'discord.js';
 
 // @public
-const Gateway: <MiddlewareT extends string = "gateway">(options: GatewayOptions<MiddlewareT>) => _cordjs_bot.CordPlugin<_cordjs_bot.CordBot & GatewayMiddleware>;
+const Gateway: <MiddlewareT extends string = "gateway">(options: GatewayOptions<MiddlewareT>) => CordPlugin<CordBot & GatewayMiddleware>;
 export { Gateway }
 export default Gateway;
 
@@ -75,7 +76,5 @@ export interface GatewayOptions<MiddlewareT extends string = 'gateway'> {
     middleware?: MiddlewareT;
     token: string;
 }
-
-// (No @packageDocumentation comment for this package)
 
 ```

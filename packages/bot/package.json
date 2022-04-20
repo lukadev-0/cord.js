@@ -2,14 +2,14 @@
   "name": "@cordjs/bot",
   "version": "0.3.0",
   "description": "Discord bot framework",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "typings": "dist/index.d.ts",
+  "main": "out/dist/index.js",
+  "module": "out/dist/index.mjs",
+  "typings": "out/dist/index.d.ts",
   "repository": "https://github.com/lukadev-0/cord.js",
   "author": "LukaDev",
   "license": "MIT",
   "files": [
-    "dist"
+    "out/dist"
   ],
   "exports": {
     ".": {
@@ -18,7 +18,7 @@
     }
   },
   "scripts": {
-    "build": "tsup --dts-resolve && api-extractor run"
+    "build": "tsup && tsc --emitDeclarationOnly -p tsconfig.build.json --outDir out/lib && api-extractor run"
   },
   "publishConfig": {
     "access": "public"

@@ -94,6 +94,4 @@ export interface MiddlewareOptions<T> {
 // @public
 export type NextFn = (err?: unknown) => void;
 
-// (No @packageDocumentation comment for this package)
-
 ```

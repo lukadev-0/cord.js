@@ -161,7 +161,7 @@
   },
   "kind": "Package",
   "canonicalReference": "@cordjs/gateway!",
-  "docComment": "",
+  "docComment": "/**\n * Connect to the gateway with Cord.js\n *\n * @remarks\n *\n * This plugin uses {@link https://discord.js.org/ | Discord.js} under the hood.\n *\n * @packageDocumentation\n */\n",
   "name": "@cordjs/gateway",
   "members": [
     {
@@ -185,25 +185,25 @@
             {
               "kind": "Reference",
               "text": "GatewayOptions",
-              "canonicalReference": "@cordjs/gateway!~GatewayOptions:interface"
+              "canonicalReference": "@cordjs/gateway!GatewayOptions:interface"
             },
             {
               "kind": "Content",
-              "text": "<MiddlewareT>) => _cordjs_bot."
+              "text": "<MiddlewareT>) => import(\"@cordjs/bot\")."
             },
             {
               "kind": "Reference",
               "text": "CordPlugin",
-              "canonicalReference": "@cordjs/bot!~CordPlugin:interface"
+              "canonicalReference": "@cordjs/bot!CordPlugin:interface"
             },
             {
               "kind": "Content",
-              "text": "<_cordjs_bot."
+              "text": "<import(\"@cordjs/bot\")."
             },
             {
               "kind": "Reference",
               "text": "CordBot",
-              "canonicalReference": "@cordjs/bot!~CordBot:class"
+              "canonicalReference": "@cordjs/bot!CordBot:class"
             },
             {
               "kind": "Content",
@@ -212,7 +212,7 @@
             {
               "kind": "Reference",
               "text": "GatewayMiddleware",
-              "canonicalReference": "@cordjs/gateway!~GatewayMiddleware:type"
+              "canonicalReference": "@cordjs/gateway!GatewayMiddleware:type"
             },
             {
               "kind": "Content",
@@ -233,7 +233,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare class GatewayContext<K extends "
+              "text": "export declare class GatewayContext<K extends "
             },
             {
               "kind": "Content",
@@ -242,7 +242,7 @@
             {
               "kind": "Reference",
               "text": "DiscordClientEventData",
-              "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
+              "canonicalReference": "@cordjs/gateway!DiscordClientEventData:interface"
             },
             {
               "kind": "Content",
@@ -251,7 +251,7 @@
             {
               "kind": "Reference",
               "text": "Context",
-              "canonicalReference": "@cordjs/bot!~Context:class"
+              "canonicalReference": "@cordjs/bot!Context:class"
             },
             {
               "kind": "Content",
@@ -294,7 +294,7 @@
                 {
                   "kind": "Reference",
                   "text": "DiscordClientEventData",
-                  "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
+                  "canonicalReference": "@cordjs/gateway!DiscordClientEventData:interface"
                 },
                 {
                   "kind": "Content",
@@ -336,7 +336,7 @@
                 {
                   "kind": "Reference",
                   "text": "DiscordClientEventData",
-                  "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
+                  "canonicalReference": "@cordjs/gateway!DiscordClientEventData:interface"
                 },
                 {
                   "kind": "Content",
@@ -370,7 +370,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type GatewayIntentsOption = "
+              "text": "export declare type GatewayIntentsOption = "
             },
             {
               "kind": "Reference",
@@ -409,7 +409,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "declare type GatewayMiddleware = "
+              "text": "export declare type GatewayMiddleware = "
             },
             {
               "kind": "Content",
@@ -418,7 +418,7 @@
             {
               "kind": "Reference",
               "text": "MiddlewareGroup",
-              "canonicalReference": "@cordjs/bot!~MiddlewareGroup:type"
+              "canonicalReference": "@cordjs/bot!MiddlewareGroup:type"
             },
             {
               "kind": "Content",
@@ -427,7 +427,7 @@
             {
               "kind": "Reference",
               "text": "DiscordClientEventData",
-              "canonicalReference": "@cordjs/gateway!~DiscordClientEventData:interface"
+              "canonicalReference": "@cordjs/gateway!DiscordClientEventData:interface"
             },
             {
               "kind": "Content",
@@ -436,7 +436,7 @@
             {
               "kind": "Reference",
               "text": "Middleware",
-              "canonicalReference": "@cordjs/bot!~Middleware:type"
+              "canonicalReference": "@cordjs/bot!Middleware:type"
             },
             {
               "kind": "Content",
@@ -445,7 +445,7 @@
             {
               "kind": "Reference",
               "text": "GatewayContext",
-              "canonicalReference": "@cordjs/gateway!~GatewayContext:class"
+              "canonicalReference": "@cordjs/gateway!GatewayContext:class"
             },
             {
               "kind": "Content",
@@ -470,7 +470,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface GatewayOptions<MiddlewareT extends "
+              "text": "export interface GatewayOptions<MiddlewareT extends "
             },
             {
               "kind": "Content",
@@ -543,7 +543,7 @@
                 {
                   "kind": "Reference",
                   "text": "GatewayIntentsOption",
-                  "canonicalReference": "@cordjs/gateway!~GatewayIntentsOption:type"
+                  "canonicalReference": "@cordjs/gateway!GatewayIntentsOption:type"
                 },
                 {
                   "kind": "Content",
