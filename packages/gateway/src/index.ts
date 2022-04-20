@@ -111,18 +111,32 @@ export const Gateway = <MiddlewareT extends string = 'gateway'>(
     function getEvents() {
       const { middleware: botMiddleware } = bot()
 
-      const events: string[] = []
+      const events = new Map<string, true>()
       for (const v of botMiddleware) {
         const [root, event] = v.path
         if (root === middleware) {
           if (!(event in DiscordClientEventProperties))
             throw new Error(`Unknown event: ${event}`)
 
-          events.push(event)
+          if (event === 'typingStart' && intentsOption === 'auto') {
+            throw new Error(
+              `Cannot use 'typingStart' with 'auto', set the 'intents' option to an object instead.\n` +
+                `{ typingStart: 'guild' | 'dm' | 'both' }`
+            )
+          }
+
+          if (event === 'threadMembersUpdate' && intentsOption === 'auto') {
+            throw new Error(
+              `Cannot use 'threadMembersUpdate' with 'auto', set the 'intents' option to an object instead.\n` +
+                `{ threadMembersUpdate: 'guild' | 'members' | 'both' }`
+            )
+          }
+
+          events.set(event, true)
         }
       }
 
-      return events
+      return [...events.keys()]
     }
 
     function eventArgsToObject<K extends keyof DiscordClientEventData>(
@@ -139,7 +153,39 @@ export const Gateway = <MiddlewareT extends string = 'gateway'>(
     }
 
     function getIntents(events: string[]) {
+      if (isIntentResolvable(intentsOption)) return intentsOption
+
       const intents = new IntentsBitField()
+      if (intentsOption !== 'auto') {
+        if (
+          intentsOption.threadMembersUpdate === 'guild' ||
+          intentsOption.threadMembersUpdate === 'both'
+        ) {
+          intents.add(IntentsBitField.Flags.Guilds)
+        }
+
+        if (
+          intentsOption.threadMembersUpdate === 'member' ||
+          intentsOption.threadMembersUpdate === 'both'
+        ) {
+          intents.add(IntentsBitField.Flags.GuildMembers)
+        }
+
+        if (
+          intentsOption.typingStart === 'guild' ||
+          intentsOption.typingStart === 'both'
+        ) {
+          intents.add(IntentsBitField.Flags.GuildMessageTyping)
+        }
+
+        if (
+          intentsOption.typingStart === 'dm' ||
+          intentsOption.typingStart === 'both'
+        ) {
+          intents.add(IntentsBitField.Flags.DirectMessageTyping)
+        }
+      }
+
       for (const event of events) {
         const intent =
           DiscordClientEventIntents[

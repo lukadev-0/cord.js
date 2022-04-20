@@ -204,7 +204,7 @@ export function CordPluginHelper<MiddlewareT extends string, BotDecorationsT>(
     },
 
     client() {
-      const client = this.bot().client
+      const client = helpers.bot().client
       if (!client)
         throw new Error("Cannot get client before 'start' has been called")
       return client
