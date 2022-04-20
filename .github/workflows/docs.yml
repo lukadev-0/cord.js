@@ -1,16 +1,12 @@
 on:
   push:
-    branches:    
+    branches:
       - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    
     steps:
       - name: Build website
         run: yarn build
