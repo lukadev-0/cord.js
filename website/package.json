@@ -7,7 +7,7 @@
     "build": "",
     "build:website": "next build",
     "start": "next start",
-    "export": "rushx build:website && next export"
+    "export": "pnpm run build:website && next export"
   },
   "dependencies": {
     "clsx": "^1.1.1",
