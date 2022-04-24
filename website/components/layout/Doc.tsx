@@ -37,8 +37,8 @@ function SidebarItem({
       <Link href={href}>
         <a
           className={clsx('block text-gray-700 dark:text-gray-400', {
-            '-ml-px border-l border-transparent pl-4 hover:border-gray-400 dark:hover:border-gray-600':
-              !root,
+            '-ml-px border-l border-transparent pl-4 ': !root,
+            'hover:border-gray-400 dark:hover:border-gray-600': router.asPath !== href, 
             'border-blue-700 dark:border-blue-400': router.asPath === href,
           })}
         >
