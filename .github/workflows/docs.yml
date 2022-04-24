@@ -21,7 +21,7 @@ jobs:
         run: pnpm install
         working-directory: ./website
       - name: Export website
-        run: yarn next export
+        run: pnpm run export
         working-directory: ./website
       - name: Deploy Website
         uses: peaceiris/actions-gh-pages@v3
