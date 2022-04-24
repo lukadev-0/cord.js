@@ -1,4 +1,0 @@
-{
-  "conventionalCommits.scopes": ["website", "bot", "gateway"],
-  "typescript.tsdk": "node_modules/typescript/lib"
-}

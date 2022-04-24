@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
 function SidebarCategory({
@@ -29,6 +30,8 @@ function SidebarItem({
   name: string
   root?: boolean
 }) {
+  const router = useRouter()
+
   return (
     <li>
       <Link href={href}>
@@ -36,6 +39,7 @@ function SidebarItem({
           className={clsx('block text-gray-700 dark:text-gray-400', {
             '-ml-px border-l border-transparent pl-4 hover:border-gray-400 dark:hover:border-gray-600':
               !root,
+            'border-blue-700 dark:border-blue-400': router.asPath === href,
           })}
         >
           {name}
@@ -48,7 +52,9 @@ function SidebarItem({
 function DocsSidebar() {
   return (
     <>
-      <SidebarItem root href="/docs/getting-started" name="Getting Started" />
+      <SidebarCategory name="Guides">
+        <SidebarItem href="/docs/getting-started" name="Getting Started" />
+      </SidebarCategory>
       <SidebarCategory name="Concepts">
         <SidebarItem href="/docs/middleware" name="Middleware" />
         <SidebarItem href="/docs/plugins" name="Plugins" />

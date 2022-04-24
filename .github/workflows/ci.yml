@@ -11,17 +11,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16.x
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Build
-        run: yarn build
-      - name: Test
-        run: yarn test
-      - name: Lint
-        run: yarn lint
-      - name: Prettier
-        run: yarn prettier
-      - uses: EndBug/add-and-commit@v9
-        with:
-          default_author: github_actions
-          message: 'style: 🎨 run prettier'
+          cache: 'pnpm'
+      - name: Install Rush
+        run: pnpm install -g @microsoft/rush
+      - name: rush install
+        run: rush install --no-link
+      - name: rush link
+        run: rush link
+      - name: rush rebuild
+        run: rush rebuild --production --verbose

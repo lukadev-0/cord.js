@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.build.json",
-  "compilerOptions": {
-    "paths": {
-      "@cordjs/*": ["./packages/*/src"]
-    }
-  }
-}

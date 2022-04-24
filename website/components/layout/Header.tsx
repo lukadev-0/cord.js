@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { useTheme } from '../ThemeContext'
+import useIsomorphicLayoutEffect from '../../lib/useIsomorphicLayoutEffect'
 
 interface Props {
   fixed?: boolean
@@ -12,7 +13,7 @@ export default function Header({ className, fixed }: Props) {
   const [theme, setTheme] = useTheme()
   const [client, setClient] = useState(false)
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setClient(true)
   }, [])
 

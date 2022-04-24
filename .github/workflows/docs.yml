@@ -12,11 +12,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16.x
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Build website
-        run: yarn build
-        working-directory: ./website
+          cache: 'pnpm'
+      - name: Install Rush
+        run: pnpm install -g @microsoft/rush
+      - run: rush install
       - name: Export website
         run: yarn next export
         working-directory: ./website

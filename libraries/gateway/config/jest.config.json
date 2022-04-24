@@ -1,0 +1,3 @@
+{
+  "extends": "@cordjs/workspace-rig/profiles/default/config/jest.config.json"
+}
