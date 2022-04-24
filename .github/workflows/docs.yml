@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
+          cache-dependency-path: common/config/rush/pnpm-lock.yaml
       - name: Install Rush
         run: pnpm install -g @microsoft/rush
       - run: rush install

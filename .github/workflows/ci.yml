@@ -18,9 +18,6 @@ jobs:
           cache-dependency-path: common/config/rush/pnpm-lock.yaml
       - name: Install Rush
         run: pnpm install -g @microsoft/rush
-      - name: rush install
-        run: rush install --no-link
-      - name: rush link
-        run: rush link
+      - run: rush install
       - name: rush rebuild
         run: rush rebuild --production --verbose
