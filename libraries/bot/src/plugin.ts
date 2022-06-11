@@ -6,7 +6,7 @@ import { Client, ClientOptions } from 'discord.js'
  *
  * @public
  */
-export interface ICordPlugin<DecoratedBotT extends CordBot = CordBot> {
+export interface ICordPlugin<TDecoratedBot extends CordBot = CordBot> {
   /**
    * Unique ID for this plugin
    *
@@ -31,7 +31,7 @@ export interface ICordPlugin<DecoratedBotT extends CordBot = CordBot> {
    *
    * @param client - the client
    */
-  decorateBot?(bot: CordBot): DecoratedBotT
+  decorateBot?(bot: CordBot): TDecoratedBot
 
   /**
    * Called after the client has started
@@ -66,7 +66,7 @@ export interface ICordPlugin<DecoratedBotT extends CordBot = CordBot> {
   preStart?(): Promise<void>
 
   /**
-   * Modify the {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Discord.js client} options.
+   * Modifies the {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Discord.js client} options.
    *
    * @remarks
    * :::info[Lifecycle Method]
@@ -87,7 +87,7 @@ export interface ICordPlugin<DecoratedBotT extends CordBot = CordBot> {
 }
 
 /**
- * Options for {@link CordPlugin}
+ * Options for the {@link CordPlugin} function
  *
  * @public
  */
@@ -103,7 +103,7 @@ export interface ICordPluginOptions<
   /**
    * The name of the plugin's middleware.
    */
-  middleware: MiddlewareT
+  middleware?: MiddlewareT
 
   /**
    * {@inheritdoc CordPlugin.start}
@@ -138,7 +138,7 @@ export interface ICordPluginOptions<
 }
 
 /**
- * Helpers passed to the factory to {@link CordPlugin}
+ * Helpers for {@link CordPlugin}
  *
  * @public
  */
@@ -175,16 +175,9 @@ export interface ICordPluginHelpers {
  * Creates a plugin
  *
  * @remarks
- * This is a utility function that creates a plugin factory
- * function.
+ * This is a utility function that creates a plugin.
  *
- * The factory function accepts options and returns a plugin.
- *
- * A `middleware` option is also added to allow users to change
- * the name of middleware in order to avoid collisions.
- *
- * @param options - the options
- * @returns a plugin factory
+ * @param factory - A function that returns an {@link ICordPluginOptions} object.
  *
  * @public
  */
@@ -193,8 +186,8 @@ export function CordPlugin<MiddlewareT extends string, BotDecorationsT>(
     helpers: ICordPluginHelpers
   ) => ICordPluginOptions<MiddlewareT, BotDecorationsT>
 ): ICordPlugin<CordBot & BotDecorationsT> {
-  let pluginBot: null | CordBot = null
-  let middleware: null | string = null
+  let pluginBot: CordBot
+  let middleware: string
 
   const helpers: ICordPluginHelpers = {
     bot() {
@@ -218,7 +211,9 @@ export function CordPlugin<MiddlewareT extends string, BotDecorationsT>(
   }
 
   const options = factory(helpers)
-  middleware = options.middleware
+  if (options.middleware) {
+    middleware = options.middleware
+  }
 
   const plugin: ICordPlugin<CordBot & BotDecorationsT> = {
     id: options.id,
@@ -230,7 +225,9 @@ export function CordPlugin<MiddlewareT extends string, BotDecorationsT>(
     decorateBot(bot: CordBot) {
       pluginBot = bot
 
-      bot.defineMiddleware(options.middleware)
+      if (options.middleware) {
+        bot.defineMiddleware(options.middleware)
+      }
 
       const decorations = options.init?.()
       if (decorations) {

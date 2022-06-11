@@ -15,7 +15,8 @@ export {
   MiddlewareCallback,
   Middleware,
   MiddlewareGroup,
-  IMiddlewareObject,
+  MiddlewareObject,
   IMiddlewareOptions,
   NextFn,
 } from './middleware'
+export { ClientOptions } from './clientoptions'

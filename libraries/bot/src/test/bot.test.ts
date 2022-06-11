@@ -159,4 +159,13 @@ describe('Bot', () => {
     expect(start).toBeCalledTimes(1)
     expect(preStart).toBeCalledTimes(1)
   })
+
+  it('throws an error if start is called twice', async () => {
+    const bot = Cord([])
+
+    await bot.start()
+    await expect(bot.start()).rejects.toThrow(
+      new Error("Can only run 'start()' once")
+    )
+  })
 })

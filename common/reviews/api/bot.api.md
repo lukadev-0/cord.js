@@ -5,7 +5,10 @@
 ```ts
 
 import { Client } from 'discord.js';
-import { ClientOptions } from 'discord.js';
+import { ClientOptions as ClientOptions_2 } from 'discord.js';
+
+// @public
+export const ClientOptions: (options: ClientOptions_2) => ICordPlugin<CordBot>;
 
 // @public
 export abstract class Context {
@@ -20,13 +23,14 @@ export default Cord;
 
 // @public
 export class CordBot {
-    constructor(plugins: ICordPlugin[]);
     client?: Client;
+    // @internal (undocumented)
+    static _create(plugins: ICordPlugin[]): CordBot;
     defineMiddleware(name: string): void;
     // (undocumented)
     execMiddleware(context: Context): Promise<void>;
-    readonly middleware: IMiddlewareObject<Context>[];
-    readonly plugins: Record<string, ICordPlugin>;
+    readonly middleware: MiddlewareObject<Context>[];
+    readonly plugins: Map<string, ICordPlugin>;
     start(): Promise<void>;
 }
 
@@ -39,10 +43,10 @@ export type CordBotWithPlugins<TPlugins extends ICordPlugin[]> = CordBot & Union
 export function CordPlugin<MiddlewareT extends string, BotDecorationsT>(factory: (helpers: ICordPluginHelpers) => ICordPluginOptions<MiddlewareT, BotDecorationsT>): ICordPlugin<CordBot & BotDecorationsT>;
 
 // @public
-export interface ICordPlugin<DecoratedBotT extends CordBot = CordBot> {
-    decorateBot?(bot: CordBot): DecoratedBotT;
+export interface ICordPlugin<TDecoratedBot extends CordBot = CordBot> {
+    decorateBot?(bot: CordBot): TDecoratedBot;
     id: string;
-    modifyClientOptions?(options: ClientOptions): ClientOptions;
+    modifyClientOptions?(options: ClientOptions_2): ClientOptions_2;
     preStart?(): Promise<void>;
     start?(): Promise<void>;
 }
@@ -61,11 +65,11 @@ export interface ICordPluginOptions<MiddlewareT extends string, BotDecorationsT>
     // (undocumented)
     id: string;
     init?(): Omit<BotDecorationsT, MiddlewareT>;
-    middleware: MiddlewareT;
+    middleware?: MiddlewareT;
     // Warning: (ae-unresolved-inheritdoc-reference) The @inheritDoc reference could not be resolved: No member was found with name "modifyClientOptions"
     //
     // (undocumented)
-    modifyClientOptions?(options: ClientOptions): ClientOptions;
+    modifyClientOptions?(options: ClientOptions_2): ClientOptions_2;
     // Warning: (ae-unresolved-inheritdoc-reference) The @inheritDoc reference could not be resolved: No member was found with name "preStart"
     //
     // (undocumented)
@@ -77,26 +81,24 @@ export interface ICordPluginOptions<MiddlewareT extends string, BotDecorationsT>
 }
 
 // @public
-export interface IMiddlewareObject<T extends Context> {
-    // (undocumented)
-    callback: MiddlewareCallback<T>;
-    // (undocumented)
-    path: string[];
+export interface IMiddlewareOptions<TContext> {
+    callback: MiddlewareCallback<TContext>;
 }
 
 // @public
-export interface IMiddlewareOptions<T> {
-    callback: MiddlewareCallback<T>;
-}
+export type Middleware<TContext, TOptions extends IMiddlewareOptions<TContext> = never> = (callback: MiddlewareCallback<TContext> | (IMiddlewareOptions<TContext> & TOptions)) => void;
 
 // @public
-export type Middleware<T, O extends Record<string, unknown> = Record<string, never>> = (callback: MiddlewareCallback<T> | (IMiddlewareOptions<T> & O)) => void;
-
-// @public
-export type MiddlewareCallback<T> = (context: T, next: NextFn, err: unknown) => void;
+export type MiddlewareCallback<TContext> = (context: TContext, next: NextFn, err: unknown) => void;
 
 // @public
 export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<K extends keyof T>(name: K, ...args: Parameters<T[K]>) => void) & (<K extends keyof T>(...args: Parameters<T[K]>) => void) & T;
+
+// @public
+export type MiddlewareObject<TContext extends Context, TOptions extends IMiddlewareOptions<TContext> = never> = {
+    path: string[];
+    callback: MiddlewareCallback<TContext>;
+} & (TContext extends IMiddlewareOptions<TContext> ? Omit<TOptions, 'callback'> : {});
 
 // @public
 export type NextFn = (err?: unknown) => void;

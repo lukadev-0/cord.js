@@ -4,7 +4,7 @@ import { Context } from './context'
 import {
   createMiddlewareBuilder,
   MiddlewareCallback,
-  IMiddlewareObject,
+  MiddlewareObject,
   IMiddlewareOptions,
   NextFn,
 } from './middleware'
@@ -20,12 +20,12 @@ export class CordBot {
   /**
    * The middleware defined in this plugin
    */
-  public readonly middleware: IMiddlewareObject<Context>[] = []
+  public readonly middleware: MiddlewareObject<Context>[] = []
 
   /**
    * The plugins
    */
-  public readonly plugins: Record<string, ICordPlugin>
+  public readonly plugins: Map<string, ICordPlugin>
 
   /**
    * The Discord.js {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Client} instance.
@@ -37,26 +37,28 @@ export class CordBot {
    */
   private _started: boolean = false
 
-  /**
-   * @param options - the options
-   */
-  public constructor(plugins: ICordPlugin[]) {
-    const pluginsRecord: Record<string, ICordPlugin> = {}
+  private constructor(plugins: ICordPlugin[]) {
+    const pluginsMap = new Map<string, ICordPlugin>()
 
     for (const plugin of plugins) {
-      plugin.decorateBot?.(this)
-      pluginsRecord[plugin.id] = plugin
+      pluginsMap.set(plugin.id, plugin)
     }
 
-    this.plugins = pluginsRecord
+    this.plugins = pluginsMap
+  }
+
+  /**
+   * @internal
+   */
+  public static _create(plugins: ICordPlugin[]): CordBot {
+    return new CordBot(plugins)
   }
 
   private _runPluginLifecycle<
     K extends keyof {
       [K in keyof ICordPlugin as NonNullable<ICordPlugin[K]> extends (
-        ...args: infer _0
-      ) => // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      infer _1
+        ...args: never[]
+      ) => unknown
         ? K
         : never]: ICordPlugin[K]
     }
@@ -64,9 +66,20 @@ export class CordBot {
     name: K,
     ...args: Parameters<NonNullable<ICordPlugin[K]>>
   ): ReturnType<NonNullable<ICordPlugin[K]>>[] {
-    return Object.values(this.plugins).map(v => {
-      return (v[name] as (...args: unknown[]) => unknown)?.apply(v, args)
-    }) as ReturnType<NonNullable<ICordPlugin[K]>>[]
+    const returnValues: ReturnType<NonNullable<ICordPlugin[K]>>[] = []
+
+    this.plugins.forEach(v => {
+      const fn = v[name] as (
+        ...args: Parameters<NonNullable<ICordPlugin[K]>>
+      ) => ReturnType<NonNullable<ICordPlugin[K]>>
+
+      if (fn) {
+        const returnValue = fn(...args)
+        returnValues.push(returnValue)
+      }
+    })
+
+    return returnValues
   }
 
   /**
@@ -78,16 +91,14 @@ export class CordBot {
     await Promise.all(this._runPluginLifecycle('preStart'))
     this._started = true
 
-    const initialClientOptions: ClientOptions = {
+    let clientOptions: ClientOptions = {
       intents: [],
     }
 
-    const clientOptions = Object.values(this.plugins).reduce(
-      (previousValue, plugin) => {
-        return plugin.modifyClientOptions?.(previousValue) ?? previousValue
-      },
-      initialClientOptions
-    )
+    this.plugins.forEach(plugin => {
+      clientOptions =
+        plugin.modifyClientOptions?.(clientOptions) ?? clientOptions
+    })
 
     this.client = new Client(clientOptions)
 
@@ -188,6 +199,13 @@ export type CordBotWithPlugins<TPlugins extends ICordPlugin[]> = CordBot &
 export function Cord<TPlugins extends ICordPlugin[]>(
   plugins: TPlugins
 ): CordBotWithPlugins<TPlugins> {
-  const bot = new CordBot(plugins)
+  let bot = CordBot._create(plugins)
+
+  for (const plugin of plugins) {
+    if (plugin.decorateBot) {
+      bot = plugin.decorateBot(bot)
+    }
+  }
+
   return bot as CordBotWithPlugins<TPlugins>
 }

@@ -8,8 +8,8 @@ import { Context } from './context'
  *
  * @public
  */
-export type MiddlewareCallback<T> = (
-  context: T,
+export type MiddlewareCallback<TContext> = (
+  context: TContext,
   next: NextFn,
   err: unknown
 ) => void
@@ -33,9 +33,13 @@ export type MiddlewareCallback<T> = (
  * @public
  */
 export type Middleware<
-  T,
-  O extends Record<string, unknown> = Record<string, never>
-> = (callback: MiddlewareCallback<T> | (IMiddlewareOptions<T> & O)) => void
+  TContext,
+  TOptions extends IMiddlewareOptions<TContext> = never
+> = (
+  callback:
+    | MiddlewareCallback<TContext>
+    | (IMiddlewareOptions<TContext> & TOptions)
+) => void
 
 /**
  * A group of {@link Middleware | middleware}
@@ -66,21 +70,26 @@ export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<
  *
  * @public
  */
-export interface IMiddlewareObject<T extends Context> {
+export type MiddlewareObject<
+  TContext extends Context,
+  TOptions extends IMiddlewareOptions<TContext> = never
+> = {
   path: string[]
-  callback: MiddlewareCallback<T>
-}
+  callback: MiddlewareCallback<TContext>
+} & (TContext extends IMiddlewareOptions<TContext>
+  ? Omit<TOptions, 'callback'>
+  : {})
 
 /**
  * Middleware options
  *
  * @public
  */
-export interface IMiddlewareOptions<T> {
+export interface IMiddlewareOptions<TContext> {
   /**
    * The callback
    */
-  callback: MiddlewareCallback<T>
+  callback: MiddlewareCallback<TContext>
 }
 
 /**
