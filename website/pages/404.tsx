@@ -16,11 +16,12 @@ export default function Custom404() {
   // as this page is statically generated
   if (!client)
     return (
-      <main className="flex h-screen items-center justify-center text-center">
-        <div>
-          <h1 className="mb-4 text-5xl text-black/10">404</h1>
-        </div>
-      </main>
+      <noscript>
+        <h1>404</h1>
+        <p>The page you're looking for is not found</p>
+        <hr />
+        <p>Please enable JavaScript</p>
+      </noscript>
     )
 
   return path === 'docs' || path === 'api' ? (

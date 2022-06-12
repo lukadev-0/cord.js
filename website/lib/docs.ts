@@ -1,65 +1,55 @@
 import glob from 'glob'
 import { promisify } from 'util'
-import { join, relative } from 'path'
+import { join } from 'path'
 import frontMatter from 'front-matter'
 import { readFile } from 'fs/promises'
 
 const base = join(process.cwd(), 'docs')
 const globAsync = promisify(glob)
 
-export interface Doc {
-  slug: string
-  content: string
-  metadata: {
-    title: string
-    slug?: string | undefined
-    description: string
-  }
+function getHeadings(doc: string) {
+  const headingLines = doc.split('\n').filter((line) => {
+    return line.match(/^###*\s/)
+  })
+
+  return headingLines.map((raw) => {
+    const text = raw.replace(/^###*\s/, '')
+    const level = raw.slice(0, 3) === '###' ? 3 : 2
+
+    return { text, level }
+  })
 }
 
-export async function getPaths() {
-  const paths = await globAsync('**/*.md', { cwd: base })
+export async function getDocs() {
+  const paths = await globAsync('**/*.mdx', { cwd: base })
 
   return Promise.all(
     paths.map(async (v) => {
-      const doc = await getDoc(join(base, v))
+      const path = join(base, v)
+      const doc = await readFile(path, 'utf8')
+
+      const { attributes } = frontMatter<{
+        title: string
+        slug?: string
+        description: string
+      }>(doc)
 
       return {
-        path: join(base, v),
-        slug: doc.slug,
+        path,
+        slug: attributes.slug ?? v,
+        content: doc,
       }
     })
   )
 }
 
 export async function getDocBySlug(slug: string) {
-  const docs = await getPaths()
+  const docs = await getDocs()
   const doc = docs.find((v) => v.slug === slug)
   if (!doc) throw new Error('unknown slug')
 
-  return getDoc(doc.path)
-}
-
-export async function getDoc(path: string) {
-  const fileContent = await readFile(path, 'utf8')
-  const content = frontMatter<{
-    [index: string]: unknown
-    title: string
-    slug?: string
-    description: string
-  }>(fileContent)
-
-  const slug = content.attributes.slug ?? relative(base, path)
-
-  const doc = {
-    slug,
-
-    content: content.body,
-
-    metadata: {
-      ...content.attributes,
-    },
+  return {
+    content: doc.content,
+    headings: getHeadings(doc.content),
   }
-
-  return doc
 }

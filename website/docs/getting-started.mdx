@@ -4,43 +4,44 @@ description: Learn how to write a Discord bot using Cord.js.
 slug: getting-started
 ---
 
-:::note[In Development]
+<Note label="In Development">
 
 Cord.js is currently highly in development.
 A lot of stuff is missing and the documentation is incomplete.
 
+A lot of APIs are subject to change, and the docs might not be up-to date.
+
 Any bugs that you may find, please report them in the [issue tracker](https://github.com/lukadev-0/cord.js/issues).
 
-:::
+</Note>
 
 ## Creating the bot
 
 We first need to create the bot itself on the [Discord Developer Portal](https://discord.com/developers/applications).
 
-::::details[Creating a bot]
+<Disclosure label="Instructions">
 
 Press the "New Application" button
-
 ![](/getting-started/Applications.png)
-\
+
 Enter in an application name and press "Create"
 ![](/getting-started/CreateApplication.png)
-\
+
 Go to the "Bot" tab and press "Add Bot"
 ![](/getting-started/AddBot.png)
-\
+
 And then copy the token as we are going to need it.
 ![](/getting-started/CopyToken.png)
 
-:::warning
+<Warning>
 
-The token is a secret, so it should be kept secret.
+The token is like your bot's password, anyone with the token can login as your bot.
 
-Anyone with the token can access your bot, and call any Discord API.
+It is really important to keep your bot's token secret.
 
-:::
+</Warning>
 
-::::
+</Disclosure>
 
 ## Setting up the project
 
@@ -97,14 +98,14 @@ const bot = Cord([
 
 This code will create a Cord.js Bot with the `Gateway` plugin.
 
-:::note
+<Note>
 
 The token should be kept secret.
 
 It is recommended to store your token in a `.env` file and add it to your `.gitignore`.
 And use the [`dotenv`](https://npmjs.com/package/dotenv) package to load your .env file.
 
-:::
+</Note>
 
 ### Adding middleware
 

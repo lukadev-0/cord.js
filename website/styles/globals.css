@@ -31,3 +31,7 @@
 body {
   @apply bg-white dark:bg-gray-900;
 }
+
+* {
+  @apply scroll-m-20;
+}
