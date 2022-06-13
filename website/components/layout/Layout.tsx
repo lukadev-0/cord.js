@@ -15,7 +15,7 @@ export default function Layout({ children, fixedHeader, headerClass }: Props) {
 
       {children}
 
-      <footer className="relative bg-gray-900 py-16 px-4 dark:bg-black/50">
+      <footer className="relative bg-gray-900 py-16 px-4 dark:bg-[#080c13]">
         <div className="mx-auto max-w-screen-xl">
           <p className="mb-2 text-gray-400">Consider supporting me</p>
 
