@@ -50,21 +50,21 @@ First, we need to initialize our project.
 ```sh
 $ mkdir my-cool-bot && cd my-cool-bot  # create a new folder and cd into it
 $ npm init -y                          # create a package.json
+```
 
-# for yarn users:
-$ yarn init -y
+Add the following to your `package.json` to support ES Modules (`import`/`export`)
+
+```json
+  "type": "module"
 ```
 
 Now, we'll need to install the required packages.
 
 ```sh
 $ npm install @cordjs/bot @cordjs/gateway
-
-# for yarn users:
-$ yarn add @cordjs/bot @cordjs/gateway
 ```
 
-The `@cordjs/bot` package will manage our bot, middleware and plugins.
+The `@cordjs/bot` package will manage our bot, [middleware](/docs/middleware) and [plugins](/docs/plugins).
 
 The `@cordjs/gateway` package is what's known as a [plugin](/docs/plugins), it will
 handle connecting to the [Discord gateway](https://discord.com/developers/docs/topics/gateway) and
@@ -72,7 +72,7 @@ allow us to listen to events such as `messageCreate`.
 
 ## Coding the bot
 
-Let's get started coding!
+Let's get coding!
 
 ### Instantiating the bot instance
 
@@ -82,16 +82,9 @@ Create a file called `index.js` with the following code:
 import Cord from '@cordjs/bot'
 import Gateway from '@cordjs/gateway'
 
-// Using CommonJS
-// const Cord = require("@cordjs/bot")
-// const Gateway = require"("@cordjs/gateway")
-
 const bot = Cord([
   Gateway({
     token: '<YOUR_TOKEN_HERE>',
-    client: {
-      intents: ['GUILDS', 'GUILD_MESSAGES'],
-    },
   }),
 ])
 ```
@@ -107,16 +100,21 @@ And use the [`dotenv`](https://npmjs.com/package/dotenv) package to load your .e
 
 </Note>
 
+<Info>
+
+You might've noticed that we didn't pass any intents.
+This is because Cord.js will automatically detect the required intents for you.
+
+</Info>
+
 ### Adding middleware
 
-Now we need to use [middleware](/docs/middleware) so we can detect
-whenever a message has been sent.
-
-Put the following code after the previous code:
+Now we need to use [middleware](/docs/middleware) so we can listen
+to new messages that are sent.
 
 ```js
 bot.gateway.messageCreate((context) => {
-  const [message] = context.data
+  const { message } = context.data
 
   if (message.content === 'hello cord.js') {
     message.reply('Hello World! :wave:')
@@ -128,7 +126,7 @@ The `context` parameter has information about the event.
 
 The `context.data` property has the data of the event,
 such as the message.
-It's an array containing the parameters from [Discord.js](https://discord.js), so we can
+It's an object containing the parameters from [Discord.js](https://discord.js), so we can
 use destructuring to get the message.
 
 Check the [Discord.js documentation](https://discord.js.org/#/docs/discord.js/stable/class/Client?scrollTo=e-apiRequest)

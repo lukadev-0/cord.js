@@ -8,7 +8,9 @@ export interface IAdmonitionBaseProps {
 
 type AdmonitionProps = HTMLProps<HTMLDivElement>
 export default function Admonition({ className, ...props }: AdmonitionProps) {
-  return <div className={clsx('p-6 pb-2 rounded-lg', className)} {...props} />
+  return (
+    <div className={clsx('p-6 pb-2 rounded-lg mb-1', className)} {...props} />
+  )
 }
 
 type AdmonitionLabelProps = HTMLProps<HTMLHeadingElement> & {
