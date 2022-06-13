@@ -102,9 +102,12 @@ export default function DocLayout({
       </div>
 
       <div
-        className={clsx('mx-auto max-w-screen-2xl px-4 md:pl-56 lg:px-72', {
-          'pt-16': !noPadding,
-        })}
+        className={clsx(
+          'mx-auto max-w-screen-2xl px-4 md:pl-56 lg:pr-72 lg:pl-64',
+          {
+            'pt-16': !noPadding,
+          }
+        )}
       >
         {children}
       </div>
