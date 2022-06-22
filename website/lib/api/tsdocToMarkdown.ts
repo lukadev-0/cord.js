@@ -39,7 +39,11 @@ export function tsdocNodeToMarkdown(
       let linkUrl: string = 'about:blank'
 
       if (docLinkTag.codeDestination) {
-        linkText = docLinkTag.linkText ?? '\\<unresolved declaration reference>'
+        linkText =
+          docLinkTag.linkText ??
+          `\\<unresolved declaration reference (${docLinkTag.codeDestination.memberReferences
+            .map((v) => v.memberIdentifier?.identifier)
+            .join(',')})>`
 
         if (resolveDeclarationReference) {
           const { url, text } = resolveDeclarationReference(

@@ -32,6 +32,8 @@ import {
   getRemarksText,
   excerptArrayToSerializedArray,
   tsdocNodeToMarkdown,
+  tsdocNodeContainerToMarkdown,
+  createResolveDeclarationReference,
 } from '../../lib/api'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -415,7 +417,10 @@ async function getPageProps(item: ApiItem) {
             ),
             description: await serialize(
               parameter.tsdocParamBlock
-                ? tsdocNodeToMarkdown(parameter.tsdocParamBlock)
+                ? tsdocNodeContainerToMarkdown(
+                    parameter.tsdocParamBlock.content,
+                    createResolveDeclarationReference(apiMethod)
+                  )
                 : 'No Description'
             ),
           }))

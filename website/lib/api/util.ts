@@ -78,20 +78,24 @@ export function getMemberByPath(
 
 export function getSummaryText(apiItem: ApiDocumentedItem) {
   if (apiItem.tsdocComment?.summarySection) {
-    return tsdocNodeContainerToMarkdown(
+    const output = tsdocNodeContainerToMarkdown(
       apiItem.tsdocComment.summarySection,
       createResolveDeclarationReference(apiItem)
-    )
+    ).trim()
+
+    if (output !== '') return output
   }
   return 'No Summary'
 }
 
 export function getRemarksText(apiItem: ApiDocumentedItem) {
   if (apiItem.tsdocComment?.remarksBlock) {
-    return tsdocNodeContainerToMarkdown(
+    const output = tsdocNodeContainerToMarkdown(
       apiItem.tsdocComment.remarksBlock.content,
       createResolveDeclarationReference(apiItem)
-    )
+    ).trim()
+
+    if (output !== '') return output
   }
   return undefined
 }
