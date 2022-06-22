@@ -1,0 +1,1827 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.23.0",
+    "schemaVersion": 1005,
+    "oldestForwardsCompatibleVersion": 1001,
+    "tsdocConfig": {
+      "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+      "noStandardTags": true,
+      "tagDefinitions": [
+        {
+          "tagName": "@alpha",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@beta",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@defaultValue",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@decorator",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@deprecated",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@eventProperty",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@example",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@experimental",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@inheritDoc",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@internal",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@label",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@link",
+          "syntaxKind": "inline",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@override",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@packageDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@param",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@privateRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@public",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@readonly",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@remarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@returns",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@sealed",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@see",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@throws",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@typeParam",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@virtual",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@betaDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@internalRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@preapproved",
+          "syntaxKind": "modifier"
+        }
+      ],
+      "supportForTags": {
+        "@alpha": true,
+        "@beta": true,
+        "@defaultValue": true,
+        "@decorator": true,
+        "@deprecated": true,
+        "@eventProperty": true,
+        "@example": true,
+        "@experimental": true,
+        "@inheritDoc": true,
+        "@internal": true,
+        "@label": true,
+        "@link": true,
+        "@override": true,
+        "@packageDocumentation": true,
+        "@param": true,
+        "@privateRemarks": true,
+        "@public": true,
+        "@readonly": true,
+        "@remarks": true,
+        "@returns": true,
+        "@sealed": true,
+        "@see": true,
+        "@throws": true,
+        "@typeParam": true,
+        "@virtual": true,
+        "@betaDocumentation": true,
+        "@internalRemarks": true,
+        "@preapproved": true
+      },
+      "reportUnsupportedHtmlElements": false
+    }
+  },
+  "kind": "Package",
+  "canonicalReference": "@cordjs/bot!",
+  "docComment": "/**\n * The main package for Cord.js.\n *\n * @packageDocumentation\n */\n",
+  "name": "@cordjs/bot",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@cordjs/bot!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Variable",
+          "canonicalReference": "@cordjs/bot!ClientOptions:var",
+          "docComment": "/**\n * Plugin that changes the ClientOptions of the {@link https://discord.js.org/#/docs/discord.js/main/class/Client | Client}\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "ClientOptions: "
+            },
+            {
+              "kind": "Content",
+              "text": "(options: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DiscordClientOptions",
+              "canonicalReference": "discord.js!ClientOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPlugin",
+              "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ClientOptions",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 8
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@cordjs/bot!Context:class",
+          "docComment": "/**\n * Information about a middleware call, passed in as first argument to a middleware handler\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare abstract class Context "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Context",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@cordjs/bot!Context:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `Context` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "path",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/bot!Context#path:member",
+              "docComment": "/**\n * The middleware path\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@cordjs/bot!Cord:function(1)",
+          "docComment": "/**\n * Creates a Cord.js bot\n *\n * @param plugins - the plugins\n *\n * @returns the bot\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function Cord<TPlugins extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPlugin",
+              "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": ">(plugins: "
+            },
+            {
+              "kind": "Content",
+              "text": "TPlugins"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBotWithPlugins",
+              "canonicalReference": "@cordjs/bot!CordBotWithPlugins:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TPlugins>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "plugins",
+              "parameterTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TPlugins",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "Cord"
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@cordjs/bot!CordBot:class",
+          "docComment": "/**\n * The main class for any Cord.js bot\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class CordBot "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CordBot",
+          "members": [
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/bot!CordBot#client:member",
+              "docComment": "/**\n * The Discord.js {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Client} instance.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "client?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Client",
+                  "canonicalReference": "discord.js!Client:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "client",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/bot!CordBot#defineMiddleware:member(1)",
+              "docComment": "/**\n * Defines a middleware\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "defineMiddleware(name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "name",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "defineMiddleware"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/bot!CordBot#execMiddleware:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "execMiddleware(context: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Context",
+                  "canonicalReference": "@cordjs/bot!Context:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "context",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "execMiddleware"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/bot!CordBot#middleware:member",
+              "docComment": "/**\n * The middleware defined in this plugin\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly middleware: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MiddlewareObject",
+                  "canonicalReference": "@cordjs/bot!MiddlewareObject:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Context",
+                  "canonicalReference": "@cordjs/bot!Context:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "middleware",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@cordjs/bot!CordBot#plugins:member",
+              "docComment": "/**\n * The plugins\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly plugins: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Map",
+                  "canonicalReference": "!Map:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ICordPlugin",
+                  "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "plugins",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@cordjs/bot!CordBot#start:member(1)",
+              "docComment": "/**\n * Start the client\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "start"
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!CordBotWithPlugins:type",
+          "docComment": "/**\n * {@link CordBot} with plugins\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type CordBotWithPlugins<TPlugins extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPlugin",
+              "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": " & "
+            },
+            {
+              "kind": "Reference",
+              "text": "UnionToIntersection",
+              "canonicalReference": "@cordjs/bot!UnionToIntersection:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TPlugins[number] extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPlugin",
+              "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<infer R> ? R : unknown>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CordBotWithPlugins",
+          "typeParameters": [
+            {
+              "typeParameterName": "TPlugins",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 10
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@cordjs/bot!CordPlugin:function(1)",
+          "docComment": "/**\n * Creates a plugin\n *\n * @remarks\n *\n * This is a utility function that creates a plugin.\n *\n * @param factory - A function that returns an {@link ICordPluginOptions} object.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function CordPlugin<MiddlewareT extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", BotDecorationsT>(factory: "
+            },
+            {
+              "kind": "Content",
+              "text": "(helpers: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPluginHelpers",
+              "canonicalReference": "@cordjs/bot!ICordPluginHelpers:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ") => "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPluginOptions",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<MiddlewareT, BotDecorationsT>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ICordPlugin",
+              "canonicalReference": "@cordjs/bot!ICordPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": " & BotDecorationsT>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 13
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "factory",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 8
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "MiddlewareT",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "BotDecorationsT",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "CordPlugin"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@cordjs/bot!ICordPlugin:interface",
+          "docComment": "/**\n * A {@link https://cord.js.org/docs/plugins | plugin}\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ICordPlugin<TDecoratedBot extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Reference",
+              "text": "CordBot",
+              "canonicalReference": "@cordjs/bot!CordBot:class"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TDecoratedBot",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "ICordPlugin",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPlugin#decorateBot:member(1)",
+              "docComment": "/**\n * Add extra properties to the bot.\n *\n * @remarks\n *\n * :::info[Lifecycle Method]\n *\n * This method is a lifecycle method and gets run during the bot's lifecycle.\n *\n * :::\n *\n * This can be used to add middleware onto the bot.\n *\n * @param client - the client\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "decorateBot?(bot: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CordBot",
+                  "canonicalReference": "@cordjs/bot!CordBot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "TDecoratedBot"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "bot",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "decorateBot"
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@cordjs/bot!ICordPlugin#id:member",
+              "docComment": "/**\n * Unique ID for this plugin\n *\n * @remarks\n *\n * If the plugin will be published as an NPM package, it is recommended that the NPM package name is used.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPlugin#modifyClientOptions:member(1)",
+              "docComment": "/**\n * Modifies the {@link https://discord.js.org/#/docs/discord.js/stable/class/Client | Discord.js client} options.\n *\n * @remarks\n *\n * :::info[Lifecycle Method]\n *\n * This method is a lifecycle method and gets run during the bot's lifecycle.\n *\n * :::\n *\n * This is called before the client is started, before {@link ICordPlugin.start}, after {@link ICordPlugin.preStart}.\n *\n * @returns A new client options object, mutating the original is allowed, in that case just return the original.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "modifyClientOptions?(options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ClientOptions",
+                  "canonicalReference": "discord.js!ClientOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ClientOptions",
+                  "canonicalReference": "discord.js!ClientOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "modifyClientOptions"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPlugin#preStart:member(1)",
+              "docComment": "/**\n * Called before the client is started\n *\n * @remarks\n *\n * :::info[Lifecycle Method]\n *\n * This method is a lifecycle method and gets run during the bot's lifecycle.\n *\n * :::\n *\n * This is called before the client is started, before {@link ICordPlugin.start}.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "preStart?(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "preStart"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPlugin#start:member(1)",
+              "docComment": "/**\n * Called after the client has started\n *\n * @remarks\n *\n * :::info[Lifecycle Method]\n *\n * This method is a lifecycle method and gets run during the bot's lifecycle.\n *\n * :::\n *\n * This is called after the client has started, after {@link ICordPlugin.preStart}.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start?(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "start"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@cordjs/bot!ICordPluginHelpers:interface",
+          "docComment": "/**\n * Helpers for {@link CordPlugin}\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ICordPluginHelpers "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ICordPluginHelpers",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginHelpers#bot:member(1)",
+              "docComment": "/**\n * Returns the bot the plugin instances is added to.\n *\n * @remarks\n *\n * This function will error when the {@link CordBot | bot} is not available yet.\n *\n * It's available when {@link ICordPluginOptions.init} is called.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "bot(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CordBot",
+                  "canonicalReference": "@cordjs/bot!CordBot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "bot"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginHelpers#client:member(1)",
+              "docComment": "/**\n * Returns the client of the bot.\n *\n * @remarks\n *\n * This function will error when the client or the bot is not available yet.\n *\n * It is available during {@link ICordPluginOptions.start}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "client(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Client",
+                  "canonicalReference": "discord.js!Client:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "client"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginHelpers#path:member(1)",
+              "docComment": "/**\n * Returns a path by combining the name of the middleware and the path\n *\n * @param path - the path\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "path(path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "path",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "path"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@cordjs/bot!ICordPluginOptions:interface",
+          "docComment": "/**\n * Options for the {@link CordPlugin} function\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ICordPluginOptions<MiddlewareT extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", BotDecorationsT> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "MiddlewareT",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "BotDecorationsT",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ICordPluginOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#id:member",
+              "docComment": "/**\n * {@inheritdoc CordPlugin.id}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#init:member(1)",
+              "docComment": "/**\n * Runs during the initialization of the bot.\n *\n * @remarks\n *\n * :::info Lifecycle Method\n *\n * This method is a lifecycle method and gets run during the bot's lifecycle.\n *\n * :::\n *\n * This is a wrapper around {@link ICordPlugin.decorateBot}, it will add the properties of the returned object (if any) to the bot.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "init?(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Omit",
+                  "canonicalReference": "!Omit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<BotDecorationsT, MiddlewareT>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "init"
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#middleware:member",
+              "docComment": "/**\n * The name of the plugin's middleware.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "middleware?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "MiddlewareT"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "middleware",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#modifyClientOptions:member(1)",
+              "docComment": "/**\n * {@inheritdoc CordPlugin.modifyClientOptions}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "modifyClientOptions?(options: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ClientOptions",
+                  "canonicalReference": "discord.js!ClientOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ClientOptions",
+                  "canonicalReference": "discord.js!ClientOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "modifyClientOptions"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#preStart:member(1)",
+              "docComment": "/**\n * {@inheritdoc CordPlugin.preStart}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "preStart?(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "preStart"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@cordjs/bot!ICordPluginOptions#start:member(1)",
+              "docComment": "/**\n * {@inheritdoc CordPlugin.start}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start?(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "start"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@cordjs/bot!IMiddlewareOptions:interface",
+          "docComment": "/**\n * Middleware options\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface IMiddlewareOptions<TContext> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "IMiddlewareOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@cordjs/bot!IMiddlewareOptions#callback:member",
+              "docComment": "/**\n * The callback\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "callback: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MiddlewareCallback",
+                  "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TContext>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "callback",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!Middleware:type",
+          "docComment": "/**\n * A middleware\n *\n * @remarks\n *\n * This is a function that can be used to add middleware to the bot. See {@link https://cord.js.org/docs/middleware | the middleware documentation}.\n *\n * @param callback - The callback or options object\n *\n * @example\n * ```ts\n * bot.gateway.messageCreate(context => {\n *   // do something\n * })\n * ```\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type Middleware<TContext, TOptions extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IMiddlewareOptions",
+              "canonicalReference": "@cordjs/bot!IMiddlewareOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext> "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "never"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(callback: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MiddlewareCallback",
+              "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext> | ("
+            },
+            {
+              "kind": "Reference",
+              "text": "IMiddlewareOptions",
+              "canonicalReference": "@cordjs/bot!IMiddlewareOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext> & TOptions)) => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Middleware",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TOptions",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 5
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 11
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!MiddlewareCallback:type",
+          "docComment": "/**\n * A middleware callback\n *\n * @param context - The context\n *\n * @param next - The `next`\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type MiddlewareCallback<TContext> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(context: TContext, next: "
+            },
+            {
+              "kind": "Reference",
+              "text": "NextFn",
+              "canonicalReference": "@cordjs/bot!NextFn:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", err: unknown) => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MiddlewareCallback",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!MiddlewareGroup:type",
+          "docComment": "/**\n * A group of {@link Middleware | middleware}\n *\n * @remarks\n *\n * Middleware is able to be added to a MiddlewareGroup.\n *\n * Middleware added to a MiddlewareGroup will be run whenever any child of the MiddlewareGroup is run.\n *\n * For example, if you add a middleware to `bot.gateway`, assuming that `catchAll` is enabled, the middleware will be run for every gateway event.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type MiddlewareGroup<T extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Record",
+              "canonicalReference": "!Record:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, "
+            },
+            {
+              "kind": "Reference",
+              "text": "Middleware",
+              "canonicalReference": "@cordjs/bot!Middleware:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Context",
+              "canonicalReference": "@cordjs/bot!Context:class"
+            },
+            {
+              "kind": "Content",
+              "text": ">>"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(<K extends keyof T>(name: K, ...args: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[K]>) => void) & (<K extends keyof T>(...args: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Parameters",
+              "canonicalReference": "!Parameters:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T[K]>) => void) & T"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MiddlewareGroup",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 7
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 13
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!MiddlewareObject:type",
+          "docComment": "/**\n * A middleware object\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type MiddlewareObject<TContext extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Context",
+              "canonicalReference": "@cordjs/bot!Context:class"
+            },
+            {
+              "kind": "Content",
+              "text": ", TOptions extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IMiddlewareOptions",
+              "canonicalReference": "@cordjs/bot!IMiddlewareOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext> "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "never"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    path: string[];\n    callback: "
+            },
+            {
+              "kind": "Reference",
+              "text": "MiddlewareCallback",
+              "canonicalReference": "@cordjs/bot!MiddlewareCallback:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext>;\n} & (TContext extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "IMiddlewareOptions",
+              "canonicalReference": "@cordjs/bot!IMiddlewareOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TContext> ? "
+            },
+            {
+              "kind": "Reference",
+              "text": "Omit",
+              "canonicalReference": "!Omit:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TOptions, 'callback'> : {})"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MiddlewareObject",
+          "typeParameters": [
+            {
+              "typeParameterName": "TContext",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TOptions",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 15
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@cordjs/bot!NextFn:type",
+          "docComment": "/**\n * The `next` function passed into {@link MiddlewareCallback}\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type NextFn = "
+            },
+            {
+              "kind": "Content",
+              "text": "(err?: unknown) => void"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "NextFn",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        }
+      ]
+    }
+  ]
+}

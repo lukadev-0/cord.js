@@ -14,8 +14,9 @@ export default function Home() {
         canonical="https://cord.js.org/"
         openGraph={{
           url: 'https://cord.js.org/',
-          title: 'Cord.js',
-          description: 'Simple, fast, and powerful Discord bot framework.',
+          title: 'Build your best Discord Bot.',
+          description:
+            'Cord.js is a Discord Bot framework with a simple, extensible API built on top of Discord.js.',
           site_name: 'Cord.js',
         }}
         twitter={{
