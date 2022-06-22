@@ -72,7 +72,7 @@ export default function Header({ className, fixed }: Props) {
                 </Link>
               </li>
               <li>
-                <Link href="/api">
+                <Link href="/api-reference">
                   <a className="text-gray-700 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-400">
                     API
                   </a>

@@ -19,6 +19,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import slugify from 'slugify'
 import clsx from 'clsx'
+import DocToC from '../../components/DocToC'
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult
@@ -52,9 +53,7 @@ export default function Docs({ mdxSource }: Props) {
 
       <main className="prose relative mx-auto block max-w-screen-md flex-grow py-16 prose-a:decoration-blue-500 prose-img:rounded dark:prose-invert">
         <h1>{metadata.title}</h1>
-        <p className="mb-14 text-xl text-gray-800 dark:text-gray-400">
-          {metadata.description}
-        </p>
+        <p className="lead">{metadata.description}</p>
 
         <MDXRemote {...mdxSource} />
       </main>
@@ -87,29 +86,7 @@ Docs.getLayout = (page: ReactElement, { headings }: Props) => {
             </SidebarCategory>
           </>
         }
-        toc={
-          <ul className="mt-1">
-            {headings.map((heading) => {
-              const slug = slugify(heading.text).toLowerCase()
-
-              return (
-                <li
-                  key={slug}
-                  className={clsx({
-                    'ml-4': heading.level === 3,
-                  })}
-                >
-                  <a
-                    href={`#${slug}`}
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-400"
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        }
+        toc={<DocToC toc={headings} />}
       >
         {page}
       </DocLayout>

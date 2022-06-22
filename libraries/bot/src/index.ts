@@ -1,5 +1,5 @@
 /**
- * Cord.js is a Discord bot framework.
+ * The main package for Cord.js.
  * @packageDocumentation
  */
 

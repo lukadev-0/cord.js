@@ -1,9 +1,10 @@
 /**
- * Connect to the gateway with Cord.js
+ * Listen to events from the Discord gateway.
  * @packageDocumentation
  *
  * @remarks
- * This plugin uses {@link https://discord.js.org/ | Discord.js} under the hood.
+ * The Gateway plugin allows you to listen to events from the Discord gateway,
+ * such as a message being created, or a member joining a server.
  */
 
 import {

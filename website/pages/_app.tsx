@@ -14,26 +14,29 @@ import Note from '../components/docs/Note'
 import Warning from '../components/docs/Warning'
 import Info from '../components/docs/Info'
 import Disclosure from '../components/docs/Disclosure'
+import { Router } from 'next/router'
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement, pageProps: unknown) => ReactNode
+  getLayout?: (
+    page: ReactElement,
+    pageProps: unknown,
+    router: Router
+  ) => ReactNode
 }
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+export default function MyApp({
+  Component,
+  pageProps,
+  router,
+}: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  const [theme, setTheme] = useState(
-    typeof window === 'undefined'
-      ? 'light'
-      : document.documentElement.classList.contains('dark')
-      ? 'dark'
-      : 'light'
-  )
+  const [theme, setTheme] = useState('light')
 
   const dark =
     typeof window === 'undefined'
@@ -41,9 +44,16 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       : useMedia('(prefers-color-scheme: dark)')
 
   useIsomorphicLayoutEffect(() => {
-    window.localStorage.setItem('theme', theme)
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-  }, [theme])
+    const currentTheme =
+      localStorage.getItem('theme') ??
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+
+    localStorage.setItem('theme', currentTheme)
+
+    setTheme(currentTheme)
+  }, [])
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
@@ -75,7 +85,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <link rel="icon" href={dark ? '/favicon-dark.svg' : '/favicon.svg'} />
         </Head>
 
-        <div>{getLayout(<Component {...pageProps} />, pageProps)}</div>
+        {getLayout(<Component {...pageProps} />, pageProps, router)}
       </MDXProvider>
     </ThemeContext.Provider>
   )

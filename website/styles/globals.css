@@ -5,7 +5,7 @@
 @layer utilities {
   /* width */
   .custom-scroll::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-2 h-2;
   }
 
   /* Track */
@@ -13,10 +13,19 @@
     @apply my-2 rounded-full bg-gray-300 dark:bg-gray-800;
   }
 
+  .custom-scroll-no-round::-webkit-scrollbar-track {
+    @apply rounded-none;
+  }
+
   /* Handle */
   .custom-scroll::-webkit-scrollbar-thumb {
     @apply rounded-full bg-gray-400 dark:bg-gray-600;
   }
+
+  .custom-scroll-no-round::-webkit-scrollbar-thumb {
+    @apply rounded-none;
+  }
+
 
   /* Handle on hover */
   .custom-scroll::-webkit-scrollbar-thumb:hover {

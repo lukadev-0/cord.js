@@ -1,10 +1,13 @@
 import { NextSeo } from 'next-seo'
+import Link from 'next/link'
 import { ReactElement } from 'react'
+import ReactSyntaxHighlighter from 'react-syntax-highlighter'
+import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
 import Layout from '../components/layout/Layout'
 
 export default function Home() {
   return (
-    <div className="min-h-screen dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-900">
       <NextSeo
         title="Cord.js"
         description="Simple, fast, and powerful Discord bot framework."
@@ -20,26 +23,62 @@ export default function Home() {
         }}
       />
 
-      <div className="dark px-4">
-        <div className="absolute inset-0 h-screen bg-gradient-to-br from-[#05061F] to-[#07020E]"></div>
-        <header className="relative mx-auto flex h-screen max-w-screen-xl flex-col justify-center pt-16 text-center md:text-left">
-          <div>
-            <h1 className="mx-auto mb-6 text-4xl font-bold dark:text-white sm:text-5xl md:mx-0 md:text-7xl">
-              Build Discord bots
-              <br />
-              <span className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
-                Faster
-              </span>
-            </h1>
+      <div className="px-4 pt-16 relative">
+        <div className="bg-gradient-to-b from-gray-800 to-gray-900 absolute inset-0 -bottom-56"></div>
+        <header className="relative mx-auto max-w-screen-xl flex flex-col items-center py-40 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold">
+            Build your best Discord Bot.
+          </h1>
 
-            <p className="mx-auto max-w-[30ch] text-lg text-gray-400 sm:text-xl md:mx-0 md:text-2xl">
-              Cord.js is a simple, fast, and powerful Discord bot framework.
-            </p>
-          </div>
+          <p className="mt-8 text-gray-400 text-xl max-w-xl">
+            Cord.js is a Discord Bot framework with a simple, extensible API
+            built on top of{' '}
+            <a
+              href="https://discord.js.org/"
+              className="text-white hover:underline"
+            >
+              Discord.js
+            </a>
+            .
+          </p>
+
+          <Link href="/docs/getting-started">
+            <a className="mt-8 px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg text-lg hover:bg-gray-300 transition duration-500">
+              Get Started
+            </a>
+          </Link>
+
+          <ReactSyntaxHighlighter
+            language="javascript"
+            style={atomOneDark}
+            PreTag={(props) => (
+              <pre
+                className="text-gray-300 p-4 rounded-lg bg-[#080c13] text-left max-w-xl w-full overflow-x-auto mt-10 custom-scroll custom-scroll-no-round shadow-2xl"
+                {...props}
+                style={{}}
+              />
+            )}
+          >
+            {`import Cord from '@cordjs/bot'
+import Gateway from '@cordjs/gateway'
+
+const bot = Cord([
+  Gateway({ token: '...' }),
+])
+
+bot.gateway.messageCreate(context => {
+  const { message } = context.data
+  if (message.content === 'ping') {
+    message.reply('🏓 Pong!')
+  }
+})
+
+bot.start()`}
+          </ReactSyntaxHighlighter>
         </header>
       </div>
 
-      <div className="border-t border-gray-300 px-4 dark:border-gray-700">
+      <div className="px-4 dark:border-gray-700 relative">
         <div className="mx-auto max-w-screen-xl py-20 text-center">
           <h2 className="mb-2 text-2xl font-medium text-black dark:text-white">
             Work in progress
@@ -54,5 +93,5 @@ export default function Home() {
 }
 
 Home.getLayout = (page: ReactElement) => {
-  return <Layout headerClass="dark">{page}</Layout>
+  return <Layout forceTheme="dark">{page}</Layout>
 }

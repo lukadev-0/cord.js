@@ -67,43 +67,48 @@ export default function DocLayout({
     <div className="relative min-h-screen dark:bg-gray-900">
       <div
         className={clsx(
-          'fixed inset-0 mx-auto max-w-screen-2xl px-4 hidden md:flex justify-between',
+          'px-4 fixed inset-0 mx-auto max-w-screen-2xl hidden md:flex justify-between pointer-events-none',
           {
             'pt-16': !noPadding,
           }
         )}
       >
         <aside
-          className={clsx('custom-scroll overflow-auto mb-4', {
-            'mt-16': !noPadding,
-            'mt-32': noPadding,
-          })}
+          className={clsx(
+            'custom-scroll overflow-auto mb-4 pointer-events-auto',
+            {
+              'mt-16': !noPadding,
+              'mt-32': noPadding,
+            }
+          )}
         >
           <nav className="w-56">
             <ul className="space-y-4">{sidebar}</ul>
           </nav>
         </aside>
 
-        <nav
-          className={clsx(
-            'custom-scroll overflow-auto hidden lg:block w-64 pb-4',
-            {
-              'mt-16': !noPadding,
-              'pt-32': noPadding,
-            }
-          )}
-        >
-          <h5 className="font-semibold text-gray-900 dark:text-gray-100">
-            On this page
-          </h5>
+        {toc && (
+          <nav
+            className={clsx(
+              'custom-scroll overflow-auto hidden lg:block w-56 pb-4 pointer-events-auto',
+              {
+                'mt-16': !noPadding,
+                'pt-32': noPadding,
+              }
+            )}
+          >
+            <h5 className="font-semibold text-gray-900 dark:text-gray-100">
+              On this page
+            </h5>
 
-          {toc}
-        </nav>
+            {toc}
+          </nav>
+        )}
       </div>
 
       <div
         className={clsx(
-          'mx-auto max-w-screen-2xl px-4 md:pl-56 lg:pr-72 lg:pl-64',
+          'mx-auto max-w-screen-2xl px-4 md:pl-56 lg:pr-64 lg:pl-64',
           {
             'pt-16': !noPadding,
           }

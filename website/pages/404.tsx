@@ -25,12 +25,14 @@ export default function Custom404() {
       </noscript>
     )
 
-  return path === 'docs' || path === 'api' ? (
+  return path === 'docs' || path === 'api-reference' ? (
     <Layout fixedHeader>
       <DocLayout
         toc={<div className="text-gray-600 dark:text-gray-400 mt-1">404</div>}
         sidebar={
-          <Link href={path === 'docs' ? '/docs/getting-started' : '/api'}>
+          <Link
+            href={path === 'docs' ? '/docs/getting-started' : '/api-reference'}
+          >
             <a className="flex items-center group relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
