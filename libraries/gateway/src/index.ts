@@ -234,11 +234,11 @@ export const Gateway = <TMiddleware extends string = 'gateway'>(
       }
     }
 
-    function execEventMiddleware(
+    function runEventMiddleware(
       event: keyof IDiscordClientEventData,
       args: unknown[]
-    ): Promise<void> {
-      return bot().execMiddleware(
+    ): void {
+      return bot().runMiddleware(
         new GatewayContext(path([event]), eventArgsToObject(event, args))
       )
     }
@@ -263,12 +263,12 @@ export const Gateway = <TMiddleware extends string = 'gateway'>(
 
       async start() {
         if (catchAll) {
-          onAnyEvent(execEventMiddleware)
+          onAnyEvent(runEventMiddleware)
         } else {
           const events = getEvents()
           for (const event of events) {
             client().on(event, (...args) =>
-              execEventMiddleware(event as keyof IDiscordClientEventData, args)
+              runEventMiddleware(event as keyof IDiscordClientEventData, args)
             )
           }
         }

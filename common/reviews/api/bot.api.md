@@ -8,7 +8,7 @@ import { Client } from 'discord.js';
 import { ClientOptions as ClientOptions_2 } from 'discord.js';
 
 // @public
-export const ClientOptions: (options: ClientOptions_2) => ICordPlugin<CordBot>;
+export function ClientOptions(options: Partial<ClientOptions_2>): ICordPlugin<CordBot>;
 
 // @public
 export abstract class Context {
@@ -27,10 +27,9 @@ export class CordBot {
     // @internal (undocumented)
     static _create(plugins: ICordPlugin[]): CordBot;
     defineMiddleware(name: string): void;
-    // (undocumented)
-    execMiddleware(context: Context): Promise<void>;
     readonly middleware: MiddlewareObject<Context>[];
     readonly plugins: Map<string, ICordPlugin>;
+    runMiddleware(context: Context): void;
     start(): Promise<void>;
 }
 
@@ -89,7 +88,7 @@ export interface IMiddlewareOptions<TContext> {
 export type Middleware<TContext, TOptions extends IMiddlewareOptions<TContext> = never> = (callback: MiddlewareCallback<TContext> | (IMiddlewareOptions<TContext> & TOptions)) => void;
 
 // @public
-export type MiddlewareCallback<TContext> = (context: TContext, next: NextFn, err: unknown) => void;
+export type MiddlewareCallback<TContext> = (context: TContext, next: NextFn, err: unknown) => void | Promise<void>;
 
 // @public
 export type MiddlewareGroup<T extends Record<string, Middleware<Context>>> = (<K extends keyof T>(name: K, ...args: Parameters<T[K]>) => void) & (<K extends keyof T>(...args: Parameters<T[K]>) => void) & T;
@@ -102,5 +101,8 @@ export type MiddlewareObject<TContext extends Context, TOptions extends IMiddlew
 
 // @public
 export type NextFn = (err?: unknown) => void;
+
+// @public
+export function pathMatches(a: string[], b: string[]): boolean;
 
 ```

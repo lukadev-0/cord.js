@@ -1,6 +1,6 @@
 import { ClientOptions } from 'discord.js'
 import { Client } from 'discord.js'
-import { Context } from './context'
+import Context from './Context'
 import {
   createMiddlewareBuilder,
   MiddlewareCallback,
@@ -8,6 +8,7 @@ import {
   IMiddlewareOptions,
   NextFn,
 } from './middleware'
+import pathMatches from './pathMatches'
 import { ICordPlugin } from './plugin'
 import { UnionToIntersection } from './util'
 
@@ -16,9 +17,9 @@ import { UnionToIntersection } from './util'
  *
  * @public
  */
-export class CordBot {
+export default class CordBot {
   /**
-   * The middleware defined in this plugin
+   * The middleware added to the bot
    */
   public readonly middleware: MiddlewareObject<Context>[] = []
 
@@ -105,40 +106,43 @@ export class CordBot {
     await Promise.all(this._runPluginLifecycle('start'))
   }
 
+  private _runNextMiddleware(
+    context: Context,
+    after: number,
+    error?: unknown
+  ): void {
+    for (let i = after + 1; i < this.middleware.length; i++) {
+      const middleware = this.middleware[i]
+      const isErrorHandling = middleware.callback.length >= 3
+      const matches = pathMatches(middleware.path, context.path)
+      const shouldRun = error === undefined ? !isErrorHandling : isErrorHandling
+
+      if (matches && shouldRun) {
+        const next: NextFn = err => {
+          this._runNextMiddleware(context, i, err ?? error)
+        }
+
+        try {
+          const result = middleware.callback(context, next, error)
+          if (result instanceof Promise) {
+            result.catch(next)
+          }
+        } catch (err) {
+          next(err)
+        }
+
+        break
+      }
+    }
+  }
+
   /**
-   * Executes a middleware with the context
+   * Runs middleware
    *
    * @param context - the context
    */
-  private async _execMiddleware(
-    context: Context,
-    after: number = 0,
-    err: unknown = undefined
-  ): Promise<void> {
-    const { path } = context
-    const middlewareIndex = this.middleware.findIndex(
-      (v, i) =>
-        i >= after &&
-        v.path.every((v, i) => path[i] === v) &&
-        (err === undefined || v.callback.length === 3)
-    )
-
-    if (middlewareIndex > -1)
-      try {
-        const next: NextFn = err => {
-          this._execMiddleware(context, middlewareIndex + 1, err).catch(
-            () => {}
-          )
-        }
-
-        await this.middleware[middlewareIndex].callback(context, next, err)
-      } catch (err) {
-        await this._execMiddleware(context, middlewareIndex + 1, err)
-      }
-  }
-
-  public async execMiddleware(context: Context): Promise<void> {
-    return this._execMiddleware(context)
+  public runMiddleware(context: Context): void {
+    this._runNextMiddleware(context, -1)
   }
 
   /**

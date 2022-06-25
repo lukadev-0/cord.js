@@ -3,8 +3,13 @@
  * @packageDocumentation
  */
 
-export { Context } from './context'
-export { CordBotWithPlugins, Cord as default, Cord, CordBot } from './bot'
+export { default as Context } from './Context'
+export {
+  default as CordBot,
+  CordBotWithPlugins,
+  Cord,
+  Cord as default,
+} from './CordBot'
 export {
   ICordPlugin,
   ICordPluginOptions,
@@ -19,4 +24,5 @@ export {
   IMiddlewareOptions,
   NextFn,
 } from './middleware'
-export { ClientOptions } from './clientoptions'
+export { default as ClientOptions } from './ClientOptions'
+export { default as pathMatches } from './pathMatches'

@@ -2,13 +2,15 @@ import Cord from '@cordjs/bot'
 import Gateway from '../index'
 import { Client, IntentsBitField } from 'discord.js'
 
-Client.prototype.login = jest.fn().mockResolvedValue(undefined)
+const TOKEN = 'test token'
+
+Client.prototype.login = jest.fn().mockResolvedValue(TOKEN)
 
 describe('Gateway', () => {
   it('adds the correct events', async () => {
     const bot = Cord([
       Gateway({
-        token: 'test',
+        token: TOKEN,
       }),
     ])
 
@@ -73,28 +75,44 @@ describe('Gateway', () => {
     ).toBe(true)
   })
 
-  it('passes correct intents (object)', async () => {
-    const bot = Cord([
-      Gateway({
-        token: 'test',
-        intents: {
-          threadMembersUpdate: 'member',
-          typingStart: 'both',
-        },
-      }),
-    ])
-
-    await bot.start()
-    if (!bot.client) throw new Error('No client')
-
-    expect(
-      new IntentsBitField(bot.client.options.intents).equals([
-        IntentsBitField.Flags.GuildMembers,
+  it.each([
+    ['threadMembersUpdate', 'member', IntentsBitField.Flags.GuildMembers],
+    [
+      'threadMembersUpdate',
+      'both',
+      [IntentsBitField.Flags.GuildMembers, IntentsBitField.Flags.Guilds],
+    ],
+    ['threadMembersUpdate', 'guild', IntentsBitField.Flags.Guilds],
+    ['typingStart', 'dm', IntentsBitField.Flags.DirectMessageTyping],
+    [
+      'typingStart',
+      'both',
+      [
         IntentsBitField.Flags.DirectMessageTyping,
         IntentsBitField.Flags.GuildMessageTyping,
+      ],
+    ],
+    ['typingStart', 'guild', IntentsBitField.Flags.GuildMessageTyping],
+  ])(
+    'passes correct intents (threadMembersUpdate: )',
+    async (key, value, intents) => {
+      const bot = Cord([
+        Gateway({
+          token: 'test',
+          intents: {
+            [key]: value,
+          },
+        }),
       ])
-    ).toBe(true)
-  })
+
+      await bot.start()
+      if (!bot.client) throw new Error('No client')
+
+      expect(
+        new IntentsBitField(bot.client.options.intents).equals(intents)
+      ).toBe(true)
+    }
+  )
 
   it('passes correct intents (IntentsResolvable)', async () => {
     const intents = new IntentsBitField([
@@ -119,21 +137,28 @@ describe('Gateway', () => {
   it.each(['typingStart', 'threadMembersUpdate'])(
     `throws when '%s' is used with auto`,
     async e => {
-      expect.assertions(1)
+      const bot = Cord([
+        Gateway({
+          token: 'test',
+        }),
+      ])
 
-      try {
-        const bot = Cord([
-          Gateway({
-            token: 'test',
-          }),
-        ])
+      bot.gateway[e as 'typingStart' | 'threadMembersUpdate'](() => undefined)
 
-        bot.gateway[e as 'typingStart' | 'threadMembersUpdate'](() => undefined)
-
-        await bot.start()
-      } catch (e) {
-        expect(e).toBeInstanceOf(Error)
-      }
+      return expect(bot.start()).rejects.toBeInstanceOf(Error)
     }
   )
+
+  it('throws when invalid event is used', () => {
+    const bot = Cord([
+      Gateway({
+        token: 'test',
+      }),
+    ])
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(bot.gateway as any).hi()
+
+    return expect(bot.start()).rejects.toEqual(new Error('Unknown event: hi'))
+  })
 })

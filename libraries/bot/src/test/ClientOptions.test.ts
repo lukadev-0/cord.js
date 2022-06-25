@@ -10,6 +10,9 @@ test('ClientOptions', async () => {
     failIfNotExists: false,
     intents: [IntentsBitField.Flags.Guilds],
     partials: [Partials.Channel],
+    ws: {
+      compress: true,
+    },
   }
 
   const bot = Cord([ClientOptions(options)])

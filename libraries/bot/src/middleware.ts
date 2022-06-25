@@ -1,4 +1,4 @@
-import { Context } from './context'
+import Context from './Context'
 
 /**
  * A middleware callback
@@ -12,7 +12,7 @@ export type MiddlewareCallback<TContext> = (
   context: TContext,
   next: NextFn,
   err: unknown
-) => void
+) => void | Promise<void>
 
 /**
  * A middleware

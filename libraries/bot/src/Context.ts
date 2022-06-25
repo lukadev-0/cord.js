@@ -4,7 +4,7 @@
  *
  * @public
  */
-export abstract class Context {
+export default abstract class Context {
   /**
    * The middleware path
    */

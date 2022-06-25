@@ -1,4 +1,4 @@
-import { CordBot } from './bot'
+import CordBot from './CordBot'
 import { Client, ClientOptions } from 'discord.js'
 
 /**
@@ -197,7 +197,7 @@ export function CordPlugin<MiddlewareT extends string, BotDecorationsT>(
     },
 
     client() {
-      const client = helpers.bot().client
+      const client = pluginBot?.client
       if (!client)
         throw new Error("Cannot get client before 'start' has been called")
       return client

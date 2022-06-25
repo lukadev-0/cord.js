@@ -47,23 +47,23 @@ describe('Bot', () => {
       [fn => bot.test('maybe', fn), { path: ['test', 'maybe', 'hm'] }],
       [fn => bot.test.maybe.hm(fn), { path: ['test', 'maybe', 'hm'] }],
       [fn => bot.test.maybe(fn), { path: ['test', 'maybe', 'hm'] }],
-    ])('%# (single middleware)', async (fn, ctx) => {
+    ])('%# (single middleware)', (fn, ctx) => {
       const f = jest.fn()
       fn(f)
-      await bot.execMiddleware(ctx as Context)
+      bot.runMiddleware(ctx as Context)
       expect(f).toBeCalledTimes(1)
       expect(f.mock.calls[0][0]).toBe(ctx)
       expect(f.mock.calls[0][1]).toBeInstanceOf(Function)
     })
 
     describe('next()', () => {
-      it('runs the next middleware', async () => {
+      it('runs the next middleware', () => {
         const a = jest.fn()
         const b = jest.fn()
 
         bot.test(a)
         bot.test(b)
-        await bot.execMiddleware({ path: ['test'] })
+        bot.runMiddleware({ path: ['test'] })
 
         expect(a).toBeCalledTimes(1)
         expect(b).toBeCalledTimes(0)
@@ -73,7 +73,7 @@ describe('Bot', () => {
         expect(b).toBeCalledTimes(1)
       })
 
-      it('handles errors', async () => {
+      it('handles errors', () => {
         const a = jest.fn()
         const b = jest.fn()
         const c = jest.fn((ctx, next, err) => {})
@@ -81,7 +81,7 @@ describe('Bot', () => {
         bot.test(a)
         bot.test(b)
         bot.test(c)
-        await bot.execMiddleware({ path: ['test'] })
+        bot.runMiddleware({ path: ['test'] })
 
         expect(a).toBeCalledTimes(1)
         expect(b).toBeCalledTimes(0)
@@ -95,7 +95,7 @@ describe('Bot', () => {
         expect(c.mock.calls[0][2]).toEqual(new Error('oops!'))
       })
 
-      it('catches errors', async () => {
+      it('catches errors', () => {
         const a = jest.fn(() => {
           throw new Error('oops!')
         })
@@ -105,13 +105,41 @@ describe('Bot', () => {
         bot.test(a)
         bot.test(b)
         bot.test(c)
-        await bot.execMiddleware({ path: ['test'] })
+        bot.runMiddleware({ path: ['test'] })
 
         expect(a).toBeCalledTimes(1)
         expect(b).toBeCalledTimes(0)
         expect(c).toBeCalledTimes(1)
         expect(c.mock.calls[0][2]).toEqual(new Error('oops!'))
       })
+
+      it('catches promises', async () => {
+        const a = jest.fn(() => {
+          return Promise.reject(new Error('oops!'))
+        })
+        const b = jest.fn()
+        const c = jest.fn((ctx, next, err) => {})
+
+        bot.test(a)
+        bot.test(b)
+        bot.test(c)
+        bot.runMiddleware({ path: ['test'] })
+
+        // allow the catch to run due to it being a microtask
+        await Promise.resolve()
+
+        expect(a).toBeCalledTimes(1)
+        expect(b).toBeCalledTimes(0)
+        expect(c).toBeCalledTimes(1)
+        expect(c.mock.calls[0][2]).toEqual(new Error('oops!'))
+      })
+    })
+
+    it('throws an error if middleware is added after start is called', async () => {
+      await bot.start()
+      await expect(() => bot.test(() => {})).toThrow(
+        new Error("Cannot add middleware after 'start()' has been called")
+      )
     })
   })
 
@@ -151,7 +179,7 @@ describe('Bot', () => {
     expect(start).not.toBeCalled()
     expect(preStart).not.toBeCalled()
 
-    await bot.execMiddleware({ path: ['other'] })
+    bot.runMiddleware({ path: ['other'] })
 
     await bot.start()
 
